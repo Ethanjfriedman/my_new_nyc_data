@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang='en'>
+  <head>
+    <meta charset ='UTF-8'>
+    <title>Forum</title>
+    <link rel="stylesheet" href="/stylesheets/app.css">
+     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
+  </head>
+  <body>
+    <%- include nav.ejs%>
+    <%- body %>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
+    <script src="http://d3js.org/d3.v3.min.js"></script>
+    <!--CHECKING TO SEE IF GRAPH AND WHICH TEMPLATE TO SERVE UP...
+     which means we will have to pass in variables, pie, timeseries, singleTimeseries, and bargraph which each are set to true or false.
+    -->
+    <% if(pie){%>
+    <script src="scripts/pie_chart.js"></script>
+    <%}else if(timeseries){%>
+    <script src="scripts/timeseries.js"></script>
+    <%}else if(singleTimeseries){%>
+    <script src="scripts/single_timeseries.js"></script>
+    <%}else if(bar){%>
+    <script src="scripts/bargraph.js"></script>
+    <%}%>
+  </body>
+</html>
