@@ -14,6 +14,7 @@
     "ejs": "^2.3.3",
     "express": "^4.13.3",
     "express-ejs-layouts": "^1.1.0",
+    "fs": "0.0.2",
     "method-override": "^2.3.5",
     "mongodb": "^2.0.39",
     "mongoose": "^4.1.1",
