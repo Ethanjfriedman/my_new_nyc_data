@@ -18,7 +18,7 @@ var makePieChart = function(dataset, chartParams, svgParams) {
     arc = d3.svg.arc();
 
   // TODO because we have a bunch of stuff named data
-  data = dataset.data;
+  data = dataset;
 
 
   ////////////////////////////////////////////////////////////
