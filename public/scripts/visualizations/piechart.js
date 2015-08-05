@@ -20,6 +20,10 @@ var makePieChart = function(dataset, chartParams, svgParams) {
   // TODO because we have a bunch of stuff named data
   data = dataset;
 
+  console.log("log of data below:")
+  console.log(data);
+
+
 
   ////////////////////////////////////////////////////////////
   ////////// Don't need this, only for filepaths//////////////
@@ -40,7 +44,7 @@ var makePieChart = function(dataset, chartParams, svgParams) {
   //// making the title dynamically /////
   //////////////////////////////////////
     var $title = $('#title');
-    $title.text(data.meta.view.name);
+    $title.text('foo');
 
   //////////////////////////////////////////////////////
   //// creating the legend and appending it to DOM /////
@@ -62,7 +66,7 @@ var makePieChart = function(dataset, chartParams, svgParams) {
   ///////////////////////////////////////////
   //// calling the pieChart d3 function /////
   ///////////////////////////////////////////
-
+//chartParams.datafields []
     var createCharts = function() {
       for (var yr = 10; yr < 19; yr += 2) {
         var arr = [];
@@ -157,6 +161,7 @@ var makePieChart = function(dataset, chartParams, svgParams) {
   ///////// making year buttons /////////
   ///////////////////////////////////////
 
+//TODO see below for using chartParams
     $buttonDiv = $('#buttons');
     for (var yr = 2005; yr <= 2009; yr++ ) {
       $button = $('<button>').attr('id', yr).text(yr);
@@ -168,15 +173,17 @@ var makePieChart = function(dataset, chartParams, svgParams) {
     //////////////////////////////////////////
     ///////// autoplay through years /////////
     //////////////////////////////////////////
-
+    // if chartParams.multiYears
+    {multiYear: true, startYear: 2005, endYear: 2009}
     var maxLoops = $buttons.length-1;
         var counter = 0;
-        var yearz = [2005,2006,2007,2008,2009];
+        // for (var i = chartParams.startYear; i <= chartParams.endYear)
+        var yearz = [2005,2006,2007,2008,2009]; //this would go
         (function next() {
             if (counter++ >= maxLoops) return;
 
             setTimeout(function() {
-                $('#year').text(yearz[counter]);
+                $('#year').text(yearz[counter]); //years[counter] would be replaced by i
                 console.log(counter);
                 d3.selectAll("path")
                 .data(pieCharts[counter])

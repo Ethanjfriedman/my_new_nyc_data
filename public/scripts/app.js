@@ -8,7 +8,6 @@ var app = angular.module("myNYCData", []);
 app.controller('userController', ['$http', function($http) {
   var controller = this;
 
-  this.myName = 'Aarati';
   // this.getPieChart = function() {
   //   console.log("Off to fetch the piechart.js file");
   //   $http.get('./oldjsontests/distribution.json').success(function(data) {
@@ -19,8 +18,9 @@ app.controller('userController', ['$http', function($http) {
 
   this.getData = function () {
     console.log('running getData');
-    $http.get('./oldjsontests/distribution.json')
+    $http.get('https://data.cityofnewyork.us/resource/99ez-fwvc.json')
       .then(function (dataset) {
+        console.log(dataset);
         makePieChart( dataset, {}, {} );
 
           // eval(response2.data.makePieChart(dataset));
