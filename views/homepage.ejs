@@ -2,10 +2,29 @@
   <h1>hi I'm going to be an Angular app!</h1>
     {{ user.myName }}
 
+
 <form ng-submit='user.getData()'>
   <input type='submit'
          value='Pie please!'
          ng-mousedown="alert('HEY THERE CHARLIE');"/>
 </form>
+
+<header>
+    <h1 id="title"></h1>
+  </header>
+  <div id='buttons'>
+  </div>
+  <p class='blurb'></p>
+  <div id="graph">
+      <div id="info">
+          <div id="keys">
+          </div>
+          <div id="buttons">
+          </div>
+          <div id="pie">
+
+          </div>
+      </div>
+  </div>
 <button ng-click='user.getData()'>Click for yummy pies!</button>
 </main>
