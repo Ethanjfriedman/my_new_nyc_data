@@ -7,7 +7,7 @@ console.log('loading piechart.js');
 var makePieChart = function(dataset, chartParams, svgParams) {
 
   //////////////////////////////////////
-  ////////// SVG VARIABLES //////////////
+  ////////// SVG VARIABLES /////////////
   //////////////////////////////////////
   var width = svgParams.width || 500;
   var height = svgParams.height || 500;
@@ -18,7 +18,7 @@ var makePieChart = function(dataset, chartParams, svgParams) {
     arc = d3.svg.arc();
 
   // TODO because we have a bunch of stuff named data
-  data = dataset;
+  data = dataset.data;
 
   ////////////////////////////////////////////////////////////
   ////////// Don't need this, only for filepaths//////////////
@@ -33,7 +33,7 @@ var makePieChart = function(dataset, chartParams, svgParams) {
   //////////////////////////////////////
     var total = data.data.pop();
     var types = data.data;
-   
+
 
    //////////////////////////////////////
   //// making the title dynamically /////
@@ -98,7 +98,7 @@ var makePieChart = function(dataset, chartParams, svgParams) {
       .append("svg")
       .attr("width", width + padding * 2)
       .attr("height", height + padding * 2);
-  //TODO i want each slice to be associated with it's label. I'm not sure how to do that...
+  //TODO i want each slice to be associated with its label. I'm not sure how to do that...
     d3.select("svg")
       .append("g")
       .attr("transform", "translate(" + cx + "," + cy + ")")
@@ -106,7 +106,7 @@ var makePieChart = function(dataset, chartParams, svgParams) {
       .data(pieCharts[0])
       .enter()
       .append("path")
-      .on('mouseover', function(d) {
+      .on('mouseover', function(d) { //this displays the category title on mouseover
         d3.select(this).attr("opacity", .5);
           var myText = $(this).attr('id');
           var x = event.pageX - this.offsetLeft;
@@ -163,7 +163,7 @@ var makePieChart = function(dataset, chartParams, svgParams) {
     }
 
     var $buttons = $('button');
-    
+
     //////////////////////////////////////////
     ///////// autoplay through years /////////
     //////////////////////////////////////////
