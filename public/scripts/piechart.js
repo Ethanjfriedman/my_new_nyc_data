@@ -7,9 +7,10 @@ var width = 500,
 var makePieChart = function(dataset) {
   var pieChart = d3.layout.pie().sort(null),
     color = d3.scale.category20(),  //TODO must make better palette
-    arc = d3.svg.arc();
+    arc = d3.svg.arc(),
+    data = dataset; //so we don't have to replace a bunch of stuff that's called data.
 
-  d3.json(dataset, function(error, data) {
+  // d3.json(dataset, function(error, data) {
     console.log(error);
       //getting rid of total and storing it in a variable;
     var total = data.data.pop();
@@ -145,7 +146,7 @@ var makePieChart = function(dataset) {
         .transition().duration(1000).attrTween("d", makeArcTween(205));
       });
     });
-  });
+  // });
 };
 
 makePieChart("../oldjsontests/firearms.json");
