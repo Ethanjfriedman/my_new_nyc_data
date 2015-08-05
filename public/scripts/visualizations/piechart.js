@@ -1,10 +1,14 @@
-/*<><><><><><><><><>PIE TEMPLATE<><><><><><><>*/
+//////////////////////////////////////
+////////// PIE TEMPLATE //////////////
+//////////////////////////////////////
 
 console.log('loading piechart.js');
 
 var makePieChart = function(dataset, chartParams, svgParams) {
 
-  // set up SVG size variables
+  //////////////////////////////////////
+  ////////// SVG VARIABLES //////////////
+  //////////////////////////////////////
   var width = svgParams.width || 500;
   var height = svgParams.height || 500;
   var padding = svgParams.padding || 500;
@@ -13,18 +17,33 @@ var makePieChart = function(dataset, chartParams, svgParams) {
     color = d3.scale.category20(),  //TODO must make better palette
     arc = d3.svg.arc();
 
-  d3.json(dataset, function(error, data) {
-    console.log(dataset);
-    console.log(data);
-      //getting rid of total and storing it in a variable;
+  // TODO because we have a bunch of stuff named data
+  data = dataset;
+
+  ////////////////////////////////////////////////////////////
+  ////////// Don't need this, only for filepaths//////////////
+  // d3.json(dataset, function(error, data) {/////////////////
+  //   console.log(dataset);  ////////////////////////////////
+  //   console.log(data); ////////////////////////////////////
+  ////////////////////////////////////////////////////////////
+
+
+  //////////////////////////////////////
+  /////// getting rid of total /////////
+  //////////////////////////////////////
     var total = data.data.pop();
     var types = data.data;
+   
 
-    //making the title
+   //////////////////////////////////////
+  //// making the title dynamically /////
+  //////////////////////////////////////
     var $title = $('#title');
     $title.text(data.meta.view.name);
 
-  // create the legend and append it to the DOM
+  //////////////////////////////////////////////////////
+  //// creating the legend and appending it to DOM /////
+  /////////////////////////////////////////////////////
     var $keys = $('#keys');
     for (var i = 0; i < types.length-1; i++) {
       var typeName = types[i][8];
@@ -38,6 +57,10 @@ var makePieChart = function(dataset, chartParams, svgParams) {
 
     var pieCharts = [],
         totals = [];
+
+  ///////////////////////////////////////////
+  //// calling the pieChart d3 function /////
+  ///////////////////////////////////////////
 
     var createCharts = function() {
       for (var yr = 10; yr < 19; yr += 2) {
@@ -55,16 +78,27 @@ var makePieChart = function(dataset, chartParams, svgParams) {
     }
 
     createCharts();
-    arc.outerRadius(205);  //WTF is this FIXME
+
+  //////////////////////////////////////
+  ///////// making pieee yummy /////////
+  //////////////////////////////////////
+
+    arc.outerRadius(205);  //WTF is this FIXME// it will be ok.
     console.log(pieCharts);
     var cy = height / 2 + padding,
         cx = width / 2 + padding;
+
+  //////////////////////////////////////
+  ///////// making each slice /////////
+  ////////plus hover effects///////////
+  //////////////////////////////////////
+
 
     d3.select("#pie")
       .append("svg")
       .attr("width", width + padding * 2)
       .attr("height", height + padding * 2);
-  //i want each slice to be associated with it's label. I'm not sure how to do that...
+  //TODO i want each slice to be associated with it's label. I'm not sure how to do that...
     d3.select("svg")
       .append("g")
       .attr("transform", "translate(" + cx + "," + cy + ")")
@@ -96,8 +130,12 @@ var makePieChart = function(dataset, chartParams, svgParams) {
       })
       .transition().duration(1000).attrTween("d", makeArcTween(205));
 
-    // Store the currently displayed angles
-    //Then, interpolate from this._current to the new angles
+
+  /////////////////////////////////////////////////////
+  //////  Storing the currenty displayed angles  //////
+  ////// Then, interpolating from current to new //////
+  /////////////////////////////////////////////////////
+
 
     function makeArcTween(val){
       return function(a) {
@@ -114,7 +152,10 @@ var makePieChart = function(dataset, chartParams, svgParams) {
       .transition().duration(1000)
       .style("background-color", function(d, i) { return color(i) }); //TODO fix colors
 
-  //making the year buttons
+  ///////////////////////////////////////
+  ///////// making year buttons /////////
+  ///////////////////////////////////////
+
     $buttonDiv = $('#buttons');
     for (var yr = 2005; yr <= 2009; yr++ ) {
       $button = $('<button>').attr('id', yr).text(yr);
@@ -122,7 +163,11 @@ var makePieChart = function(dataset, chartParams, svgParams) {
     }
 
     var $buttons = $('button');
-    //autoplay
+    
+    //////////////////////////////////////////
+    ///////// autoplay through years /////////
+    //////////////////////////////////////////
+
     var maxLoops = $buttons.length-1;
         var counter = 0;
         var yearz = [2005,2006,2007,2008,2009];
@@ -142,7 +187,11 @@ var makePieChart = function(dataset, chartParams, svgParams) {
                 next();
             }, 5000);
         })();
-     //end of autoplay
+
+   //////////////////////////////////////////////////
+   /////////// year button click effect /////////////
+   //////////////////////////////////////////////////
+
     $.each($buttons, function(i, val) {
       $(val).click(function() {
         d3.selectAll("path")
@@ -150,10 +199,11 @@ var makePieChart = function(dataset, chartParams, svgParams) {
         .transition().duration(1000).attrTween("d", makeArcTween(205));
       });
     });
-  });
+  // });
 };
 
-//
-// module.exports = makePieChart;
-//
-// makePieChart("../oldjsontests/firearms.json");
+
+
+
+//old path to local file...
+//"../oldjsontests/firearms.json"
