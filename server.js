@@ -35,12 +35,12 @@ server.use(methodOverride('_method'));    //method override to enable DELETE and
 server.use(morgan('short'));              //activating morgan logging
 server.use(expressLayouts);               //using express-ejs-layouts to render partials
 
-// var userController = require('./controllers/users.js');
-// server.use('/user', userController);
-//
-// var visualizationController = require('./controllers/visualizations.js');
-// server.use('/visualization', visualizationController);
-//
+var userController = require('./controllers/users.js');
+server.use('/user', userController);
+
+var visualizationController = require('./controllers/visualizations.js');
+server.use('/visualization', visualizationController);
+
 
 server.get('/',function(req,res){
   res.render('homepage');

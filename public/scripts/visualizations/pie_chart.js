@@ -138,4 +138,4 @@ var makePieChart = function(dataset) {
 //sends it up into makePieChart()
 
 
-makePieChart("distribution.json");
+makePieChart(dataset);
