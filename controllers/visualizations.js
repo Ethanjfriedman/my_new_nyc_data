@@ -4,9 +4,10 @@ var express = require('express'),
     user = models.user,
     visualization = models.visualization;
 
-    module.exports = router;
+module.exports = router;
 
 /*<><><><><><><><><><><><><><><><><><><><><><><><><>*/
+
 
 router.get('/bar',function(req,res){
   res.render('graph',{type:bar});
@@ -19,3 +20,4 @@ router.get('/pie',function(req,res){
 router.get('/timeseries',function(req,res){
   res.render('graph',{type:timeseries});
 });
+
