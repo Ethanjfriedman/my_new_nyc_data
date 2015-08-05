@@ -14,7 +14,8 @@ var makePieChart = function(dataset, chartParams, svgParams) {
     arc = d3.svg.arc();
 
   d3.json(dataset, function(error, data) {
-    console.log(error);
+    console.log(dataset);
+    console.log(data);
       //getting rid of total and storing it in a variable;
     var total = data.data.pop();
     var types = data.data;
@@ -152,6 +153,7 @@ var makePieChart = function(dataset, chartParams, svgParams) {
   });
 };
 
-module.exports = makePieChart;
+//
+// module.exports = makePieChart;
 //
 // makePieChart("../oldjsontests/firearms.json");

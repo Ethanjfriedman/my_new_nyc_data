@@ -1,7 +1,11 @@
-
-
 <main ng-controller='userController as user'>
   <h1>hi I'm going to be an Angular app!</h1>
     {{ user.myName }}
-{{ user.getData() }}
+
+<form ng-submit='user.getData()'>
+  <input type='submit'
+         value='Pie please!'
+         ng-mousedown="alert('HEY THERE CHARLIE');"/>
+</form>
+<button ng-click='user.getData()'>Click for yummy pies!</button>
 </main>

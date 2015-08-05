@@ -79,7 +79,7 @@ var makePieChart = function(dataset) {
           setTimeout(function(){
             $('.blurb').fadeOut('slow');
           },1500);
-          
+
         })
       .attr("fill", function(d, i){ return color(i); })
       .attr("stroke", "white")
@@ -147,5 +147,3 @@ var makePieChart = function(dataset) {
     });
   });
 };
-
-makePieChart("../oldjsontests/firearms.json");
