@@ -1,0 +1,49 @@
+body {
+  padding: 1em;
+      }
+#buttons, #keys, #pie {
+  display: inline-block;
+  vertical-align: top;
+}
+button {
+  display: block;
+  margin: 1.5em;
+}
+#keys {
+  border: 1px solid lightgrey;
+  padding: 1em;
+}
+.key-color {
+  float:right;
+  background-color: white;
+  padding: 10px;
+}
+.key-text {
+  padding: 10px;
+}
+.blurb{
+  visibility: hidden;
+  position: absolute;
+  background-color: black;
+  color:white;
+  padding:5px;
+}
+ .axis {
+   font: 10px sans-serif;
+ }
+
+ .axis path,
+
+ .axis line {
+   fill: none;
+   stroke: #000;
+   shape-rendering: crispEdges;
+ }
+ 
+ .line {
+    fill: none;
+    stroke-width: 1.5px;
+  }
+ .bars{
+    transition:1s;
+ }
