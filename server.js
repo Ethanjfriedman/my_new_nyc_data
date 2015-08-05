@@ -36,10 +36,9 @@ server.use(morgan('short'));              //activating morgan logging
 server.use(expressLayouts);               //using express-ejs-layouts to render partials
 
 server.use('/',function(req,res){
-  var pieChart = require('./public/scripts/visualizations/piechart.js');
-  var dataset = require('./public/oldjsontests/distribution.json');
-  console.log(dataset);
-  res.render('homepage', { pieChart: pieChart, dataset: dataset});
+  // var pieChart = require('./public/scripts/visualizations/piechart.js');
+  // var dataset = require('./public/oldjsontests/distribution.json');
+  res.render('homepage');
 });
 //
 // var userController = require('./controllers/users.js');
