@@ -8,14 +8,14 @@ var express = require('express'),
 
 /*<><><><><><><><><><><><><><><><><><><><><><><><><>*/
 
-server.get('/bar',function(req,res){
-  res.render('graph',{bar:true, piechart:false, timeseries:false, single_timeseries: false});
+router.get('/bar',function(req,res){
+  res.render('graph',{type:bar});
 });
 
-server.get('/pie',function(req,res){
-  res.render('graph',{bar:false, piechart:true, timeseries:false, single_timeseries: false});
+router.get('/pie',function(req,res){
+  res.render('graph',{type:pie});
 });
 
-server.get('/timeseries',function(req,res){
-  res.render('graph',{bar:false, piechart:false, timeseries:true, single_timeseries: false});
+router.get('/timeseries',function(req,res){
+  res.render('graph',{type:timeseries});
 });

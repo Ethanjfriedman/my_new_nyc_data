@@ -14,13 +14,13 @@
     <!--CHECKING TO SEE IF GRAPH AND WHICH TEMPLATE TO SERVE UP...
      which means we will have to pass in variables, pie, timeseries, singleTimeseries, and bargraph which each are set to true or false.
     -->
-    <% if(pie){%>
+    <% if(type === pie){%>
     <script src="scripts/pie_chart.js"></script>
-    <%}else if(timeseries){%>
+    <%}else if(type === timeseries){%>
     <script src="scripts/timeseries.js"></script>
-    <%}else if(singleTimeseries){%>
+    <%}else if(type === singleTimeseries){%>
     <script src="scripts/single_timeseries.js"></script>
-    <%}else if(bar){%>
+    <%}else if(type === bar){%>
     <script src="scripts/bargraph.js"></script>
     <%}%>
   </body>
