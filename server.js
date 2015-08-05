@@ -44,5 +44,5 @@ server.use('/',function(req,res){
 // var userController = require('./controllers/users.js');
 // server.use('/users', userController);
 //
-// var visualizationController = require('./controllers/visualizations.js');
-// server.use('/visualizations', visualizationController);
+var visualizationController = require('./controllers/visualizations.js');
+server.use('/visualizations', visualizationController);

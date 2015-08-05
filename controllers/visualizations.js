@@ -28,7 +28,7 @@ router.get('/pie',function(req,res){
 
   var makePieChart=require('../public/scripts/piechart.js');
   console.log(makePieChart);
-  res.render('graph',{dataset: dataset, piechart: makePieChart, chartParams: chartParams, svgParams: svgParams});
+  res.render('graph', {dataset: dataset, piechart: makePieChart, chartParams: chartParams, svgParams: svgParams});
 });
 
 router.get('/timeseries',function(req,res){
