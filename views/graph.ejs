@@ -1,26 +1,33 @@
-<% if(!pie){%>
-<div id='buttons'>
-</div>
-<%}%>
-
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
+<script src="http://d3js.org/d3.v3.min.js"></script>
 <h1 id='title'></h1>
 <h3 id ='year'>2005</h3>
 <p class='blurb'></p>
 
-
-<% if(pie){%>
+<% if(type === 'pie'){%>
   <header>
-          <h1 id="title"></h1>
-      </header>
-      <p class='blurb'></p>
-      <div id="graph">
-          <div id="info">
-              <div id="keys">
-              </div>
-              <div id="buttons">
-              </div>
-              <div id="pie">
-              </div>
+    <h1 id="title"></h1>
+  </header>
+  <p class='blurb'></p>
+  <div id="graph">
+      <div id="info">
+          <div id="keys">
+          </div>
+          <div id="buttons">
+          </div>
+          <div id="pie">
+            <%= piechart(dataset) %>
           </div>
       </div>
+  </div>
+<% } else { %>
+  <div id='buttons'>
+  </div>
+<% } %>
+<% if(type === 'timeseries'){%>
+<script src="scripts/timeseries.js"></script>
+<%}else if(type === 'singleTimeseries'){%>
+<script src="scripts/single_timeseries.js"></script>
+<%}else if(type === 'bar'){%>
+<script src="scripts/bargraph.js"></script>
 <%}%>
