@@ -26,11 +26,9 @@ app.controller('visualizationController', ['$http', function($http) {
 
   //get data for and draw a timeseries chart
   this.getTimeseriesData = function () {
-    console.log('running visualizationController.getTimeseriesData()');
     $http.get('https://data.cityofnewyork.us/resource/7r8u-zrb7.json')
       .then(function (dataset) {
-        console.log(dataset);
-        makeTimeseries( dataset, {}, {});
+        makeTimeseries(adapterForFirearmsToTimeseries(dataset), {}, {});
       });
   }
 }]);
