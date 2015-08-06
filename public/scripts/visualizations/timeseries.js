@@ -2,7 +2,7 @@
 /////////MULTI LINE TEMPLATE//////////////
 /////////////////////////////////////////
 
-var makeTimeseries = function(dataset, chartParams, svgParams) {
+var makeTimeseries = function(data, chartParams, svgParams) {
 
   //////////////////////////////////////
   ////////// SVG VARIABLES /////////////
@@ -39,10 +39,6 @@ var makeTimeseries = function(dataset, chartParams, svgParams) {
       .append("g")
       .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 
-      // TODO because we have a bunch of stuff named data
-      //(i.e., need to eliminate next line and change all refs to data to dataset)
-      var data = dataset;
-
       ////////////////////////////////////////////////////////////
       ////////// Don't need this, only for filepaths//////////////
       // d3.json(dataset, function(error, data) {/////////////////
@@ -56,32 +52,23 @@ var makeTimeseries = function(dataset, chartParams, svgParams) {
     //eventually we'll probably want some chartParams property
     //that controls this.
     var dates = [];
-    var firstSeriesKeys = Object.keys(data.data[0]).sort();
-    // var minVal = parseInt(data.data[0][firstSeriesKeys[0]]); //min and max values needed for establishing x & y domains later
-    // var maxVal = parseInt(data.data[0][firstSeriesKeys[0]]); //we'll iterate over the whole array of objects below
     var values = [];
     var allSeries = [];
     for (var i = 0; i < data.data.length; i++) {
       var currentSeries = data.data[i];
       var dataSeries = [];
       var keys = Object.keys(currentSeries).sort();
-      var seriesName = keys[keys.length - 1];
+      var seriesName = currentSeries[keys[keys.length - 1]];
       for (var j = 0; j < keys.length - 1; j++) {
         var dataPoint = {};
         var key = keys[j].split('');
         var val = parseInt(currentSeries[keys[j]]);
-
-        // if (!minVal || val < minVal) { //FIXME WTF
-        //   minVal = val;
-        //   console.log(minVal);
-        // } else if (!maxVal || val > maxVal) {
-        //   maxVal = val;
-        // }
         key.shift();
         var keyString = parseDate(key.join(''));
         dates.push(keyString);
         dataPoint.date = keyString;
         dataPoint.value = val;
+        dataPoint.series = seriesName;
         values.push(val);
         dataSeries.push(dataPoint);
         }
@@ -92,7 +79,7 @@ var makeTimeseries = function(dataset, chartParams, svgParams) {
     var maxVal = values[0];
     var minVal = values[values.length - 1];
 
-    x.domain(d3.extent(allSeries[0], function(d) { console.log(d.date); return d.date; }));
+    x.domain(d3.extent(allSeries[0], function(d) { return d.date; }));
     y.domain(d3.extent([minVal, maxVal]));
 
     //making the x-axis
@@ -111,7 +98,7 @@ var makeTimeseries = function(dataset, chartParams, svgParams) {
           .style("text-anchor", "middle")
           .text("Year");
       //
-      // svg.append("text")      
+      // svg.append("text")
       //     .attr("transform", "translate(" + (50) + " ," + (height + margin.bottom +30) + ")")
       //     .style("text-anchor", "middle")
       //     .text("Year");
@@ -136,12 +123,15 @@ var makeTimeseries = function(dataset, chartParams, svgParams) {
         svg.append("path")
           .datum(allSeries[i])
           .attr('opacity',0)
+          .attr('id', 'allSeries[i][0].series')
           .on('mouseover', function(d) {
           d3.select(this).attr('stroke-dasharray',"5,5")
             var myText = $(this).attr('class').split(' ');
+            myText.shift();
+            myText = myText.join('');
             var x = event.pageX - this.offsetLeft;
             var y = event.pageY - this.offsetTop;
-            $('.blurb').css('visibility', 'visible').css('margin-left', x-50).css('margin-top', y-150).fadeIn('slow').text(myText[1]);
+            $('.blurb').css('visibility', 'visible').css('margin-left', x-50).css('margin-top', y-150).fadeIn('slow').text(myText);
           })
           .on('mouseout', function(d){
             that = this;
@@ -162,6 +152,11 @@ var makeTimeseries = function(dataset, chartParams, svgParams) {
           .data(allSeries[i])
           .enter().append("circle")
           .attr('opacity', 0)
+          .attr('id',function(d) {return (d.value); })
+          .on('mouseover', function() {
+            var valueText = ($(this).attr('id')).slice(0,6);
+            $('.blurb').css('visibility', 'visible').css('margin-left', x-50).css('margin-top', y-150).fadeIn('slow').text(valueText);
+          })
           .transition().delay(function (d,i){ return i * 200;}).duration(100)
           .attr("r", 3)
           .attr('opacity',1)
@@ -169,23 +164,33 @@ var makeTimeseries = function(dataset, chartParams, svgParams) {
           .attr("cy", function(d) { return y(d.value); })
           .attr('fill',function(d){ return color(i); });
       }
+}
 
-        // var lines = svg.selectAll(".line")
-        // var point = line.append("g")
-        // .attr("class", "line-point");
+var adapterForFirearmsToTimeseries = function(data) {
+  var result = {};
+  var dates = [];
+  var values = [];
+  var allSeries = [];
+  for (var i = 0; i < data.data.length; i++) {
+    var currentSeries = data.data[i];
+    var dataSeries = [];
+    var keys = Object.keys(currentSeries).sort();
+    var seriesName = currentSeries[keys[keys.length - 1]];
+    for (var j = 0; j < keys.length - 1; j++) {
+      var dataPoint = {};
+      var key = keys[j].split('');
+      var val = parseInt(currentSeries[keys[j]]);
+      key.shift();
+      var keyString = parseDate(key.join(''));
+      dates.push(keyString);
+      dataPoint.date = keyString;
+      dataPoint.value = val;
+      dataPoint.series = seriesName;
+      values.push(val);
+      dataSeries.push(dataPoint);
+      }
+    allSeries.push(dataSeries);
+    }
 
-        // point.selectAll('circle')
-        // .data(function(d,i){ return d.values})
-        // .enter().append('circle')
-        // .attr("cx", function(d, i) {
-        //     return x(i) + x.rangeBand() / 2;
-        //   })
-        //  .attr("cy", function(d, i) { return y(d.value) })
-        //  .attr("r", 5);
-
-  // });
-
-  $('path').on('mouseover', function(){
-    console.log(this.attr('id') + 'mew');
-  });
+  return result;
 }
