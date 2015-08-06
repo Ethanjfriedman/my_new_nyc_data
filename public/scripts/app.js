@@ -16,12 +16,12 @@ app.controller('visualizationController', ['$http', function($http) {
 
   //get data for and draw a pie chart
 
-  this.getPieChartData = function (dataURL, chartParams) {
+  this.getPieChartData = function (dataURL, chartParams) { //im passing in chartParams* and dataURL from the form
     console.log('running getData');
     $http.get(dataURL)
       .then(function (dataset) {
         console.log(dataset);
-        controller.makePieChart( dataset, chartParams, {} );
+        controller.makePieChart( dataset, chartParams, {} ); //using chartParams here.
 
       });
 
