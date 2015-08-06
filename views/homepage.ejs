@@ -1,13 +1,17 @@
 <main ng-controller='visualizationController as visualization'>
   <h1>hi I'm going to be an Angular app!</h1>
 
-<form ng-submit='visualization.getPieChartData()'>
+<form ng-submit="visualization.getPieChartData('https://data.cityofnewyork.us/resource/99ez-fwvc.json')">
   <input type='submit'
          value='Pie please!'/>
 </form>
-<form ng-submit='visualization.getTimeseriesData()'>
+<form ng-submit="visualization.getTimeseriesData('https://data.cityofnewyork.us/resource/7r8u-zrb7.json')">
   <input type='submit'
          value="Let's travel through time!"/>
+</form>
+<form ng-submit="visualization.getBarGraphData('https://data.cityofnewyork.us/resource/99ez-fwvc.json')">
+  <input type='submit'
+         value="I want to go to a bar!"/>
 </form>
 
 <header>

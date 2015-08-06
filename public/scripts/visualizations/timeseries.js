@@ -1,12 +1,18 @@
 //////////////////////////////////////////
 /////////MULTI LINE TEMPLATE//////////////
 /////////////////////////////////////////
-
+console.log('loading timeseries.js');
 var makeTimeseries = function(data, chartParams, svgParams) {
 
   //////////////////////////////////////
   ////////// SVG VARIABLES /////////////
   //////////////////////////////////////
+
+  //clearing out existing SVG elements as well as keys and buttons
+  $('svg').remove();
+  $('#buttons button').remove();
+  $('#keys *').remove();
+
   var margin = svgParams.margin || {top: 20, right: 20, bottom: 30, left: 50},
       width = svgParams.width || 960 - margin.left - margin.right,
       height = svgParams.height || 500 - margin.top - margin.bottom;

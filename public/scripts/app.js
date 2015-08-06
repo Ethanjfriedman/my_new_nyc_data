@@ -15,9 +15,9 @@ app.controller('visualizationController', ['$http', function($http) {
   this.makePieChart = makePieChart;
 
   //get data for and draw a pie chart
-  this.getPieChartData = function () {
+  this.getPieChartData = function (dataURL) {
     console.log('running getData');
-    $http.get('https://data.cityofnewyork.us/resource/99ez-fwvc.json')
+    $http.get(dataURL)
       .then(function (dataset) {
         console.log(dataset);
         controller.makePieChart( dataset, {}, {} );
@@ -25,10 +25,17 @@ app.controller('visualizationController', ['$http', function($http) {
   };
 
   //get data for and draw a timeseries chart
-  this.getTimeseriesData = function () {
-    $http.get('https://data.cityofnewyork.us/resource/7r8u-zrb7.json')
+  this.getTimeseriesData = function (dataURL) {
+    $http.get(dataURL)
       .then(function (dataset) {
         makeTimeseries(adapterForFirearmsToTimeseries(dataset), {}, {});
+      });
+  }
+
+  this.getBarGraphData = function(dataURL) {
+    $http.get(dataURL)
+      .then(function (dataset) {
+        makeBarGraph(adapterForDistributionOfAbuseAllegationsToBarChart(dataset),{},{});
       });
   }
 }]);
