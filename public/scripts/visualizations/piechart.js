@@ -3,8 +3,28 @@
 //////////////////////////////////////
 
 console.log('loading piechart.js');
+/*
+chartParams = {
+  keys: ['_number_1','_number_2','_number_3','_number_4','_number_5', '_percent_of_total_1', '_percent_of_total_2', '_percent_of_total_3', '_percent_of_total_4', '_percent_of_total_5', 'type_of_abuse_of_authority_allegation'],
+  multi: false
+}
+chartParams = {
+   abuses:true,
+   multi: false
+}
+*/
+var makePieChart = function(data, chartParams, svgParams) {
 
-var makePieChart = function(dataset, chartParams, svgParams) {
+/////////////////////////////////
+///// Preventing duplicates /////
+/////////////////////////////////
+
+$('svg').remove();
+$('#buttons button').remove();
+$('#keys *').remove();
+
+
+
 
   //////////////////////////////////////
   ////////// SVG VARIABLES /////////////
@@ -18,10 +38,35 @@ var makePieChart = function(dataset, chartParams, svgParams) {
     arc = d3.svg.arc();
 
   // TODO because we have a bunch of stuff named data
-  data = dataset;
 
-  console.log("log of data below:")
-  console.log(data);
+  // data = dataset;
+  // keys = chartParams.keys;
+  // keyAbuse = keys[keys.length - 1]; //the name of the abuse.
+  // key2005 = keys[5]; //percentage of total for that year.
+  // key2006 = keys[6];
+  // key2007 = keys[7];
+  // key2008 = keys[8];
+  // key2009 = keys[9];
+
+////////////////////////////////////////////
+/////// THIS IS WORKING YESSSSSSS////////////
+/////// the name seems to work    ///////////
+/////// year array is working   ////////////
+////////////////////////////////////////////
+if(chartParams.dataType === 'firearms'){
+adapterForFirearmsToPie(data);
+}
+// } else if(chartParams.dataType === '2009') //for other types i.e. ones that have 2005-2009
+
+////////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////////////
+
+
+
+  // console.log("log of data below:");
+  // console.log(data);
+
 
   ////////////////////////////////////////////////////////////
   ////////// Don't need this, only for filepaths//////////////
@@ -32,8 +77,10 @@ var makePieChart = function(dataset, chartParams, svgParams) {
   //////////////////////////////////////
   /////// getting rid of total /////////
   //////////////////////////////////////
-    var total = data.data.pop();
+    // var total = data.data.pop();
     var types = data.data;
+
+    
 
 
    //////////////////////////////////////
@@ -46,8 +93,8 @@ var makePieChart = function(dataset, chartParams, svgParams) {
   //// creating the legend and appending it to DOM /////
   /////////////////////////////////////////////////////
     var $keys = $('#keys');
-    for (var i = 0; i < types.length-1; i++) {
-      var typeName = types[i][8];
+    for (var i = 0; i < types.length; i++) {
+      var typeName = types[i].name;
       var p = $('<p>');
       var keyText = $('<span>').addClass('key-text').attr('id', typeName).text(typeName);
       var keyColor = $('<span>').addClass('key-color');
@@ -62,23 +109,32 @@ var makePieChart = function(dataset, chartParams, svgParams) {
   ///////////////////////////////////////////
   //// calling the pieChart d3 function /////
   ///////////////////////////////////////////
-//chartParams.datafields []
-    var createCharts = function() {
-      for (var yr = 10; yr < 19; yr += 2) {
-        var arr = [];
-        var yearlyTotal = [];
-        for (var type = 0; type <= types.length - 1; type++) {
-          arr.push(types[type][yr]);
-          yearlyTotal.push(types[type][yr - 1]); // [334, 456, 789, ... 111]
-        }
-        var chart = pieChart(arr);
-        totals.push(yearlyTotal);
-        //totals = [ [2005 totals], [2006 totals], ... [2009 totals]]
-        pieCharts.push(chart);
+
+//i need an array of pointers to each year, then i loop through the years and grab
+//the total for that year and store it in another array.
+
+
+    var createCharts = function(){
+      for(b = 0; b < numberOfYearsForThisDataset; b++){ /********************************//********************************//********************************//********************************/
+      arr = [];
+      yearlyTotal = []; //the percentages for each year.
+      for(var a = 0; a < types.length; a++){
+
+
+        
+        yearlyTotal.push(types[a].arrOfYearValues[b]);  //creating 11 sets for each b cycle (each year), within each pushing only that year from each abuse.
       }
-    }
+
+      var chart = pieChart(yearlyTotal);
+      pieCharts.push(chart);
+
+      totals.push(yearlyTotal);
+      }
+
+    };
 
     createCharts();
+
 
   //////////////////////////////////////
   ///////// making pieee yummy /////////
@@ -99,7 +155,7 @@ var makePieChart = function(dataset, chartParams, svgParams) {
       .append("svg")
       .attr("width", width + padding * 2)
       .attr("height", height + padding * 2);
-  //TODO i want each slice to be associated with its label. I'm not sure how to do that...
+
     d3.select("svg")
       .append("g")
       .attr("transform", "translate(" + cx + "," + cy + ")")
@@ -108,14 +164,18 @@ var makePieChart = function(dataset, chartParams, svgParams) {
       .enter()
       .append("path")
       .on('mouseover', function(d) { //this displays the category title on mouseover
-        d3.select(this).attr("opacity", .5);
+        d3.select(this).attr("opacity", 0.5);
           var myText = $(this).attr('id');
           var x = event.pageX - this.offsetLeft;
           var y = event.pageY - this.offsetTop;
-          $('.blurb').css('visibility', 'visible').css('margin-left', x-50).css('margin-top', y-150).fadeIn('slow').text(myText);
+          $(document).mousemove( function(e) { //this anchors the label to the mouse position
+             mouseX = e.pageX;
+             mouseY = e.pageY;
+          });
+          $('.blurb').css('visibility', 'visible').css('top', mouseY).css('left', mouseX).fadeIn('slow').text(myText);
         })
       .on('mouseout', function(d){
-        d3.select(this).attr("opacity", 1)
+        d3.select(this).attr("opacity", 1);
           setTimeout(function(){
             $('.blurb').fadeOut('slow');
           },1500);
@@ -124,7 +184,7 @@ var makePieChart = function(dataset, chartParams, svgParams) {
       .attr("fill", function(d, i){ return color(i); })
       .attr("stroke", "white")
       .attr("stroke-width", "2px")
-      .attr('id', function(d, i){ console.log(data.data[i][8] + 'd8'); return data.data[i][8];})
+      .attr('id', function(d, i){ return data.data[i].name;})
       .each(function(d) {
         this._current = JSON.parse(JSON.stringify(d));
         this._current.endAngle = this._current.startAngle;
@@ -140,7 +200,7 @@ var makePieChart = function(dataset, chartParams, svgParams) {
 
     function makeArcTween(val){
       return function(a) {
-        var i = d3.interpolate(this._current, a)
+        var i = d3.interpolate(this._current, a);
         var k = d3.interpolate(arc.outerRadius()(), val);
         this._current = i(0);
         return function(t) {
@@ -151,15 +211,21 @@ var makePieChart = function(dataset, chartParams, svgParams) {
 
     d3.selectAll(".key-color")
       .transition().duration(1000)
-      .style("background-color", function(d, i) { return color(i) }); //TODO fix colors
+      .style("background-color", function(d, i) { return color(i);}); //TODO fix colors
 
   ///////////////////////////////////////
   ///////// making year buttons /////////
   ///////////////////////////////////////
+  var yearsToLabel = [];
+    if(chartParams.yearType === '2012'){
+      yearsToLabel = [2002,2003,2004,2005,2006,2007,2008,2009,2010,2011,2012]; //this sucks but it will do for now.
+    } else if( chartParams.yearType === '2009'){
+      yearsToLabel = [2005,2006,2007,2008,2009];
+    }
 
-//TODO see below for using chartParams
+/////////////////////////////////////////////////////
     $buttonDiv = $('#buttons');
-    for (var yr = 2005; yr <= 2009; yr++ ) {
+    for (var yr = yearsToLabel[0]; yr <= yearsToLabel[yearsToLabel.length-1]; yr++ ) { /********************************//********************************//********************************/
       $button = $('<button>').attr('id', yr).text(yr);
       $buttonDiv.append($button);
     }
@@ -169,20 +235,22 @@ var makePieChart = function(dataset, chartParams, svgParams) {
     //////////////////////////////////////////
     ///////// autoplay through years /////////
     //////////////////////////////////////////
-    // if chartParams.multiYears
-    // {multiYear: true, startYear: 2005, endYear: 2009}
+
+
+
+    (function next() {
+
     var maxLoops = $buttons.length-1;
         var counter = 0;
         // for (var i = chartParams.startYear; i <= chartParams.endYear)
-        var yearz = [2005,2006,2007,2008,2009]; //this would go
-        (function next() {
+
             if (counter++ >= maxLoops) return;
 
             setTimeout(function() {
-                $('#year').text(yearz[counter]); //years[counter] would be replaced by i
+                $('#year').text(yearsToLabel[counter]); //years[counter] would be replaced by i
                 console.log(counter);
                 d3.selectAll("path")
-                .data(pieCharts[counter])
+                .data(pieCharts[counter]) /********************************//********************************//********************************/
                 .transition().duration(1000).attrTween("d", makeArcTween(205));
 
                 if(counter === maxLoops){
@@ -205,6 +273,58 @@ var makePieChart = function(dataset, chartParams, svgParams) {
     });
   // });
 };
+
+
+
+ var adapterForFirearmsToPie = function(data){  /********************************/  /********************************/
+
+
+
+    for(type = 0; type < data.data.length; type++){
+      data.data[type].arrOfYearValues = [
+         data.data[type]._2002,
+         data.data[type]._2003,
+         data.data[type]._2004,
+         data.data[type]._2005,
+         data.data[type]._2006,
+         data.data[type]._2007,
+         data.data[type]._2008,
+         data.data[type]._2009,
+         data.data[type]._2010,
+         data.data[type]._2011,
+         data.data[type]._2012,
+      ];
+      numberOfYearsForThisDataset = data.data[type].arrOfYearValues.length; //i didnt use var because i wanted to cheat scope and make this global :-)
+      data.data[type].name = data.data[type].discharge_detail; //this works.
+ 
+    }
+   
+};
+
+// var adapterForDistributionToPie = function(data){  /********************************/  /********************************/
+
+
+
+//     for(type = 0; type < data.data.length; type++){
+//       data.data[type].arrOfYearValues = [
+//          data.data[type]._2002,
+//          data.data[type]._2003,
+//          data.data[type]._2004,
+//          data.data[type]._2005,
+//          data.data[type]._2006,
+//          data.data[type]._2007,
+//          data.data[type]._2008,
+//          data.data[type]._2009,
+//          data.data[type]._2010,
+//          data.data[type]._2011,
+//          data.data[type]._2012,
+//       ];
+//       numberOfYearsForThisDataset = data.data[type].arrOfYearValues.length; //i didnt use var because i wanted to cheat scope and make this global :-)
+//       data.data[type].name = data.data[type].discharge_detail; //this works.
+ 
+//     }
+   
+// };
 
 
 

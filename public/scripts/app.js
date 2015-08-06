@@ -16,12 +16,14 @@ app.controller('visualizationController', ['$http', function($http) {
 
   //get data for and draw a pie chart
   this.getPieChartData = function (dataURL) {
-    console.log('running getData');
     $http.get(dataURL)
       .then(function (dataset) {
-        console.log(dataset);
-        controller.makePieChart( dataset, {}, {} );
+        controller.makePieChart( dataset, {
+          yearType:'2012',
+           dataType: 'firearms'
+        }, {} );
       });
+
   };
 
   //get data for and draw a timeseries chart
