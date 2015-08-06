@@ -11,7 +11,6 @@ var makeTimeseries = function(data, chartParams, svgParams) {
       width = svgParams.width || 960 - margin.left - margin.right,
       height = svgParams.height || 500 - margin.top - margin.bottom;
 
-  // var parseDate = d3.time.format("%Y").parse;
 
   var color = d3.scale.category20();
 
@@ -48,7 +47,10 @@ var makeTimeseries = function(data, chartParams, svgParams) {
   var minVal = data.minVal;
   var maxVal = data.maxVal;
 
-  //setting up domains for the x- and y-axes
+ ///////////////////////////////////////////////////////////////
+ /////////// Setting up domains for the x & y axis /////////////
+ ///////////////////////////////////////////////////////////////
+
   x.domain(d3.extent(allSeries[0], function(d) { return d.date; }));
   y.domain(d3.extent([minVal, maxVal]));
 

@@ -1,10 +1,19 @@
 <main ng-controller='visualizationController as visualization'>
   <h1>hi I'm going to be an Angular app!</h1>
 
-<form ng-submit='visualization.getPieChartData()'>
+<form ng-submit="visualization.getPieChartData('https://data.cityofnewyork.us/resource/7r8u-zrb7.json', {
+          yearType:'2012',
+           dataType: 'firearms'
+        })">
   <input type='submit'
-         value='Pie please!'/>
+         value='Pie for fire!'/>
 </form>
+<form ng-submit="visualization.getPieChartData('https://data.cityofnewyork.us/resource/us5j-esyf.json', {
+          yearType:'2009',
+           dataType: 'language'
+        })">
+  <input type='submit'
+          value ='pie for language'/>
 <form ng-submit='visualization.getTimeseriesData()'>
   <input type='submit'
          value="Let's travel through time!"/>
@@ -12,6 +21,7 @@
 
 <header>
     <h1 id="title"></h1>
+    <h3 id='year'></h3>
   </header>
   <div id='buttons'>
   </div>

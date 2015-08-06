@@ -15,16 +15,12 @@ app.controller('visualizationController', ['$http', function($http) {
   this.makePieChart = makePieChart;
 
   //get data for and draw a pie chart
-  this.getPieChartData = function () {
+  this.getPieChartData = function (chosenDataset, chartParams) {
     console.log('running getData');
-    $http.get('https://data.cityofnewyork.us/resource/7r8u-zrb7.json')
+    $http.get(chosenDataset)
       .then(function (dataset) {
         console.log(dataset);
-
-        controller.makePieChart( dataset, {
-          yearType:'2012',
-           dataType: 'firearms'
-        }, {} );
+        controller.makePieChart( dataset, chartParams, {} );
       });
 
   };
