@@ -22,7 +22,6 @@ var makeBarGraph = function(data, charParams, svgParams) {
 
   //colors
   var color = d3.scale.category20();
-
   var $title = $('#title');
   $title.text(data.title);
   //
@@ -36,8 +35,8 @@ var makeBarGraph = function(data, charParams, svgParams) {
 
     // Loading data
     //d3 max is treating numbers as strings, so we convert below
-    var maxY = d3.max(maxYears, function(d) { return d;})
-    console.log(maxY);
+    // var maxY = d3.max(maxYears, function(d) { return d;})
+    // console.log(maxY);
 
     // x.domain(data.data.map(function(d) { return d[8]; }));
     x.domain(data.abuses);
@@ -57,7 +56,7 @@ var makeBarGraph = function(data, charParams, svgParams) {
         .data(data.data) //love this line!
         .enter()
         .append("rect")
-        .style('fill',function(d){ return color(d); })
+        .style('fill',function(d, i){ return color(d); })
         .on('mouseover', function(d) {
           d3.select(this)
           .style('fill', 'black');
@@ -73,14 +72,14 @@ var makeBarGraph = function(data, charParams, svgParams) {
               $('.blurb').fadeOut('slow');
             },1500);
         })
-        .attr("x", function(d) { return x(d[8]); })
+        .attr("x", function(d) { return x(d[0]); })
         .attr("width", x.rangeBand())
-        .attr("y", function(d) { return y(d[year]); })
+        .attr("y", function(d, i) { return y(d[1]);  })
         .style('opacity', 0)
         .transition().delay(function (d,i){ return i * 100;})
         .duration(300)
         .style('opacity', 1)
-        .attr("height", function(d) { return height - y(d[year]); })
+        .attr("height", function(d, i) { return height - y(d[1]); })
         .attr('id', function(d){ return d[8]})
         .attr('class', 'bars');
 
@@ -109,13 +108,12 @@ var makeBarGraph = function(data, charParams, svgParams) {
       //autoplay
       var maxLoops = $buttons.length-1;
           var counter = 0;
-          var yearz = [2005,2006,2007,2008,2009];
           (function next() {
               if (counter++ >= maxLoops) return;
 
               setTimeout(function() {
-                  $('#year').text(yearz[counter]);
-                  year = years[counter];
+                  $('#year').text(data.years[counter]);
+                  year = data.years[counter];
                   drawBars();
                   if(counter === maxLoops){
                     counter = -1;
@@ -126,7 +124,7 @@ var makeBarGraph = function(data, charParams, svgParams) {
        //end of autoplay
       $.each($buttons, function(i, val) {
         $(val).click(function() {
-          year = years[i];
+          year = data.years[i];
           drawBars();
           console.log(year + 'yeaaar');
         });
@@ -134,33 +132,31 @@ var makeBarGraph = function(data, charParams, svgParams) {
   }
 
   var adapterForDistributionOfAbuseAllegationsToBarChart = function(data) {
-    console.log(data);
   var result = {};
   result.data = [];
   var keys = Object.keys(data.data[0]).sort();
   result.years = ["2005", "2006", "2007", "2008", "2009"];
   result.abuses = [];
   var yValues = [];
-  for (var i = 0; i < data.data.length; i++) {
+  for (var i = 0; i < data.data.length - 1; i++) {
     var currentAbuse = data.data[i];
+
     var currentResult = [];
     for (var j = 0; j < keys.length; j++) {
       if (j < 10) {
-        currentResult.push(currentAbuse[keys[i]]);
+        currentResult.push(parseInt(currentAbuse[keys[j]]));
+        if (j < 4) {
+          yValues.push(parseInt(currentAbuse[keys[j]]));
+        }
       } else {
-        result.abuses.unshift(currentAbuse[keys[j]])
+        result.abuses.unshift(currentAbuse[keys[j]]);
         currentResult.unshift(currentAbuse[keys[j]]);
       }
-
     }
-    console.log(currentResult);
     result.data.push(currentResult);
   }
-
   result.maxYValue = d3.max(yValues, function(d) {return d;});
-  console.log(result);
-  debugger;
-
   result.title = "Allegations of Abuse of Authority by Police";
+  console.log(result);
   return result;
   }
