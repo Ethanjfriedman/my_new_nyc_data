@@ -19,6 +19,7 @@ var makePieChart = function(dataset, chartParams, svgParams) {
 
   // TODO because we have a bunch of stuff named data
   data = dataset;
+
   console.log("log of data below:")
   console.log(data);
 
