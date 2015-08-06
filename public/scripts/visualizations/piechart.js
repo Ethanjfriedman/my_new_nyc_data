@@ -22,12 +22,9 @@ var makePieChart = function(dataset, chartParams, svgParams) {
   console.log("log of data below:")
   console.log(data);
 
-
   ////////////////////////////////////////////////////////////
   ////////// Don't need this, only for filepaths//////////////
   // d3.json(dataset, function(error, data) {/////////////////
-  //   console.log(dataset);  ////////////////////////////////
-  //   console.log(data); ////////////////////////////////////
   ////////////////////////////////////////////////////////////
 
 
@@ -42,7 +39,7 @@ var makePieChart = function(dataset, chartParams, svgParams) {
   //// making the title dynamically /////
   //////////////////////////////////////
     var $title = $('#title');
-    $title.text('foo');
+    $title.text('foo'); //TODO FIXME
 
   //////////////////////////////////////////////////////
   //// creating the legend and appending it to DOM /////
@@ -172,7 +169,7 @@ var makePieChart = function(dataset, chartParams, svgParams) {
     ///////// autoplay through years /////////
     //////////////////////////////////////////
     // if chartParams.multiYears
-    {multiYear: true, startYear: 2005, endYear: 2009}
+    // {multiYear: true, startYear: 2005, endYear: 2009}
     var maxLoops = $buttons.length-1;
         var counter = 0;
         // for (var i = chartParams.startYear; i <= chartParams.endYear)
