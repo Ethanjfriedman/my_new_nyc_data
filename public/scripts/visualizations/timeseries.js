@@ -113,16 +113,18 @@ d3.json("../oldjsontests/firearms.json", function(error, data) {
         .datum(allSeries[i])
         .attr('opacity',0)
         .on('mouseover', function(d) {
-        d3.select(this).attr('stroke-dasharray',"5,5")
+        d3.select(this).attr('stroke-dasharray',"5,5").attr('stroke-width', '5px');
           var myText = $(this).attr('class').split(' ');
-          var x = event.pageX - this.offsetLeft;
-          var y = event.pageY - this.offsetTop;
-          $('.blurb').css('visibility', 'visible').css('margin-left', x-50).css('margin-top', y-150).fadeIn('slow').text(myText[1]);
+          $(document).mousemove( function(e) {
+             mouseX = e.pageX;
+             mouseY = e.pageY;
+          });
+          $('.blurb').css('visibility', 'visible').css('top', mouseY).css('left', mouseX).fadeIn('slow').text(myText[1]);
         })
         .on('mouseout', function(d){
           that = this;
           setTimeout(function(){
-            d3.select(that).attr('stroke-dasharray',"none")
+            d3.select(that).attr('stroke-dasharray',"none").attr('stroke-width', '2px');
             $('.blurb').fadeOut('slow');
           },1000);
           
