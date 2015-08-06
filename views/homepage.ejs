@@ -1,10 +1,13 @@
-<main ng-controller='userController as user'>
+<main ng-controller='visualizationController as visualization'>
   <h1>hi I'm going to be an Angular app!</h1>
 
-<form ng-submit='user.getData()'>
+<form ng-submit='visualization.getPieChartData()'>
   <input type='submit'
-         value='Pie please!'
-         ng-mousedown="alert('HEY THERE CHARLIE');"/>
+         value='Pie please!'/>
+</form>
+<form ng-submit='visualization.getTimeseriesData()'>
+  <input type='submit'
+         value="Let's travel through time!"/>
 </form>
 
 <header>
@@ -20,9 +23,7 @@
           <div id="buttons">
           </div>
           <div id="pie">
-
           </div>
       </div>
   </div>
-<button ng-click='user.getData()'>Click for yummy pies!</button>
 </main>

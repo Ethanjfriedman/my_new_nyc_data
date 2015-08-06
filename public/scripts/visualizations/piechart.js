@@ -38,6 +38,7 @@ $('#keys *').remove();
     arc = d3.svg.arc();
 
   // TODO because we have a bunch of stuff named data
+
   // data = dataset;
   // keys = chartParams.keys;
   // keyAbuse = keys[keys.length - 1]; //the name of the abuse.
@@ -66,11 +67,10 @@ adapterForFirearmsToPie(data);
   // console.log("log of data below:");
   // console.log(data);
 
+
   ////////////////////////////////////////////////////////////
   ////////// Don't need this, only for filepaths//////////////
   // d3.json(dataset, function(error, data) {/////////////////
-  //   console.log(dataset);  ////////////////////////////////
-  //   console.log(data); ////////////////////////////////////
   ////////////////////////////////////////////////////////////
 
 
@@ -87,7 +87,7 @@ adapterForFirearmsToPie(data);
   //// making the title dynamically /////
   //////////////////////////////////////
     var $title = $('#title');
-    $title.text('foo');
+    $title.text('foo'); //TODO FIXME
 
   //////////////////////////////////////////////////////
   //// creating the legend and appending it to DOM /////
@@ -237,7 +237,9 @@ adapterForFirearmsToPie(data);
     //////////////////////////////////////////
 
 
+
     (function next() {
+
     var maxLoops = $buttons.length-1;
         var counter = 0;
         // for (var i = chartParams.startYear; i <= chartParams.endYear)
