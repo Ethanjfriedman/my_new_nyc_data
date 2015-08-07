@@ -8,6 +8,10 @@ module.exports = router;
 
 /*<><><><><><><><><><><><><><><><><><><><><><><><><>*/
 
+router.post('/', function (req, res) {
+    console.log('yeah motherfucker!');
+    console.log(req.body);
+});
 
 router.get('/bar',function(req,res){
   res.render('graph',{type: 'bar'});
