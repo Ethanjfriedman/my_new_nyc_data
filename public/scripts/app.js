@@ -22,7 +22,6 @@ app.controller('visualizationController', ['$http', function($http) {
            dataType: 'firearms'
         }, {} );
       });
-
   };
 
   //get data for and draw a timeseries chart
@@ -31,6 +30,7 @@ app.controller('visualizationController', ['$http', function($http) {
       .then(function (dataset) {
         makeTimeseries(adapterForFirearmsToTimeseries(dataset), {}, {});
       });
+
   }
 
   this.getBarGraphData = function(dataURL) {

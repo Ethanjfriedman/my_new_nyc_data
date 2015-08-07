@@ -6,8 +6,11 @@ console.log('loading piechart.js');
 
 
 var makePieChart = function(data, chartParams, svgParams) {
-  console.log(chartParams);
 
+
+
+chartParams.startYear = parseInt(chartParams.startYear);
+chartParams.endYear = parseInt(chartParams.startYear);
 
   /////////////////////////////////
   ///// Preventing duplicates /////
@@ -37,29 +40,44 @@ var makePieChart = function(data, chartParams, svgParams) {
   ////////////////////////////////////////////////////
   /////// calling the appropriate adapter ////////////
   ////////////////////////////////////////////////////
-  if(chartParams.dataType === 'firearms'){
+  if(chartParams.dataType == 'firearms'){
     adapterForFirearmsToPie(data);
-  } else if (chartParams.dataType === 'language'){
-    console.log('im adapting');
-    adapterForOffensiveLanguageToPie(data);
-  }
+  } else if (chartParams.dataType == 'language'){
+        adapterForOffensiveLanguageToPie(data);
+    } else if (chartParams.dataType == 'Abuse of Authority'){
+        adapterForAbuseOfAuthorityToPie(data);
+      } else if (chartParams.dataType == 'Race of Victims'){
+          adapterForRaceOfVictimsToPie(data);
+        } else if (chartParams.dataType == 'Gender of Victims'){
+            adapterForGenderOfVictimsToPie(data);
+          } else if (chartParams.dataType == 'Gender of Officers'){
+              adapterForGenderOfOfficersToPie(data);
+          }
 
 
-  /////////////////////////////////////////////////////
-  /////// getting rid of total if appropriate /////////
-  /////////////////////////////////////////////////////
-  if(chartParams.total === true){
-    var total = data.data.pop();
-  }
+  ////////////////////////////////////////////////////////////////
+  /////// getting rid of total & subtotal if appropriate /////////
+  ////////////////////////////////////////////////////////////////
+  var total;
+
+  if(chartParams.totalPresent === 'true'){
+    total = data.data.pop();
+  } else if (chartParams.totalPresent === 'weird'){ //so the race & gender dataset also has an object for a subtotal, which is at index5
+      data.data.splice(5,1);
+      total = data.data.pop();
+    } else if (chartParams.totalPresent === 'weird2'){
+        data.data.splice(2,1);
+        total = data.data.pop();
+    }
     
 
   ///////////////////////////////////////////////////
   //// giving the types of abuses/offenses/etc. /////
   //// a generic name////////////////////////////////
   ///////////////////////////////////////////////////
-
+    
     var types = data.data;
-
+    
     
   ///////////////////////////////////////
   //// making the title dynamically /////
@@ -71,7 +89,6 @@ var makePieChart = function(data, chartParams, svgParams) {
   //////////////////////////////////////////////////////
   //// creating the legend and appending it to DOM /////
   /////////////////////////////////////////////////////
-
 
     var $keys = $('#keys');
     for (var i = 0; i < types.length; i++) {
@@ -92,28 +109,37 @@ var makePieChart = function(data, chartParams, svgParams) {
   ///////////////////////////////////////////
   //i need an array of pointers to each year, then i loop through the years and grab
   //the total for that year and store it in another array.
+  // ChartParams.startYear = 2;
+  // ChartParams.endYear = 4;  ~~ so 2007 - 2009 // or 2004 ~~ 2006 depending on the dataset.
 
+    // var createCharts = function(){
+      console.log(chartParams.startYear);
+      for (f = chartParams.startYear; f <= chartParams.endYear; f++){ /********************************STARTYEAR AND ENDYEAR********************************//********************************/
+       console.log('running first level');
+        arr = [];
+        yearlyTotal = []; //the percentages for each year.
 
-    var createCharts = function(){
-      for(b = 0; b < numberOfYearsForThisDataset; b++){ /********************************//********************************//********************************//********************************/
-      arr = [];
-      yearlyTotal = []; //the percentages for each year.
-      for(var a = 0; a < types.length; a++){
-
-
+        for (var a = 0; a < types.length; a++){
+        console.log('running second level');
+       
         
-        yearlyTotal.push(types[a].arrOfYearValues[b]);  //creating 11 sets for each b cycle (each year), within each pushing only that year from each abuse.
-      }
+          yearlyTotal.push(types[a].arrOfYearValues[f]);  //creating 11 sets for each b cycle (each year), within each pushing only that year from each abuse.
+       
+        }
 
       var chart = pieChart(yearlyTotal);
+
       pieCharts.push(chart);
+
 
       totals.push(yearlyTotal);
       }
 
-    };
 
-    createCharts();
+
+    // };
+
+    // createCharts();
 
 
   //////////////////////////////////////
@@ -121,7 +147,6 @@ var makePieChart = function(data, chartParams, svgParams) {
   //////////////////////////////////////
 
     arc.outerRadius(205);  //WTF is this FIXME// it will be ok :-)
-    console.log(pieCharts);
     var cy = height / 2 + padding,
         cx = width / 2 + padding;
 
@@ -210,7 +235,7 @@ var makePieChart = function(data, chartParams, svgParams) {
   ///////// making year buttons /////////
   ///////////////////////////////////////
     $buttonDiv = $('#buttons');
-    for (var yr = yearsToLabel[0]; yr <= yearsToLabel[yearsToLabel.length-1]; yr++ ) { /********************************//********************************//********************************/
+    for (var yr = yearsToLabel[chartParams.startYear]; yr <= yearsToLabel[chartParams.endYear]; yr++ ) { /********************************STARTYEAR AND ENDYEAR********************************//********************************/
       $button = $('<button>').attr('id', yr).text(yr);
       $buttonDiv.append($button);
     }
@@ -225,13 +250,12 @@ var makePieChart = function(data, chartParams, svgParams) {
 
     (function next() {
 
-    var maxLoops = $buttons.length-1; //we can assume thats the number of years
+    var maxLoops = chartParams.endYear - chartParams.startYear; //we can assume thats the number of years
         var counter = 0;
             if (counter++ >= maxLoops) return;
 
             setTimeout(function() {
                 $('#year').text(yearsToLabel[counter]); //years[counter] would be replaced by i
-                console.log(counter);
                 d3.selectAll("path")
                 .data(pieCharts[counter]) 
                 .transition().duration(1000).attrTween("d", makeArcTween(205));
@@ -269,6 +293,8 @@ var makePieChart = function(data, chartParams, svgParams) {
 
 
     for(type = 0; type < data.data.length; type++){
+ 
+
       data.data[type].arrOfYearValues = [
          data.data[type]._2002,
          data.data[type]._2003,
@@ -282,13 +308,16 @@ var makePieChart = function(data, chartParams, svgParams) {
          data.data[type]._2011,
          data.data[type]._2012,
       ];
+
       numberOfYearsForThisDataset = data.data[type].arrOfYearValues.length; //i didnt use var because i wanted to cheat scope and make this global :-)
       data.data[type].name = data.data[type].discharge_detail;
  
     }
    
 };
-
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////    ADAPTERS FOR EVERYTHING    //////////////////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 
  ///////////////////////////////////////////////////
@@ -314,6 +343,97 @@ var adapterForOffensiveLanguageToPie = function(data){
 };
 
 
+ ////////////////////////////////////////////////////////////
+ /////////// ADAPTER FOR ABUSE ALLEGATIONS DATA /////////////
+ ////////////////////////////////////////////////////////////
 
+var adapterForAbuseOfAuthorityToPie = function(data){
+
+
+    for(type = 0; type < data.data.length; type++){
+      data.data[type].arrOfYearValues = [
+         data.data[type]._number_1,
+         data.data[type]._number_2,
+         data.data[type]._number_3,
+         data.data[type]._number_4,
+         data.data[type]._number_5
+      ];
+      numberOfYearsForThisDataset = data.data[type].arrOfYearValues.length; //i didnt use var because i wanted to cheat scope and make this global :-)
+      data.data[type].name = data.data[type].type_of_abuse_of_authority_allegation;
+ 
+    }
+   
+};
+
+
+
+
+ /////////////////////////////////////////////////////
+ /////////// ADAPTER FOR RACE OF VICTIMS /////////////
+ /////////////////////////////////////////////////////
+
+var adapterForRaceOfVictimsToPie = function(data){
+
+
+    for(type = 0; type < data.data.length; type++){
+      data.data[type].arrOfYearValues = [
+         data.data[type]._number_1,
+         data.data[type]._number_2,
+         data.data[type]._number_3,
+         data.data[type]._number_4,
+         data.data[type]._number_5
+      ];
+      numberOfYearsForThisDataset = data.data[type].arrOfYearValues.length; //i didnt use var because i wanted to cheat scope and make this global :-)
+      data.data[type].name = data.data[type].race;
+ 
+    }
+   
+};
+
+
+ ///////////////////////////////////////////////////////
+ /////////// ADAPTER FOR GENDER OF VICTIMS /////////////
+ ///////////////////////////////////////////////////////
+
+var adapterForGenderOfVictimsToPie = function(data){
+
+
+    for(type = 0; type < data.data.length; type++){
+      data.data[type].arrOfYearValues = [
+         data.data[type]._number_1,
+         data.data[type]._number_2,
+         data.data[type]._number_3,
+         data.data[type]._number_4,
+         data.data[type]._number_5
+      ];
+      numberOfYearsForThisDataset = data.data[type].arrOfYearValues.length; //i didnt use var because i wanted to cheat scope and make this global :-)
+      data.data[type].name = data.data[type].gender;
+ 
+    }
+   
+};
+
+ ///////////////////////////////////////////////////////
+ /////////// ADAPTER FOR GENDER OF VICTIMS /////////////
+ ///////////////////////////////////////////////////////
+
+var adapterForGenderOfOfficersToPie = function(data){
+
+
+    for(type = 0; type < data.data.length; type++){
+      data.data[type].arrOfYearValues = [
+         data.data[type]._number_of_officers_1,
+         data.data[type]._number_of_officers_2,
+         data.data[type]._number_of_officers_3,
+         data.data[type]._number_of_officers_4,
+         data.data[type]._number_of_officers_5
+      ];
+
+      numberOfYearsForThisDataset = data.data[type].arrOfYearValues.length; //i didnt use var because i wanted to cheat scope and make this global :-)
+      data.data[type].name = data.data[type].gender;
+ 
+    }
+   
+};
 
 
