@@ -11,6 +11,7 @@ var makePieChart = function(data, chartParams, svgParams) {
 
 chartParams.startYear = parseInt(chartParams.startYear);
 chartParams.endYear = parseInt(chartParams.startYear);
+console.log(chartParams.startYear, chartParams.endYear)
 
   /////////////////////////////////
   ///// Preventing duplicates /////
