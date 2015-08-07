@@ -11,17 +11,20 @@ app.controller('userController', ['$http', function($http) {
 }]);
 
 app.controller('visualizationController', ['$http', function($http) {
+  //get data for and draw a pie chart
+  this.formData = {};//im passing in chartParams*  and dataURL from the form
+
   var controller = this;
   this.makePieChart = makePieChart;
 
-  //get data for and draw a pie chart
+  
 
-  this.getPieChartData = function (dataURL, chartParams) { //im passing in chartParams* and dataURL from the form
-    console.log('running getData');
-    $http.get(dataURL)
+
+  this.getPieChartData = function () {
+    // console.log(controller.formData.chartParams);
+    $http.get(controller.formData.dataURL)
       .then(function (dataset) {
-        console.log(dataset);
-        controller.makePieChart( dataset, chartParams, {} ); //using chartParams here.
+        controller.makePieChart(dataset, controller.formData.chartParams, {} ); //using chartParams here.
 
       });
 
@@ -33,7 +36,7 @@ app.controller('visualizationController', ['$http', function($http) {
       .then(function (dataset) {
         makeTimeseries(adapterForFirearmsToTimeseries(dataset), {}, {});
       });
-  }
+  };
 
   this.getBarGraphData = function(dataURL) {
     $http.get(dataURL)
