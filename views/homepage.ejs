@@ -1,14 +1,10 @@
-<script src="scripts/visualizations/piechart.js"></script>
-<script src="scripts/visualizations/timeseries.js"></script>
-<script src="scripts/visualizations/bargraph.js"></script>
-<script src="scripts/app.js"></script>
 <main ng-controller='visualizationController as visualization'>
   <h1>hi I'm going to be an Angular app!</h1>
 
 
 <form ng-submit="visualization.getPieChartData()">
 
-  <select ng-model="visualization.formData.dataURL" onchange="activate(this);">
+  <select ng-model="visualization.formData.dataURL" onchange="activate(this)">
     <option value="https://data.cityofnewyork.us/resource/7r8u-zrb7.json">Firearms</option>
     <option value="https://data.cityofnewyork.us/resource/us5j-esyf.json">Language</option>
     <option value="https://data.cityofnewyork.us/resource/99ez-fwvc.json">Abuse</option>
@@ -64,13 +60,15 @@
          class='dataType' 
          ng-model="visualization.formData.chartParams.dataType" 
          type="radio" 
-         value="firearms" >firearms<br>
+         name='dataType'
+         value="firearms" >hi<br>
 
-<input id = 'language' 
+ <input id = 'language' 
          class='dataType' 
          ng-model="visualization.formData.chartParams.dataType" 
          type="radio" 
-         value="language" >language<br>
+         name='dataType'
+         value="language" >hi<br>
 
   <!-- yearType -->
 
@@ -78,6 +76,7 @@
          class=' yearType' 
          ng-model="visualization.formData.chartParams.yearType" 
          type="radio" 
+         name='yearType'
          value="2012" >hi<br>
 
   <input id = 'year2009' 
@@ -85,6 +84,7 @@
          ng-model="visualization.formData.chartParams.yearType" 
          type="radio" 
          value="2009" 
+         name='yearType'
          checked="checked">hiok<br>
 
 
@@ -94,24 +94,28 @@
          class=' totalPresent' 
          ng-model="visualization.formData.chartParams.totalPresent" 
          type="radio" 
+         name='totalPresent'
          value="true" >totalPresent<br>
 
   <input id ='totalFalse' 
          class=' totalPresent' 
          ng-model="visualization.formData.chartParams.totalPresent" 
          type="radio" 
+         name='totalPresent'
          value="false" >totalPresent<br>
 
   <input id ='totalWeird' 
          class=' totalPresent'
          ng-model="visualization.formData.chartParams.totalPresent" 
          type="radio" 
+         name='totalPresent'
          value="weird" >totalPresent<br>
 
   <input id ='totalWeird2' 
          class=' totalPresent' 
          ng-model="visualization.formData.chartParams.totalPresent" 
          type="radio" 
+         name='totalPresent'
          value="weird2" >totalPresent<br>
 
 

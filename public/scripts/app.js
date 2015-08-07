@@ -13,25 +13,28 @@ app.controller('visualizationController', ['$http', function($http) {
   var controller = this;
   this.makePieChart = makePieChart;
 
-<<<<<<< HEAD
-  
+  this.formData={
+    dataURL:'',
+    chartParams: {
+      dataType:'',
+      yearType:'',
+      startYear:'',
+      endYear:''
+    }
+  };
+
 
 
   this.getPieChartData = function () {
-    console.log(controller.formData.chartParams);
+
     $http.get(controller.formData.dataURL)
-=======
-  //get data for and draw a pie chart
-  this.getPieChartData = function (dataURL) {
-    $http.get(dataURL)
->>>>>>> 65f0262063f718242ba86565d23200d86e957be5
       .then(function (dataset) {
-        controller.makePieChart( dataset, {
-          yearType:'2012',
-           dataType: 'firearms'
-        }, {} );
+        controller.makePieChart( dataset, controller.formData.chartParams, {} );
       });
   };
+
+  // $http.post('/visualizations', $http.get(dataURL));
+
 
   //get data for and draw a timeseries chart
   this.getTimeseriesData = function (dataURL) {
