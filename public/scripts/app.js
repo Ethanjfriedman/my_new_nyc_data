@@ -13,15 +13,9 @@ app.controller('visualizationController', ['$http', function($http) {
   var controller = this;
   this.makePieChart = makePieChart;
 
-  this.formData={
-    dataURL:'',
-    chartParams: {
-      dataType:'',
-      yearType:'',
-      startYear:'',
-      endYear:''
-    }
-  };
+
+  this.formData={};
+
 
 
 
