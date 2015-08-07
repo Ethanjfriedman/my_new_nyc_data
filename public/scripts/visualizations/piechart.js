@@ -7,10 +7,8 @@ console.log('loading piechart.js');
 
 var makePieChart = function(data, chartParams, svgParams) {
 
-
-
 chartParams.startYear = parseInt(chartParams.startYear);
-chartParams.endYear = parseInt(chartParams.startYear);
+chartParams.endYear = parseInt(chartParams.endYear);
 console.log(chartParams.startYear, chartParams.endYear)
 
   /////////////////////////////////
