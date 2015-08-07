@@ -21,7 +21,7 @@ app.controller('visualizationController', ['$http', function($http) {
 
 
   this.getPieChartData = function () {
-    // console.log(controller.formData.chartParams);
+    console.log(controller.formData.chartParams);
     $http.get(controller.formData.dataURL)
       .then(function (dataset) {
         controller.makePieChart(dataset, controller.formData.chartParams, {} ); //using chartParams here.
