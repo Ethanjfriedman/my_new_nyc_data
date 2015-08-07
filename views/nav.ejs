@@ -1,7 +1,22 @@
 <div class='topBar'>
+  <div class='mobileMenu'>
+     <div class='navbar'>
+      <ul>
+        <li><a href="/users/logout">Log out</a></li>
+        <li><a href="/users/login">Log In</a></li>
+        <li><a href="#">About this Project</a></li>
+      </ul>
+    </div>
+
+    <div id="hamburger-button">
+            <span></span>
+            <span></span>
+            <span></span>
+    </div>
+  </div>
   <div class='left'>
-    <h1 class='logo'>MY <h1 id='nyc'>NYC<h1> DATA</h1>
-    <p class='tagline'>Data Visualization made easy. Learn more about the city you love.</p>
+    <h1 class='logo'>MY <span id='nyc'>NYC</span> DATA</h1>
+    <p class='tagline'>Data Visualization made easy. </br> Learn more about the city you love.</p>
   </div>
   <div class='right'>
     <ul>
@@ -11,3 +26,20 @@
     </ul>
   </div>
 </div>
+
+<script>
+  function animateHamburger() {
+  $('#hamburger-button').toggleClass('open');
+/*animating burger to x*/
+}
+
+function slideMenu(){
+  $('.navbar').toggleClass('open');
+  /*animating menu slidedown*/
+}
+$('#hamburger-button').click(function(){
+  console.log('trying');
+  animateHamburger();
+  slideMenu();/*attaching click handler to burger*/
+});
+</script>
