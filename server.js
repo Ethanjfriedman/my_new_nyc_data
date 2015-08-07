@@ -2,6 +2,7 @@ var express = require('express'),
     server = express(),
     bodyParser = require('body-parser'),
     ejs = require('ejs'),
+    session = require('express-session'),
     expressLayouts  = require('express-ejs-layouts'),
     MongoClient = require('mongodb').MongoClient,
     ObjectID = require('mongodb').ObjectID,
@@ -10,17 +11,25 @@ var express = require('express'),
     morgan = require('morgan'),
     mongoose = require('mongoose'),
     PORT = process.env.PORT || 3000,
+    bcrypt = require('bcrypt'),
     fs = require('fs');
     mongoose.connect(url);
 
 var db = mongoose.connection;
 
-db.on('open', function(){
+db.on('error', function() {
+  console.log('Database error');
+});
+
+db.once('open', function(){
   server.listen(PORT);
   server.db = db;
   console.log('Ready For Action');
   });
 
+var schemas = require('./models/schemas.js');
+var User = schemas.user;
+var Visualization = schemas.visualization;
 
  /*<><><><><><><>MIDDLEWARE<><><><><><><><>*/
  //setting up views
@@ -28,21 +37,57 @@ server.set('views', './views');
 server.set('view engine', 'ejs');
 
 //using bodyParser
-server.use(bodyParser.urlencoded({extended:true}));
+server.use(bodyParser.urlencoded({extended:true})); //for use in parsing user-submitted forms
+server.use(bodyParser.json()); //for use with angular and $http
 
 server.use(express.static('./public'));   //location of static files
 server.use(methodOverride('_method'));    //method override to enable DELETE and PATCH reqs
 server.use(morgan('short'));              //activating morgan logging
 server.use(expressLayouts);               //using express-ejs-layouts to render partials
+server.use(session({                      //setting up session
+  secret: "Cooldataiskewl",
+  resave: true,
+  saveUninitialized: false
+}));
 
-server.use('/',function(req,res){
-  // var pieChart = require('./public/scripts/visualizations/piechart.js');
-  // var dataset = require('./public/oldjsontests/distribution.json');
+// setting the user as a res.locals variable
+server.use(function(req, res, next){
+  console.log("running res locals middleware");
+  if (req.user) {
+    res.locals.user = req.user;
+    console.log("Houston we have a user: " + res.locals.user)
+  } else {
+    console.log("no user foo");
+    res.locals.user = null;
+  }
+  next();
+});
+
+// server.use(function(req, res, next) {
+//   if (req.session.user) {
+//     console.log("Houston, we have a user")
+//     console.log(req.session.user)
+//     res.locals.user = session.username;
+//   } else {
+//     console.log(foobar)
+//   }
+// });
+
+var userController = require('./controllers/users.js');
+server.use('/users', userController);
+
+// server.get('/',checkUserLogin, function(req,res){
+//   User.findById(req.session.userId, function (err, user) {
+//   if (err) {
+//     console.log(err);
+//   } else {
+//   res.render('homepage', {user: user});
+//   }
+// });
+
+server.get('/', function(req, res) {
   res.render('homepage');
 });
-//
-// var userController = require('./controllers/users.js');
-// server.use('/users', userController);
-//
+
 var visualizationController = require('./controllers/visualizations.js');
 server.use('/visualizations', visualizationController);

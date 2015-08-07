@@ -1,13 +1,11 @@
 var mongoose = require('mongoose'),
     Schema = mongoose.Schema;
 
-
-
-/*<><><><><><><><><><>*/
- /*<><><><><>Schemas<><><><><><><>*/
+/*<><><><><><><><><><><><><><><><>*/
+/*<><><><><>Schemas<><><><><><><>*/
  var userSchema = mongoose.Schema({
    name: {type: String, required: true, unique: true},
-   password_digest:{type: String, required: true, unique: true},
+   password:{type: String, required: true, minlength: 6},
    active:{type: Boolean, default: true},
    visualization_ids:[],
  });
