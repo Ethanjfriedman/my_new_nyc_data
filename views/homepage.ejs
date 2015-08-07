@@ -4,7 +4,7 @@
 
 <form ng-submit="visualization.getPieChartData()">
 
-  <select ng-model="visualization.formData.dataURL" onchange="activate(this)">
+  <select ng-model="visualization.formData.dataURL" onchange="activate(this)" >
     <option value="https://data.cityofnewyork.us/resource/7r8u-zrb7.json">Firearms</option>
     <option value="https://data.cityofnewyork.us/resource/us5j-esyf.json">Language</option>
     <option value="https://data.cityofnewyork.us/resource/99ez-fwvc.json">Abuse</option>
@@ -55,70 +55,6 @@
     <option value='3'>2008</option>
     <option value='4'>2009</option>
   </select>
-  <!-- DataType -->
-  <input id = 'firearms' 
-         class='dataType' 
-         ng-model="visualization.formData.chartParams.dataType" 
-         type="radio" 
-         name='dataType'
-         value="firearms" >hi<br>
-
- <input id = 'language' 
-         class='dataType' 
-         ng-model="visualization.formData.chartParams.dataType" 
-         type="radio" 
-         name='dataType'
-         value="language" >hi<br>
-
-  <!-- yearType -->
-
-  <input id = 'year2012' 
-         class=' yearType' 
-         ng-model="visualization.formData.chartParams.yearType" 
-         type="radio" 
-         name='yearType'
-         value="2012" >hi<br>
-
-  <input id = 'year2009' 
-         class=' yearType' 
-         ng-model="visualization.formData.chartParams.yearType" 
-         type="radio" 
-         value="2009" 
-         name='yearType'
-         checked="checked">hiok<br>
-
-
-
-  <!-- total stuff -->
-  <input id ='totalTrue' 
-         class=' totalPresent' 
-         ng-model="visualization.formData.chartParams.totalPresent" 
-         type="radio" 
-         name='totalPresent'
-         value="true" >totalPresent<br>
-
-  <input id ='totalFalse' 
-         class=' totalPresent' 
-         ng-model="visualization.formData.chartParams.totalPresent" 
-         type="radio" 
-         name='totalPresent'
-         value="false" >totalPresent<br>
-
-  <input id ='totalWeird' 
-         class=' totalPresent'
-         ng-model="visualization.formData.chartParams.totalPresent" 
-         type="radio" 
-         name='totalPresent'
-         value="weird" >totalPresent<br>
-
-  <input id ='totalWeird2' 
-         class=' totalPresent' 
-         ng-model="visualization.formData.chartParams.totalPresent" 
-         type="radio" 
-         name='totalPresent'
-         value="weird2" >totalPresent<br>
-
-
 
   <input type='submit'
          value='Pie for fire!'/>
@@ -218,11 +154,10 @@
   function activate(obj) {
     if(obj.value == "https://data.cityofnewyork.us/resource/7r8u-zrb7.json"){
       $('.year2012').removeClass('hideMe');
-      $('#year2012').attr('checked','true');
-      $('#totalFalse').attr('checked','true');
-      $('#firearms').attr('checked','true');
+    }else{
+      $('.year2009').removeClass('hideMe');
     }
-}
+  }
 
 
 
