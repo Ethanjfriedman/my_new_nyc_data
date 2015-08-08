@@ -21,9 +21,7 @@ router.post('/', function (req, res) {
         console.log("error finding visualization" + error);
       } else if (visualization == null) {
         console.log("visualization NOT found in DB");
-        var vizInfo = {}
-        populateVizInfo(dataSent);
-        pullData(dataSent.dataURL);
+        pullData(dataSent);
       } else {
         console.log("visualization found")
         var chartParams = dataSent.chartParams || null,
@@ -33,10 +31,10 @@ router.post('/', function (req, res) {
     });
 });
 
-pullData = function(dataURL, visualizationInfo) {
-  console.log("data url:", dataURL);
+pullData = function(dataWanted, vizInfo) {
+  console.log("data url:", dataWanted.dataURL);
 
-  var request = https.request(dataURL, function(response) {
+  var request = https.request(dataWanted.dataURL, function(response) {
     // console.log("statusCode: ", response.statusCode);
     // console.log("headers: ", response.headers);
     var viz = new Visualization;
@@ -46,8 +44,18 @@ pullData = function(dataURL, visualizationInfo) {
     });
     // console.log("new viz:");
     // console.log(viz);
-    viz.dataURL = dataURL;
-    
+    viz.dataURL = dataWanted.dataURL;
+    viz.name = dataWanted.databaseName;
+    viz.description = dataWanted.description;
+    viz.save(function(error, chart) {
+      if (error) {
+        console.log("error saving viz to database");
+        console.log(error);
+      } else {
+        console.log("new visualization successfully saved!!");
+        res.json({dataset: chart.dataset}, {chartParams: dataWanted.chartParams}, {svgParams: dataWanted.svgParams});
+      }
+    })
   });
 
 

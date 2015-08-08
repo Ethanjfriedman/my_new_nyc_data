@@ -59,7 +59,7 @@ console.log(chartParams.startYear, chartParams.endYear)
   ////////////////////////////////////////////////////////////////
   var total;
 
-  if(chartParams.totalPresent === 'true'){
+  if(chartParams.totalPresent === true){
     total = data.data.pop();
   } else if (chartParams.totalPresent === 'weird'){ //so the race & gender dataset also has an object for a subtotal, which is at index5
       data.data.splice(5,1);
