@@ -21,7 +21,7 @@ var makeTimeseries = function(data, chartParams, svgParams) {
       width = svgParams.width || 960 - margin.left - margin.right,
       height = svgParams.height || 500 - margin.top - margin.bottom;
 
-  
+
   /////////////////////////////////////////////
   ////////// setting d3 variables /////////////
   /////////////////////////////////////////////
@@ -200,7 +200,7 @@ var makeTimeseries = function(data, chartParams, svgParams) {
 ///////////////////////////////////////////////
 
 
-var adapterForFirearmsToTimeseries = function(data) {
+var adapterForFirearmsToTimeseries = function(data, params) {
   var result = {}; //this object will be returned with the necessary data to graph the timeseries
   var dates = []; //used for labels for the x-axis
   var values = []; //used to calculate the min and max y-values to establish y-axis domain
@@ -213,11 +213,11 @@ var adapterForFirearmsToTimeseries = function(data) {
     var dataSeries = [];
     var keys = Object.keys(currentSeries).sort(); //grabbing the keys for the current series
     var seriesName = currentSeries[keys[keys.length - 1]]; //series name is the final one after sorting in prior line
-    for (var j = 0; j < keys.length - 1; j++) {
+    for (var j = params.startYear; j <= params.endYear; j++) {
       var dataPoint = {};
       var key = keys[j].split(''); //key for the current point, e.g. "_2005", split into an array
       key.shift(); //removing the leading underscore
-      var keyString = parseDate(key.join('')); //rejoining as a string and parsing as a date.
+      var keyString = parseDate(key.join('')); //rejoining as a string and parsing as a date, e.g. '2012'
       dates.push(keyString);
       dataPoint.date = keyString;
       var val = parseInt(currentSeries[keys[j]]);

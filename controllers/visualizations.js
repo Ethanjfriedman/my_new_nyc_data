@@ -23,10 +23,11 @@ router.post('/', function (req, res) {
         console.log("visualization NOT found in DB");
         pullData(dataSent);
       } else {
-        console.log("visualization found!!");
-        var chartParams = dataSent.chartParams || null,
-            svgParams = dataSent.svgParams || null;
-        res.json({dataset: visualization, chartParams: chartParams, svgParams: svgParams});
+        console.log("visualization found:");
+        console.log(visualization);
+        var chartParams = dataSent.chartParams || {},
+            svgParams = dataSent.svgParams || {};
+        res.json({dataset: visualization.dataset, chartParams: chartParams, svgParams: svgParams});
       }
     });
 });
@@ -35,23 +36,31 @@ pullData = function(dataWanted, vizInfo) {
   console.log("data url:", dataWanted.dataURL);
 
   var request = https.request(dataWanted.dataURL, function(response) {
-    // console.log("statusCode: ", response.statusCode);
+    console.log("statusCode: ", response.statusCode);
     // console.log("headers: ", response.headers);
+    console.log("response:")
+    console.log(response);
     var viz = new Visualization;
-    response.on('data', function(d) {
-      console.log("*********************************");
-      console.log(d);
-      console.log("*********************************");
-      process.stdout.write(d);
-      viz.dataset.push(d);
-      console.log("viz.dataset:");
-      console.log(viz.dataset);
-    });
+    viz.dataset = response;
+    // response.on('data', function(d) {
+    //   console.log("*********************************");
+    //   console.log(d);
+    //   console.log("*********************************");
+    //   process.stdout.write(d);
+    //   console.log("I'm the d:");
+    //   console.log(d);
+    //   // d = JSON.parse(d);
+    //   viz.dataset.push(d);
+    //   console.log("viz.dataset:");
+    //   console.log(viz.dataset);
+    // });
     // console.log("new viz:");
     // console.log(viz);
     viz.dataURL = dataWanted.dataURL;
     viz.name = dataWanted.databaseName;
     viz.description = dataWanted.description;
+    console.log("viz");
+    console.log(viz);
     viz.save(function(error, chart) {
       if (error) {
         console.log("error saving viz to database");
