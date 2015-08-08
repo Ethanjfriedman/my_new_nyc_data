@@ -23,9 +23,9 @@ router.post('/', function (req, res) {
         console.log("visualization NOT found in DB");
         pullData(dataSent);
       } else {
-        console.log("visualization found")
+        console.log("visualization found!!");
         var chartParams = dataSent.chartParams || null,
-            svgParams = dataSent.chartParams || null;
+            svgParams = dataSent.svgParams || null;
         res.json({dataset: visualization, chartParams: chartParams, svgParams: svgParams});
       }
     });
@@ -39,8 +39,13 @@ pullData = function(dataWanted, vizInfo) {
     // console.log("headers: ", response.headers);
     var viz = new Visualization;
     response.on('data', function(d) {
+      console.log("*********************************");
+      console.log(d);
+      console.log("*********************************");
       process.stdout.write(d);
       viz.dataset.push(d);
+      console.log("viz.dataset:");
+      console.log(viz.dataset);
     });
     // console.log("new viz:");
     // console.log(viz);
@@ -53,7 +58,7 @@ pullData = function(dataWanted, vizInfo) {
         console.log(error);
       } else {
         console.log("new visualization successfully saved!!");
-        res.json({dataset: chart.dataset}, {chartParams: dataWanted.chartParams}, {svgParams: dataWanted.svgParams});
+        res.json({dataset: chart.dataset}, {chartParams: chart.chartParams}, {svgParams: chart.svgParams});
       }
     })
   });
