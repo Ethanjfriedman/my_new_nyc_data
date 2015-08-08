@@ -14,17 +14,19 @@ app.controller('visualizationController', ['$http', function($http) {
   this.makePieChart = makePieChart;
 
   this.formData={};
-  //
-  // this.getPieChartData = function () {
-  //
-  //   $http.get(controller.formData.dataURL)
-  //     .then(function (dataset) {
-  //       controller.dataset = dataset;
-  //       controller.makePieChart( dataset, controller.formData.chartParams, {} );
-  //     }).then(function() {
-  //             $http.post('/visualizations', {dataset: controller.dataset, charParms: controller.formData.chartParams, svgParams: {}});
-  //     });
-  // };
+
+  this.getPieChartData = function () {
+
+    $http.get(controller.formData.dataURL)
+      .then(function (dataset) {
+        controller.dataset = dataset;
+        controller.makePieChart( dataset, controller.formData.chartParams, {} );
+      }).then(function() {
+              $http.post('/visualizations', {dataset: controller.dataset, charParms: controller.formData.chartParams, svgParams: {}});
+      });
+  };
+
+  //THIS IS THE VERSION THAT GOES TO OUR SERVER NOT TO THE API
   this.getPieChartData = function() {
     console.log(controller.formData);
     $http.post('/visualizations', controller.formData);
