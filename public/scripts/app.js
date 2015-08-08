@@ -43,10 +43,17 @@ app.controller('visualizationController', ['$http', function($http) {
   //             controller.formData.chartParams.totalPresent = 'weird2';
   //             controller.formData.chartParams.dataType = 'Gender of Officers';
   //           }
+<<<<<<< HEAD
 
 
 
 
+=======
+  //
+  //
+  //
+  //
+>>>>>>> 6afdf11b5db4f25221837b4c883058ffef03f24d
   //   $http.get(controller.formData.dataURL)
   //     .then(function (dataset) {
   //       controller.dataset = dataset;
@@ -86,7 +93,15 @@ app.controller('visualizationController', ['$http', function($http) {
                 controller.formData.chartParams.dataType = 'Gender of Officers';
               }
     console.log(controller.formData);
-    $http.post('/visualizations', controller.formData);
+    $http.post('/visualizations', controller.formData)
+      .then(function(dataset) {
+        console.log("I got the data back! Now I need to draw it");
+        controller.dataset = dataset;
+        console.log(dataset);
+        var svgParams = controller.formData.svgParams || null;
+        controller.makePieChart(dataset, controller.formData.chartParams, {svgParams: svgParams} );
+      }
+    );
   }
 
 
