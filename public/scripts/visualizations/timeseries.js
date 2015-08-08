@@ -5,9 +5,6 @@ console.log('loading timeseries.js');
 
 var makeTimeseries = function(data, chartParams, svgParams) {
 
-if(chartParams.dataType === 'firearms'){
-  data = adapterForFirearmsToTimeseries(data, chartParams);
-}
 
   ////////////////////////////////////////////////////////////////////////////
   //// clearing out existing SVG elements as well as keys and buttons ////////
@@ -80,7 +77,7 @@ if(chartParams.dataType === 'firearms'){
   /////////////////////////////////////////////////////////////////
   ////////// finding all the max values for each year /////////////
   /////////////////////////////////////////////////////////////////
-console.log(data);
+
   var allSeries = data.allSeries;
   var dates = data.dates;
   var minVal = data.minVal;
@@ -89,8 +86,7 @@ console.log(data);
  ///////////////////////////////////////////////////////////////
  /////////// Setting up domains for the x & y axis /////////////
  ///////////////////////////////////////////////////////////////
-  console.log(allSeries);
-  debugger;
+
   x.domain(d3.extent(allSeries[0], function(d) { return d.date; }));
   y.domain(d3.extent([minVal, maxVal]));
 
@@ -195,7 +191,7 @@ console.log(data);
       .attr('opacity',1)
       .attr("cx", function(d) { return x(d.date); })
       .attr("cy", function(d) { return y(d.value); })
-      .attr('fill',function(d){ return color(i); })
+      .attr('fill',function(d){ return color(i); });
   }
 }
 
@@ -212,13 +208,12 @@ var adapterForFirearmsToTimeseries = function(data, params) {
   var allSeries = []; //each element will be a dataSeries: an array of objects, where each object is one datapoint
   var parseDate = d3.time.format("%Y").parse;
   var title = "Reasons for Firearms Discharges by Police";
-  
+
   for (var i = 0; i < data.data.length; i++) {
     var currentSeries = data.data[i];
     var dataSeries = [];
     var keys = Object.keys(currentSeries).sort(); //grabbing the keys for the current series
     var seriesName = currentSeries[keys[keys.length - 1]]; //series name is the final one after sorting in prior line
-
     for (var j = params.startYear; j <= params.endYear; j++) {
       var dataPoint = {};
       var key = keys[j].split(''); //key for the current point, e.g. "_2005", split into an array
@@ -244,8 +239,5 @@ var adapterForFirearmsToTimeseries = function(data, params) {
   result.dates = dates;
   result.allSeries = allSeries;
   result.title = title;
-  console.log('===========')
-  console.log(result)
   return result;
-    
-};
+}
