@@ -11,7 +11,7 @@
 <div class='tools'>
 <form ng-submit="visualization.getPieChartData()">
 
-  <select ng-model="visualization.formData.dataURL" onchange="activate(this);">
+  <select name='pie' ng-model="visualization.formData.dataURL" onchange="activate(this);">
     <option value="https://data.cityofnewyork.us/resource/7r8u-zrb7.json">Firearms</option>
     <option value="https://data.cityofnewyork.us/resource/us5j-esyf.json">Language</option>
     <option value="https://data.cityofnewyork.us/resource/99ez-fwvc.json">Abuse</option>
@@ -73,7 +73,7 @@
 <!--==========TIME SERIES===========-->
 <form ng-submit="visualization.getTimeseriesData()">
 
-  <select ng-model="visualization.formData.dataURL" onchange="activate2(this);">
+  <select name='pie' ng-model="visualization.formData.dataURL" onchange="activate2(this);">
     <option value="https://data.cityofnewyork.us/resource/7r8u-zrb7.json">Firearms</option>
     <option value="https://data.cityofnewyork.us/resource/us5j-esyf.json">Language</option>
     <option value="https://data.cityofnewyork.us/resource/99ez-fwvc.json">Abuse</option>
@@ -168,19 +168,24 @@
 
 function activate(obj) {
     if(obj.value == "https://data.cityofnewyork.us/resource/7r8u-zrb7.json"){
+      $('.year2009').addClass('hideMe');
       $('.year2012').removeClass('hideMe');
+
     }
     else{
       $('.year2009').removeClass('hideMe');
+      $('.year2012').addClass('hideMe');
     }
     
 }
 
 function activate2(obj) {
   if(obj.value =='https://data.cityofnewyork.us/resource/7r8u-zrb7.json'){
+    $('.year20092').addClass('hideMe');
     $('.year20122').removeClass('hideMe');
   } else{
     $('.year20092').removeClass('hideMe');
+    $('.year20122').addClass('hideMe');
   }
 }
 
