@@ -6,16 +6,14 @@ console.log('loading piechart.js');
 
 
 var makePieChart = function(data, chartParams, svgParams) {
-  console.log(data);
 console.log("ooh baby I'm gonna draw a pie chart!!!");
-data = data.data; //(shudder)
-
+console.log("data.dataset:");
+console.log(data.dataset);
 console.log("data:")
 console.log(data);
 console.log("chartParams:");
 console.log(chartParams);
 console.log("svgParams:");
-svgParams = svgParams.svgParams;
 console.log(svgParams);
 
 
