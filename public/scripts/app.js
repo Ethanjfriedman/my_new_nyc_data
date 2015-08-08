@@ -43,17 +43,7 @@ app.controller('visualizationController', ['$http', function($http) {
   //             controller.formData.chartParams.totalPresent = 'weird2';
   //             controller.formData.chartParams.dataType = 'Gender of Officers';
   //           }
-<<<<<<< HEAD
-
-
-
-
-=======
   //
-  //
-  //
-  //
->>>>>>> 6afdf11b5db4f25221837b4c883058ffef03f24d
   //   $http.get(controller.formData.dataURL)
   //     .then(function (dataset) {
   //       controller.dataset = dataset;
