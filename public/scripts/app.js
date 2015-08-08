@@ -15,40 +15,45 @@ app.controller('visualizationController', ['$http', function($http) {
   this.makePieChart = makePieChart;
   this.formData={};
 
-  this.getPieChartData = function () {
-  if(controller.formData.dataURL === "https://data.cityofnewyork.us/resource/7r8u-zrb7.json"){
-    controller.formData.chartParams.yearType = '2012';
-    controller.formData.chartParams.totalPresent = false;
-    controller.formData.chartParams.dataType = 'firearms';
-  } else if(controller.formData.dataURL === 'https://data.cityofnewyork.us/resource/us5j-esyf.json'){
-      controller.formData.chartParams.yearType = '2009';
-      controller.formData.chartParams.totalPresent = true;
-      controller.formData.chartParams.dataType = 'language';
-    } else if(controller.formData.dataUrl === 'https://data.cityofnewyork.us/resource/99ez-fwvc.json'){
+  this.whichDataset = function() {
+    if(controller.formData.dataURL === "https://data.cityofnewyork.us/resource/7r8u-zrb7.json"){
+      controller.formData.chartParams.yearType = '2012';
+      controller.formData.chartParams.totalPresent = false;
+      controller.formData.chartParams.dataType = 'firearms';
+    } else if(controller.formData.dataURL === 'https://data.cityofnewyork.us/resource/us5j-esyf.json'){
         controller.formData.chartParams.yearType = '2009';
         controller.formData.chartParams.totalPresent = true;
-        controller.formData.chartParams.dataType = 'Abuse of Authority';
-      } else if(controller.formData.dataUrl === 'https://data.cityofnewyork.us/resource/x8rc-3utf.json'){
+        controller.formData.chartParams.dataType = 'language';
+      } else if(controller.formData.dataUrl === 'https://data.cityofnewyork.us/resource/99ez-fwvc.json'){
           controller.formData.chartParams.yearType = '2009';
-          controller.formData.chartParams.totalPresent = 'weird';
-          controller.formData.chartParams.dataType = 'Race of Victims';
-        } else if(controller.formData.dataUrl === 'https://data.cityofnewyork.us/resource/ffgt-jimk.json'){
+          controller.formData.chartParams.totalPresent = true;
+          controller.formData.chartParams.dataType = 'Abuse of Authority';
+        } else if(controller.formData.dataUrl === 'https://data.cityofnewyork.us/resource/x8rc-3utf.json'){
             controller.formData.chartParams.yearType = '2009';
-            controller.formData.chartParams.totalPresent = 'weird2';
-            controller.formData.chartParams.dataType = 'Gender of Victims';
-          } else if(controller.formData.dataUrl === 'https://data.cityofnewyork.us/resource/664m-n5th.json'){
+            controller.formData.chartParams.totalPresent = 'weird'; //TODO change 'weird' to 'subtotalTypeA'
+            controller.formData.chartParams.dataType = 'Race of Victims';
+          } else if(controller.formData.dataUrl === 'https://data.cityofnewyork.us/resource/ffgt-jimk.json'){
               controller.formData.chartParams.yearType = '2009';
               controller.formData.chartParams.totalPresent = 'weird2';
               controller.formData.chartParams.dataType = 'Gender of Officers';
+              } else if(controller.formData.dataUrl === 'https://data.cityofnewyork.us/resource/ffgt-jimk.json'){
+                  controller.formData.chartParams.yearType = '2009';
+                  controller.formData.chartParams.totalPresent = 'weird2';
+                  controller.formData.chartParams.dataType = 'Gender of Victims';
             }
-  
-     $http.get(controller.formData.dataURL)
+  };
+
+  this.getPieChartData = function () {
+    this.whichDataset();
+
+    $http.get(controller.formData.dataURL)
       .then(function (dataset) {
         controller.dataset = dataset;
         controller.makePieChart( dataset, controller.formData.chartParams, {} );
-      }).then(function() {
-              $http.post('/visualizations', {dataset: controller.dataset, charParms: controller.formData.chartParams, svgParams: {}});
       });
+      // .then(function() {
+      //         $http.post('/visualizations', {dataset: controller.dataset, charParms: controller.formData.chartParams, svgParams: {}});
+      // });
   };
 
   //THIS IS THE VERSION THAT GOES TO OUR SERVER NOT TO THE API
@@ -149,11 +154,7 @@ app.controller('visualizationController', ['$http', function($http) {
   //get data for and draw a timeseries chart
 
   this.getTimeseriesData = function () {
-    if(controller.formData.dataURL === "https://data.cityofnewyork.us/resource/7r8u-zrb7.json"){
-      controller.formData.chartParams.yearType = '2012';
-      controller.formData.chartParams.totalPresent = false;
-      controller.formData.chartParams.dataType = 'firearms';
-    }
+    this.whichDataset();
 
     $http.get(controller.formData.dataURL)
       .then(function (dataset) {
@@ -169,7 +170,7 @@ app.controller('visualizationController', ['$http', function($http) {
       .then(function (dataset) {
         makeBarGraph(adapterForDistributionOfAbuseAllegationsToBarChart(dataset),{},{});
       });
-  }
+  };
 }]);
 
 
@@ -186,4 +187,4 @@ var firearms = {
     { "discharge_detail" : "Unauthorized use of a Firearm", "_2012" : "6", "_2010" : "6", "_2011" : "2", "_2002" : "0", "_2006" : "8", "_2005" : "6", "_2004" : "5", "_2003" : "2", "_2009" : "4", "_2008" : "3", "_2007" : "6" },
     { "discharge_detail" : "MOS Suicide / Attempt", "_2012" : "9", "_2010" : "2", "_2011" : "3", "_2002" : "2", "_2006" : "3", "_2005" : "3", "_2004" : "5", "_2003" : "7", "_2009" : "3", "_2008" : "8", "_2007" : "6" }
   ]
-}
+};
