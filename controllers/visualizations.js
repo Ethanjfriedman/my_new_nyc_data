@@ -1,17 +1,63 @@
 var express = require('express'),
     router = express.Router(),
     models = require('../models/schemas.js'),
-    user = models.user,
-    visualization = models.visualization;
+    User = models.user,
+    url = require('url'),
+    https = require('https'),
+    session = require('express-session'),
+    Visualization = models.visualization;
 
 module.exports = router;
 
 /*<><><><><><><><><><><><><><><><><><><><><><><><><>*/
 
 router.post('/', function (req, res) {
-    console.log('yeah motherfucker!');
-    console.log(req.body);
+    console.log('POST to /visualizations -- now off to get the data');
+    var dataSent = req.body;
+    console.log(dataSent);
+    Visualization.findOne({dataURL: dataSent.dataURL}, function (error, visualization) {
+      console.log('searching in db...');
+      if (error) {
+        console.log("error finding visualization" + error);
+      } else if (visualization == null) {
+        console.log("visualization NOT found in DB");
+        var vizInfo = {}
+        populateVizInfo(dataSent);
+        pullData(dataSent.dataURL);
+      } else {
+        console.log("visualization found")
+        var chartParams = dataSent.chartParams || null,
+            svgParams = dataSent.chartParams || null;
+        res.json({dataset: visualization, chartParams: chartParams, svgParams: svgParams});
+      }
+    });
 });
+
+pullData = function(dataURL, visualizationInfo) {
+  console.log("data url:", dataURL);
+
+  var request = https.request(dataURL, function(response) {
+    // console.log("statusCode: ", response.statusCode);
+    // console.log("headers: ", response.headers);
+    var viz = new Visualization;
+    response.on('data', function(d) {
+      process.stdout.write(d);
+      viz.dataset.push(d);
+    });
+    // console.log("new viz:");
+    // console.log(viz);
+    viz.dataURL = dataURL;
+    
+  });
+
+
+  request.end();
+
+  request.on('error', function(e) {
+    console.error(e);
+  });
+}
+
 
 router.get('/bar',function(req,res){
   res.render('graph',{type: 'bar'});

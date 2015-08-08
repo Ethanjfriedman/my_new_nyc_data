@@ -14,18 +14,25 @@ app.controller('visualizationController', ['$http', function($http) {
   this.makePieChart = makePieChart;
 
   this.formData={};
+  //
+  // this.getPieChartData = function () {
+  //
+  //   $http.get(controller.formData.dataURL)
+  //     .then(function (dataset) {
+  //       controller.dataset = dataset;
+  //       controller.makePieChart( dataset, controller.formData.chartParams, {} );
+  //     }).then(function() {
+  //             $http.post('/visualizations', {dataset: controller.dataset, charParms: controller.formData.chartParams, svgParams: {}});
+  //     });
+  // };
+  this.getPieChartData = function() {
+    console.log(controller.formData);
+    $http.post('/visualizations', controller.formData);
+  }
 
 
 
-  this.getPieChartData = function () {
 
-    $http.get(controller.formData.dataURL)
-      .then(function (dataset) {
-        controller.makePieChart( dataset, controller.formData.chartParams, {} );
-      });
-  };
-
-  // $http.post('/visualizations', $http.get(dataURL));
 
 
   //get data for and draw a timeseries chart

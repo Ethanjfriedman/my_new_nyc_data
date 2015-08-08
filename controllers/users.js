@@ -1,14 +1,14 @@
 var express = require('express'),
     router = express.Router(),
     models = require('../models/schemas.js'),
-    user = models.user,
+    User = models.user,
     session = require('express-session');
     bcrypt = require('bcrypt'),
     bodyParser = require('body-parser'),
-    visualization = models.visualization;
-
-    var schemas = require('../models/schemas.js');
-    var User = schemas.user;
+    Visualization = models.visualization;
+    // 
+    // var schemas = require('../models/schemas.js');
+    // var User = schemas.user;
 
 // render the user login page
 router.get('/login', function(req, res) {

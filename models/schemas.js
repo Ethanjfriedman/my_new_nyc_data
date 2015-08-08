@@ -14,8 +14,9 @@ var mongoose = require('mongoose'),
 
  var visualizationSchema = mongoose.Schema({
    name: {type: String, required: true, unique: true},
+   dataURL: {type: String, required: true, unique: true},
    description:{type: String, required: true, unique: true},
-   user_id:{type:Number, required:true},
+   user_id:{type:Number}, //NOTE: took out required: true here  FIXME??!!??!!??!!
    dataset:[{ name: String, type: String}] //maybe so that later we can use multiple datasets?
  });
 
@@ -25,6 +26,3 @@ var mongoose = require('mongoose'),
     user: user,
     visualization: visualization
   };
-/*
-var newOrder = new OrderItem();
-newOrder.items.push(new MenuItem());*/
