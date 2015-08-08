@@ -6,7 +6,7 @@ console.log('loading timeseries.js');
 var makeTimeseries = function(data, chartParams, svgParams) {
 
 if(chartParams.dataType === 'firearms'){
-  adapterForFirearmsToTimeseries(data, chartParams);
+  data = adapterForFirearmsToTimeseries(data, chartParams);
 }
 
   ////////////////////////////////////////////////////////////////////////////
@@ -80,7 +80,7 @@ if(chartParams.dataType === 'firearms'){
   /////////////////////////////////////////////////////////////////
   ////////// finding all the max values for each year /////////////
   /////////////////////////////////////////////////////////////////
-
+console.log(data);
   var allSeries = data.allSeries;
   var dates = data.dates;
   var minVal = data.minVal;
@@ -89,7 +89,8 @@ if(chartParams.dataType === 'firearms'){
  ///////////////////////////////////////////////////////////////
  /////////// Setting up domains for the x & y axis /////////////
  ///////////////////////////////////////////////////////////////
-
+  console.log(allSeries);
+  debugger;
   x.domain(d3.extent(allSeries[0], function(d) { return d.date; }));
   y.domain(d3.extent([minVal, maxVal]));
 
@@ -243,6 +244,8 @@ var adapterForFirearmsToTimeseries = function(data, params) {
   result.dates = dates;
   result.allSeries = allSeries;
   result.title = title;
+  console.log('===========')
+  console.log(result)
   return result;
     
 };
