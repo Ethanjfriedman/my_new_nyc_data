@@ -5,9 +5,7 @@ console.log('loading timeseries.js');
 
 var makeTimeseries = function(data, chartParams, svgParams) {
 
-if(chartParams.dataType === 'firearms'){
-  data = adapterForFirearmsToTimeseries(data, chartParams);
-}
+data = selectAdapter(data, chartParams);
 
   ////////////////////////////////////////////////////////////////////////////
   //// clearing out existing SVG elements as well as keys and buttons ////////
@@ -198,6 +196,23 @@ if(chartParams.dataType === 'firearms'){
   }
 }
 
+///////////////////////////////////////////////
+///////// SELECT THE RIGHT ADAPTER  ///////////
+///////////////////////////////////////////////
+
+var selectAdapter = function(data, params) {
+  console.log("selecting the right adapter to draw the timeseries");
+  switch (params.dataType) {
+    case 'firearms':
+      data = adapterForFirearmsToTimeseries(data, params);
+      return data;
+      break;
+    default:
+      console.log('uh-oh something went wrong in the Timeseries selectAdapter function');
+      break;
+  }
+}
+
 
 ///////////////////////////////////////////////
 /////////// ADAPTER FOR FIREARMS  /////////////
@@ -210,7 +225,7 @@ var adapterForFirearmsToTimeseries = function(data, params) {
   var values = []; //used to calculate the min and max y-values to establish y-axis domain
   var allSeries = []; //each element will be a dataSeries: an array of objects, where each object is one datapoint
   var parseDate = d3.time.format("%Y").parse;
-  var title = "Reasons for Firearms Discharges by Police";
+  var title = params.title;
 
   for (var i = 0; i < data.data.length; i++) {
     var currentSeries = data.data[i];

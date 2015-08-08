@@ -20,26 +20,44 @@ app.controller('visualizationController', ['$http', function($http) {
       controller.formData.chartParams.yearType = '2012';
       controller.formData.chartParams.totalPresent = false;
       controller.formData.chartParams.dataType = 'firearms';
+      controller.formData.chartParams.title = "Reasons for Firearms Discharges by Police, "
+                                              + (2002 + parseInt(controller.formData.chartParams.startYear))
+                                              + " - " + (2002 + parseInt(controller.formData.chartParams.endYear));
     } else if(controller.formData.dataURL === 'https://data.cityofnewyork.us/resource/us5j-esyf.json'){
         controller.formData.chartParams.yearType = '2009';
         controller.formData.chartParams.totalPresent = true;
         controller.formData.chartParams.dataType = 'language';
+        controller.formData.chartParams.title = "Use of Offensive Language by Police, "
+                                                + (2005 + parseInt(controller.formData.chartParams.startYear))
+                                                + " - " + (2005 + parseInt(controller.formData.chartParams.endYear));
       } else if(controller.formData.dataUrl === 'https://data.cityofnewyork.us/resource/99ez-fwvc.json'){
           controller.formData.chartParams.yearType = '2009';
           controller.formData.chartParams.totalPresent = true;
           controller.formData.chartParams.dataType = 'Abuse of Authority';
+          controller.formData.chartParams.title = "Allegations of Police Abuse of Authority"
+                                                  + (2005 + parseInt(controller.formData.chartParams.startYear))
+                                                  + " - " + (2005 + parseInt(controller.formData.chartParams.endYear));
         } else if(controller.formData.dataUrl === 'https://data.cityofnewyork.us/resource/x8rc-3utf.json'){
             controller.formData.chartParams.yearType = '2009';
             controller.formData.chartParams.totalPresent = 'weird'; //TODO change 'weird' to 'subtotalTypeA'
             controller.formData.chartParams.dataType = 'Race of Victims';
+            controller.formData.chartParams.title = "Race of Victims With Substantiated Allegations Against Police"
+                                                    + (2005 + parseInt(controller.formData.chartParams.startYear))
+                                                    + " - " + (2005 + parseInt(controller.formData.chartParams.endYear));
           } else if(controller.formData.dataUrl === 'https://data.cityofnewyork.us/resource/ffgt-jimk.json'){
               controller.formData.chartParams.yearType = '2009';
               controller.formData.chartParams.totalPresent = 'weird2';
               controller.formData.chartParams.dataType = 'Gender of Officers';
+              controller.formData.chartParams.title = "Gender of Officers With Substantiated Allegations Against Them"
+                                                      + (2005 + parseInt(controller.formData.chartParams.startYear))
+                                                      + " - " + (2005 + parseInt(controller.formData.chartParams.endYear));
               } else if(controller.formData.dataUrl === 'https://data.cityofnewyork.us/resource/ffgt-jimk.json'){
                   controller.formData.chartParams.yearType = '2009';
                   controller.formData.chartParams.totalPresent = 'weird2';
                   controller.formData.chartParams.dataType = 'Gender of Victims';
+                  controller.formData.chartParams.title = "Gender of Victims With Substantiated Allegations Against Police"
+                                                          + (2005 + parseInt(controller.formData.chartParams.startYear))
+                                                          + " - " + (2005 + parseInt(controller.formData.chartParams.endYear));
             }
   };
 
