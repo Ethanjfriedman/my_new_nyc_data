@@ -1,9 +1,16 @@
+
 <div class='modal'>
+
+<script src="scripts/visualizations/piechart.js"></script>
+<script src="scripts/visualizations/timeseries.js"></script>
+<script src="scripts/visualizations/bargraph.js"></script>
+<script src="scripts/app.js"></script>
+
 <main ng-controller='visualizationController as visualization'>
 <div class='tools'>
 <form ng-submit="visualization.getPieChartData()">
 
-  <select ng-model="visualization.formData.dataURL" onchange="activate(this)" >
+  <select ng-model="visualization.formData.dataURL" onchange="activate(this);">
     <option value="https://data.cityofnewyork.us/resource/7r8u-zrb7.json">Firearms</option>
     <option value="https://data.cityofnewyork.us/resource/us5j-esyf.json">Language</option>
     <option value="https://data.cityofnewyork.us/resource/99ez-fwvc.json">Abuse</option>
@@ -62,11 +69,6 @@
 
 
 
-
-
-
-
-
 <!--==========TIME SERIES===========-->
 <form ng-submit="visualization.getTimeseriesData('https://data.cityofnewyork.us/resource/7r8u-zrb7.json')">
 
@@ -106,10 +108,11 @@
   function activate(obj) {
     if(obj.value == "https://data.cityofnewyork.us/resource/7r8u-zrb7.json"){
       $('.year2012').removeClass('hideMe');
-    }else{
-      $('.year2009').removeClass('hideMe');
+      $('#year2012').attr('checked','true');
+      $('#totalFalse').attr('checked','true');
+      $('#firearms').attr('checked','true');
     }
-  }
+}
 
 
 
