@@ -3,6 +3,8 @@
 body {
   padding: 0;
   margin:0;
+  background-image:url('https://dl.dropboxusercontent.com/u/89221222/background.jpg');
+  background-repeat: no-repeat;
       }
 /*<><><><><><><><>BURGER NAV<><><><><><>*/
 .mobileMenu{
@@ -17,8 +19,8 @@ body {
   vertical-align: top;
   height:30px;
   width:40px;
-  margin-left:5%;
-  margin-top:5%;
+  margin-left:3%;
+  margin-top:3%;
 }
 
 #hamburger-button:hover {
@@ -129,7 +131,7 @@ width:100%;
   }
 
   .left{
-    padding-left:5%;
+    padding-left:5vw;
   }
   .right{
     display:none !important;
@@ -171,13 +173,14 @@ width:100%;
 }
 .left{
  display:inline-block;
- left:10px;
- top:10px;
- padding-left:2%;
+ left:5%;
+ top:5%;
+ padding-left:0%;
 }
 .right{
   display:inline-block;
   margin-right:3vw;
+  margin-top:2vw;
 }
 
 .right ul{
@@ -251,4 +254,39 @@ button {
 
  .hideMe{
   display:none;
+ }
+
+ .modal{
+  background-color: white;
+  opacity: .9;
+  width:90vw;
+  height:70vh;
+  border-radius: 5px;
+  margin:2% auto;
+ }
+
+ .tools{
+  width:30vw;
+  display: inline-block;
+  background-color: lightblue;
+  border-radius: 5px;
+  height:65vh;
+  padding:1em;
+ }
+ .submit{
+  background-color: darkblue;
+  color:white;
+  border-radius: none;
+  outline: none;
+  border:none;
+  box-shadow: 1px 1px 5px blue;
+ } 
+ .graph{
+  width:30vw;
+  display: inline-block;
+ }
+ select {
+  background-color: white;
+  border:none;
+  border-radius:none;
  }

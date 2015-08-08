@@ -1,7 +1,6 @@
+<div class='modal'>
 <main ng-controller='visualizationController as visualization'>
-  <h1>hi I'm going to be an Angular app!</h1>
-
-
+<div class='tools'>
 <form ng-submit="visualization.getPieChartData()">
 
   <select ng-model="visualization.formData.dataURL" onchange="activate(this)" >
@@ -57,7 +56,8 @@
   </select>
 
   <input type='submit'
-         value='Pie for fire!'/>
+         value='Pie Please!'
+         class='submit'/>
 </form>
 
 
@@ -66,71 +66,21 @@
 
 
 
-<form ng-submit="visualization.getPieChartData('https://data.cityofnewyork.us/resource/us5j-esyf.json', {
-          yearType:'2009',
-           dataType: 'language',
-           totalPresent: true,
-           startYear: 0,
-           endYear: 4
-        })">
-  <input type='submit'
-          value ='pie for language'/>
-</form>
 
-<form ng-submit="visualization.getPieChartData('https://data.cityofnewyork.us/resource/99ez-fwvc.json', {
-          yearType:'2009',
-           dataType: 'Abuse of Authority',
-           totalPresent: true,
-           startYear: 0,
-           endYear: 4
-        })">
-  <input type='submit'
-          value ='pie for abuse allegations'/>
-</form>
-
-<form ng-submit="visualization.getPieChartData('https://data.cityofnewyork.us/resource/x8rc-3utf.json', {
-          yearType:'2009',
-           dataType: 'Race of Victims',
-           totalPresent: 'weird',
-           startYear: 0,
-           endYear: 4
-        })">
-  <input type='submit'
-          value ='pie for race of victims'/>
-</form>
-
-<form ng-submit="visualization.getPieChartData('https://data.cityofnewyork.us/resource/ffgt-jimk.json', {
-          yearType:'2009',
-           dataType: 'Gender of Victims',
-           totalPresent: 'weird2',
-           startYear: 0,
-           endYear: 4
-        })">
-  <input type='submit'
-          value ='pie for gender of victims'/>
-</form>
-
-<form ng-submit="visualization.getPieChartData('https://data.cityofnewyork.us/resource/664m-n5th.json', {
-          yearType:'2009',
-           dataType: 'Gender of Officers',
-           totalPresent: 'weird2',
-           startYear: 0,
-           endYear: 4
-        })">
-  <input type='submit'
-          value ='pie for gender of officers'/>
-</form>
 <!--==========TIME SERIES===========-->
 <form ng-submit="visualization.getTimeseriesData('https://data.cityofnewyork.us/resource/7r8u-zrb7.json')">
 
   <input type='submit'
-         value="Let's travel through time!"/>
+         value="Let's travel through time!"
+         class='submit'/>
 </form>
 <form ng-submit="visualization.getBarGraphData('https://data.cityofnewyork.us/resource/99ez-fwvc.json')">
   <input type='submit'
-         value="I want to go to a bar!"/>
+         value="I want to go to a bar!"
+         class='submit'/>
 </form>
-
+</div>
+<div class='graph'>
 <header>
     <h1 id="title"></h1>
     <h3 id='year'></h3>
@@ -148,7 +98,9 @@
           </div>
       </div>
   </div>
+</div>
 </main>
+</div>
 
 <script type="text/javascript">
   function activate(obj) {
