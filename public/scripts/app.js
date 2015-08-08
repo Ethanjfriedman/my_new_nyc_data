@@ -44,7 +44,7 @@ app.controller('visualizationController', ['$http', function($http) {
   //             controller.formData.chartParams.dataType = 'Gender of Officers';
   //           }
   //
-  //   $http.get(controller.formData.dataURL)
+   //   $http.get(controller.formData.dataURL)
   //     .then(function (dataset) {
   //       controller.dataset = dataset;
   //       controller.makePieChart( dataset, controller.formData.chartParams, {} );
@@ -100,13 +100,19 @@ app.controller('visualizationController', ['$http', function($http) {
 
 
   //get data for and draw a timeseries chart
-  this.getTimeseriesData = function (dataURL) {
-    $http.get(dataURL)
-      .then(function (dataset) {
-        makeTimeseries(adapterForFirearmsToTimeseries(dataset), {}, {});
-      });
 
-  }
+  this.getTimeseriesData = function () {
+    if(controller.formData.dataURL === "https://data.cityofnewyork.us/resource/7r8u-zrb7.json"){
+      controller.formData.chartParams.yearType = '2012';
+      controller.formData.chartParams.totalPresent = false;
+      controller.formData.chartParams.dataType = 'firearms';
+    }
+
+    $http.get(controller.formData.dataURL)
+      .then(function (dataset) {
+        makeTimeseries(dataset, controller.formData.chartParams, {});
+      });
+  };
 
   this.getBarGraphData = function(dataURL) {
     $http.get(dataURL)

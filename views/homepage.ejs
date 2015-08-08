@@ -1,10 +1,11 @@
-
-<div class='modal'>
-
 <script src="scripts/visualizations/piechart.js"></script>
 <script src="scripts/visualizations/timeseries.js"></script>
 <script src="scripts/visualizations/bargraph.js"></script>
 <script src="scripts/app.js"></script>
+
+
+
+<div class='modal'>
 
 <main ng-controller='visualizationController as visualization'>
 <div class='tools'>
@@ -70,12 +71,71 @@
 
 
 <!--==========TIME SERIES===========-->
-<form ng-submit="visualization.getTimeseriesData('https://data.cityofnewyork.us/resource/7r8u-zrb7.json')">
+<form ng-submit="visualization.getTimeseriesData()">
+
+  <select ng-model="visualization.formData.dataURL" onchange="activate2(this);">
+    <option value="https://data.cityofnewyork.us/resource/7r8u-zrb7.json">Firearms</option>
+    <option value="https://data.cityofnewyork.us/resource/us5j-esyf.json">Language</option>
+    <option value="https://data.cityofnewyork.us/resource/99ez-fwvc.json">Abuse</option>
+    <option value="https://data.cityofnewyork.us/resource/x8rc-3utf.json">Race</option>
+    <option value="https://data.cityofnewyork.us/resource/ffgt-jimk.json"> Gender of Victims</option>
+    <option value="https://data.cityofnewyork.us/resource/664m-n5th.json"> Gender of Officers </option>
+  </select>
+
+  <select class='hideMe year20122' ng-model="visualization.formData.chartParams.startYear" convert-to-number>
+    <option value='0'>2002</option>
+    <option value='1'>2003</option>
+    <option value='2'>2004</option>
+    <option value='3'>2005</option>
+    <option value='4'>2006</option>
+    <option value='5'>2007</option>
+    <option value='6'>2008</option>
+    <option value='7'>2009</option>
+    <option value='8'>2010</option>
+    <option value='9'>2011</option>
+    <option value='10'>2012</option>
+  </select>
+
+  <select class='hideMe year20092' ng-model="visualization.formData.chartParams.startYear" convert-to-number>
+    <option value='0'>2005</option>
+    <option value='1'>2006</option>
+    <option value='2'>2007</option>
+    <option value='3'>2008</option>
+    <option value='4'>2009</option>
+  </select>
+  <select class='hideMe year20122' ng-model="visualization.formData.chartParams.endYear" convert-to-number>
+    <option value='0'>2002</option>
+    <option value='1'>2003</option>
+    <option value='2'>2004</option>
+    <option value='3'>2005</option>
+    <option value='4'>2006</option>
+    <option value='5'>2007</option>
+    <option value='6'>2008</option>
+    <option value='7'>2009</option>
+    <option value='8'>2010</option>
+    <option value='9'>2011</option>
+    <option value='10'>2012</option>
+  </select>
+
+  <select class='hideMe year20092' ng-model="visualization.formData.chartParams.endYear" convert-to-number>
+    <option value='0'>2005</option>
+    <option value='1'>2006</option>
+    <option value='2'>2007</option>
+    <option value='3'>2008</option>
+    <option value='4'>2009</option>
+  </select>
 
   <input type='submit'
          value="Let's travel through time!"
          class='submit'/>
 </form>
+
+
+
+
+
+
+<!--=============BAR CHART =========-->
 <form ng-submit="visualization.getBarGraphData('https://data.cityofnewyork.us/resource/99ez-fwvc.json')">
   <input type='submit'
          value="I want to go to a bar!"
@@ -105,13 +165,23 @@
 </div>
 
 <script type="text/javascript">
-  function activate(obj) {
+
+function activate(obj) {
     if(obj.value == "https://data.cityofnewyork.us/resource/7r8u-zrb7.json"){
       $('.year2012').removeClass('hideMe');
-      $('#year2012').attr('checked','true');
-      $('#totalFalse').attr('checked','true');
-      $('#firearms').attr('checked','true');
     }
+    else{
+      $('.year2009').removeClass('hideMe');
+    }
+    
+}
+
+function activate2(obj) {
+  if(obj.value =='https://data.cityofnewyork.us/resource/7r8u-zrb7.json'){
+    $('.year20122').removeClass('hideMe');
+  } else{
+    $('.year20092').removeClass('hideMe');
+  }
 }
 
 
