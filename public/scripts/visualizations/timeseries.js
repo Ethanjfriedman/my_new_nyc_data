@@ -5,6 +5,9 @@ console.log('loading timeseries.js');
 
 var makeTimeseries = function(data, chartParams, svgParams) {
 
+if(chartParams.dataType === 'firearms'){
+  data = adapterForFirearmsToTimeseries(data, chartParams);
+}
 
   ////////////////////////////////////////////////////////////////////////////
   //// clearing out existing SVG elements as well as keys and buttons ////////
@@ -74,9 +77,9 @@ var makeTimeseries = function(data, chartParams, svgParams) {
   var $title = $('#title');
   $title.text(data.title);
 
-  /////////////////////////////////////////////////////////////////
-  ////////// finding all the max values for each year /////////////
-  /////////////////////////////////////////////////////////////////
+  ////////////////////////////////////////////////////////////////////
+  // grabbing the data and finding all the max values for each year //
+  ////////////////////////////////////////////////////////////////////
 
   var allSeries = data.allSeries;
   var dates = data.dates;
@@ -191,7 +194,7 @@ var makeTimeseries = function(data, chartParams, svgParams) {
       .attr('opacity',1)
       .attr("cx", function(d) { return x(d.date); })
       .attr("cy", function(d) { return y(d.value); })
-      .attr('fill',function(d){ return color(i); });
+      .attr('fill',function(d){ return color(i); })
   }
 }
 
@@ -214,6 +217,7 @@ var adapterForFirearmsToTimeseries = function(data, params) {
     var dataSeries = [];
     var keys = Object.keys(currentSeries).sort(); //grabbing the keys for the current series
     var seriesName = currentSeries[keys[keys.length - 1]]; //series name is the final one after sorting in prior line
+
     for (var j = params.startYear; j <= params.endYear; j++) {
       var dataPoint = {};
       var key = keys[j].split(''); //key for the current point, e.g. "_2005", split into an array
@@ -239,5 +243,8 @@ var adapterForFirearmsToTimeseries = function(data, params) {
   result.dates = dates;
   result.allSeries = allSeries;
   result.title = title;
+  console.log('===========')
+  console.log(result)
   return result;
-}
+
+};
