@@ -106,7 +106,7 @@ console.log(chartParams.startYear, chartParams.endYear)
   //////////////////////////////////////
 
     var $title = $('#title');
-    $title.text('foo'); //TODO FIXME
+    $title.text(chartParams.title); //TODO FIXME
 
   //////////////////////////////////////////////////////
   //// creating the legend and appending it to DOM /////
