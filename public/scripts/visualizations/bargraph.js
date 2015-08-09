@@ -66,7 +66,7 @@ $(window).resize(function(){
     //////// XAXIS YAXIS DOMAINS //////////////
     ///////////////////////////////////////////
 
-    x.domain(data[year].abuses);
+    x.domain(data.abuses);
     y.domain([0,data.maxYValue +50]); //TODO: this should change based on year being shown
 
 
@@ -91,7 +91,8 @@ $(window).resize(function(){
         ///////////////////////////////////////////////////////
         //////// APPEND BARS PLUS HOVER HANDLERS //////////////
         ///////////////////////////////////////////////////////
-        debugger;
+
+        var source = data.data;
 
         svg.selectAll("thisdoesnotmatter")
           .data(data.data) //love this line!

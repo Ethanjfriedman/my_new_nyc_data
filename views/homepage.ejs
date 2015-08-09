@@ -34,7 +34,9 @@
     <option value="https://data.cityofnewyork.us/resource/ffgt-jimk.json"> Gender of Victims With Allegations Against Police</option>
     <option value="https://data.cityofnewyork.us/resource/664m-n5th.json">Gender of Officers With Allegations Against Them</option>
   </select>
+
   <p>color scheme:</p>
+
   <select name='pie' ng-model="visualization.formData.chartParams.colorScheme">
     <option value="winter">Winter Colors</option>
     <option value="monochrome">Monochrome Colors</option>
@@ -290,7 +292,7 @@ function activate3(obj) {
 
 
 $('.fa-pie-chart').on('click', function(){
-  $('.chooseGraph').text('Choose a Dataset and timespan')
+  $('.chooseGraph').text('Choose a dataset and timespan')
   $('i').addClass('hideMe');
   $('.pieForm').removeClass('hideMe');
 })
@@ -298,14 +300,14 @@ $('.fa-pie-chart').on('click', function(){
 
 
 $('.fa-line-chart').on('click', function(){
-  $('.chooseGraph').text('Choose a Dataset and timespan')
+  $('.chooseGraph').text('Choose a dataset and timespan')
   $('i').addClass('hideMe');
   $('.timeSeriesForm').removeClass('hideMe');
 })
 
 
 $('.fa-bar-chart').on('click', function(){
-  $('.chooseGraph').text('Choose a Dataset and timespan')
+  $('.chooseGraph').text('Choose a dataset and timespan')
   $('i').addClass('hideMe');
   $('.barForm').removeClass('hideMe');
 })

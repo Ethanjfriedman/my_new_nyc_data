@@ -75,6 +75,14 @@ server.get('/about', function (req, res) {
   res.render('about');
 });
 
+server.get('/new', function (req, res) {
+  res.render('users/new');
+});
+
+server.get('/login', function (req, res) {
+  res.render('users/login');
+});
+
 server.get('/', function(req, res) {
   if (req.session.userId) {
     res.render('homepage');
