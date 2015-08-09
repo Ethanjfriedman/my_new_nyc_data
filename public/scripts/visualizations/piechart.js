@@ -6,15 +6,8 @@ console.log('loading piechart.js');
 
 
 var makePieChart = function(data, chartParams, svgParams) {
-console.log("ooh baby I'm gonna draw a pie chart!!!");
-console.log("data.dataset:");
-console.log(data.dataset);
-console.log("data:")
-console.log(data);
-console.log("chartParams:");
-console.log(chartParams);
-console.log("svgParams:");
-console.log(svgParams);
+
+// data = selectAdaptor(data, chartParams);
 
 ///////////////////////////////////////////////////
 //checking window width in order to resize pie/////
@@ -28,10 +21,8 @@ var smallPie = function(){
     }
 };
 
-
 chartParams.startYear = parseInt(chartParams.startYear);
 chartParams.endYear = parseInt(chartParams.endYear);
-console.log(chartParams.startYear, chartParams.endYear)
 
   /////////////////////////////////
   ///// Preventing duplicates /////
@@ -265,7 +256,7 @@ console.log(chartParams.startYear, chartParams.endYear)
     var $buttons = $('.yearButton');
 
    $('#year').text($($buttons[0]).attr('id'));
-    
+
 
   //////////////////////////////////////////
   ///////// autoplay through years /////////
@@ -276,8 +267,8 @@ var counter = 0;
 
     (function next() {
 
-   
-        
+
+
             if (counter++ >= maxLoops) return;
 
             setTimeout(function() {

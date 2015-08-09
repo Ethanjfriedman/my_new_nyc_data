@@ -131,15 +131,6 @@ app.controller('visualizationController', ['$http', function($http) {
   };
 
   //THIS IS THE VERSION THAT GOES TO OUR SERVER NOT TO THE API
-//   this.getPieChartData = function() {
-//     if(controller.formData.dataURL === "https://data.cityofnewyork.us/resource/7r8u-zrb7.json"){
-//       controller.formData.chartParams.yearType = '2012';
-//       controller.formData.chartParams.totalPresent = false;
-//       controller.formData.chartParams.dataType = 'firearms';
-//       controller.formData.databaseName = "Firearms Discharge Report";
-//       controller.formData.description = "Report detailing NYPD occurrence of firearm discharge";
-//     } else if(controller.formData.dataURL === 'https://data.cityofnewyork.us/resource/us5j-esyf.json'){
-// =======
 //   this.getPieChartData = function () {
 //   if(controller.formData.dataURL === "https://data.cityofnewyork.us/resource/7r8u-zrb7.json"){
 //     controller.formData.chartParams.yearType = '2012';
@@ -150,7 +141,6 @@ app.controller('visualizationController', ['$http', function($http) {
 //       controller.formData.chartParams.totalPresent = true;
 //       controller.formData.chartParams.dataType = 'language';
 //     } else if(controller.formData.dataUrl === 'https://data.cityofnewyork.us/resource/99ez-fwvc.json'){
-// >>>>>>> 9b50095a8aac3a8528d719a5d79ffa4f81dfb1c7
 //         controller.formData.chartParams.yearType = '2009';
 //         controller.formData.chartParams.totalPresent = true;
 //         controller.formData.chartParams.dataType = 'Abuse of Authority';
@@ -239,15 +229,24 @@ app.controller('visualizationController', ['$http', function($http) {
 
 
 
-  this.getBarGraphData = function(dataURL) {
-    $http.get(dataURL)
+  this.getBarGraphData = function() {
+    this.whichDataset();
+
+    $http.get(controller.formData.dataURL)
       .then(function (dataset) {
-        makeBarGraph(adapterForDistributionOfAbuseAllegationsToBarChart(dataset),{},{});
+        makeBarGraph(adapterForAbuseToBarChart(dataset),controller.formData.chartParams,{});
       });
   };
 }]);
 
-
+// this.getPieChartData = function () {
+//   this.whichDataset();
+//
+//   $http.get(controller.formData.dataURL)
+//     .then(function (dataset) {
+//       controller.dataset = dataset;
+//       controller.makePieChart( dataset, controller.formData.chartParams, {} );
+//     });
 
 var firearms = {
   name: "Firearms Discharge Report",
