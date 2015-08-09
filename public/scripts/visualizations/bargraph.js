@@ -3,9 +3,8 @@
 ///////////////////////////////////
 
 console.log('loading bargraph.js');
-var makeBarGraph = function(data, charParams, svgParams) {
-
-  data = selectAdapter(data, chartParams);
+var makeBarGraph = function(data, chartParams, svgParams) {
+data = selectAdapter(data, chartParams);
 
 $('#buttons button').remove();
 
@@ -207,10 +206,10 @@ $(window).resize(function(){
   var selectAdapter = function(data, params) {
     console.log("selecting the right adapter to draw the bar chart");
     switch (params.dataType) {
-      case 'firearms':
-        data = adapterForFirearmsToTimeseries(data, params);
-        return data;
-        break;
+      // case 'firearms':
+      //   data = adapterForFirearmsToTimeseries(data, params);
+      //   return data;
+      //   break;
       case 'language':
         data = adapterForAbuseToBarChart(data, params, 5, 5);
         return data;
@@ -219,20 +218,20 @@ $(window).resize(function(){
         data = adapterForAbuseToBarChart(data, params, 5, 5);
         return data;
         break;
-      case 'Race of Victims':
-        data = adapterForLanguageToTimeseries(data, params, 7 , 5);
-        return data;
-        break;
-      case 'Gender of Officers':
-        data = adapterForLanguageToTimeseries(data, params, 4, 2);
-        return data;
-        break;
-      case 'Gender of Victims':
-        data = adapterForLanguageToTimeseries(data, params, 4, 2);
-        return data;
-        break;
+      // case 'Race of Victims':
+      //   data = adapterForLanguageToTimeseries(data, params, 7 , 5);
+      //   return data;
+      //   break;
+      // case 'Gender of Officers':
+      //   data = adapterForLanguageToTimeseries(data, params, 4, 2);
+      //   return data;
+      //   break;
+      // case 'Gender of Victims':
+      //   data = adapterForLanguageToTimeseries(data, params, 4, 2);
+      //   return data;
+      //   break;
       default:
-        console.log('uh-oh something went wrong in the Timeseries selectAdapter function');
+        console.log('uh-oh something went wrong in the bar selectAdapter function');
         break;
     }
   }
@@ -242,14 +241,15 @@ $(window).resize(function(){
   /////////////////////////////////////////////////////////////////////
 
 
-  var adapterForAbuseToBarChart = function(data) {
+  var adapterForAbuseToBarChart = function(data, params, limit, skip) {
+    console.log("runing adapterForAbuseToBarChart");
     var result = {};
     result.data = [];
     var keys = Object.keys(data.data[0]).sort();
-    result.years = ["2005", "2006", "2007", "2008", "2009"];
+    // result.years = ["2005", "2006", "2007", "2008", "2009"];
     result.abuses = [];
     var yValues = [];
-    for (var i = 0; i < data.data.length - 1; i++) {
+    for (var i = 0; i < limit; i++) {
       var currentAbuse = data.data[i];
       var currentResult = [];
       for (var j = 0; j < keys.length; j++) {
@@ -267,6 +267,7 @@ $(window).resize(function(){
     }
     result.maxYValue = d3.max(yValues, function(d) {return d;});
     result.title = "Allegations of Abuse of Authority by Police";
+    console.log("adapted abuse allegations dataset:")
     console.log(result);
     return result;
   }

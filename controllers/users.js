@@ -6,12 +6,13 @@ var express = require('express'),
     bcrypt = require('bcrypt'),
     bodyParser = require('body-parser'),
     Visualization = models.visualization;
-    // 
+    //
     // var schemas = require('../models/schemas.js');
     // var User = schemas.user;
 
 // render the user login page
 router.get('/login', function(req, res) {
+  console.log(req.session.userId);
   res.render('users/login');
 });
 
@@ -64,8 +65,9 @@ router.post('/', function(req, res) {
           console.log(user.name + " successfully logged in");
           console.log(user);
           req.session.userId = user._id;
-          res.user = user;
-          res.render('homepage', {user: user});
+          req.session.user = user;
+          console.log(req.session.userId);
+          res.render('homepage');
         } else {
           console.log('password error');
           res.redirect(301, 'login');
@@ -87,4 +89,7 @@ router.get('/logout', function (req, res) {
   }
 });
 
+router.get('/', function (req, res) {
+  res.redirect(301, '/');
+})
 module.exports = router;

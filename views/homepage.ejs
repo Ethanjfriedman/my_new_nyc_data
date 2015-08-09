@@ -3,11 +3,8 @@
 <script src="scripts/visualizations/timeseries.js"></script>
 <script src="scripts/visualizations/bargraph.js"></script>
 <script src="scripts/app.js"></script>
-
-
-
+<% console.log(locals.user); %>
 <div class='modal'>
-
 <main class='controller' ng-controller='visualizationController as visualization'>
 <div class='tools'>
   <!-- FONT AWESOME -->
@@ -397,7 +394,7 @@ function year2012ValidationPie(obj){
       $('#20129').attr('disabled',true);
     }
   // console.log($('.year2012 .two option:nth-child(n +'x')')));
- 
+
 }
 
 function year2009ValidationPie(obj){
@@ -420,7 +417,7 @@ function year2009ValidationPie(obj){
       $('#20093').attr('disabled',true);
     }
   // console.log($('.year2012 .two option:nth-child(n +'x')')));
- 
+
 }
 //////////////////////////////////////////////
 /////////     timeSeries   ///////////////////
@@ -498,7 +495,7 @@ function year2012ValidationTime(obj){
       $('#20129time').attr('disabled',true);
     }
   // console.log($('.year2012 .two option:nth-child(n +'x')')));
- 
+
 }
 
 function year2009ValidationTime(obj){
@@ -521,7 +518,7 @@ function year2009ValidationTime(obj){
       $('#20093time').attr('disabled',true);
     }
   // console.log($('.year2012 .two option:nth-child(n +'x')')));
- 
+
 }
 //////////////////////////////////////////////
 /////////     BarCHART     ///////////////////
@@ -599,7 +596,7 @@ function year2012ValidationBar(obj){
       $('#20129bar').attr('disabled',true);
     }
   // console.log($('.year2012 .two option:nth-child(n +'x')')));
- 
+
 }
 
 function year2009ValidationBar(obj){
@@ -622,7 +619,7 @@ function year2009ValidationBar(obj){
       $('#20093bar').attr('disabled',true);
     }
   // console.log($('.year2012 .two option:nth-child(n +'x')')));
- 
+
 }
 
 function showSubmitTime(){
