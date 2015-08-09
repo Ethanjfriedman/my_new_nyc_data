@@ -1,3 +1,4 @@
+<script src="scripts/visualizations/hex_colors.js"></script>
 <script src="scripts/visualizations/piechart.js"></script>
 <script src="scripts/visualizations/timeseries.js"></script>
 <script src="scripts/visualizations/bargraph.js"></script>
@@ -25,12 +26,18 @@
 <form class='pieForm hideMe' ng-submit="visualization.getPieChartData()">
 
   <select name='pie' ng-model="visualization.formData.dataURL" onchange="activate(this);">
-    <option value="https://data.cityofnewyork.us/resource/7r8u-zrb7.json">Firearms</option>
-    <option value="https://data.cityofnewyork.us/resource/us5j-esyf.json">Language</option>
-    <option value="https://data.cityofnewyork.us/resource/99ez-fwvc.json">Abuse</option>
-    <option value="https://data.cityofnewyork.us/resource/x8rc-3utf.json">Race</option>
-    <option value="https://data.cityofnewyork.us/resource/ffgt-jimk.json"> Gender of Victims</option>
-    <option value="https://data.cityofnewyork.us/resource/664m-n5th.json"> Gender of Officers </option>
+    <option value="https://data.cityofnewyork.us/resource/7r8u-zrb7.json">Reasons for Firearms Discharges by Police</option>
+    <option value="https://data.cityofnewyork.us/resource/us5j-esyf.json">Use of Offensive Language by Police</option>
+    <option value="https://data.cityofnewyork.us/resource/99ez-fwvc.json">Allegations of Police Abuse of Authority</option>
+    <option value="https://data.cityofnewyork.us/resource/x8rc-3utf.json">Race of Victims With Allegations Against Police</option>
+    <option value="https://data.cityofnewyork.us/resource/ffgt-jimk.json"> Gender of Victims With Allegations Against Police</option>
+    <option value="https://data.cityofnewyork.us/resource/664m-n5th.json">Gender of Officers With Allegations Against Them</option>
+  </select>
+  
+  <select name='pie' ng-model="visualization.formData.chartParams.colorScheme">
+    <option value="winter">Winter Colors</option>
+    <option value="monochrome">Monochrome Colors</option>
+    <option value="summer">Summer Colors</option>
   </select>
 
   <select class='hideMe year2012 one' ng-model="visualization.formData.chartParams.startYear" onchange="year2012ValidationPie(this);" convert-to-number>
@@ -87,13 +94,18 @@
 <form class='timeSeriesForm hideMe' ng-submit="visualization.getTimeseriesData()">
 
   <select name='timeSeries' ng-model="visualization.formData.dataURL" onchange="activate2(this);">
-    <option value="https://data.cityofnewyork.us/resource/7r8u-zrb7.json">Firearms</option>
+    <option value="https://data.cityofnewyork.us/resource/7r8u-zrb7.json">Reasons for Firearms Discharges by Police</option>
     <option value="https://data.cityofnewyork.us/resource/us5j-esyf.json">Language</option>
     <option value="https://data.cityofnewyork.us/resource/99ez-fwvc.json">Abuse</option>
     <option value="https://data.cityofnewyork.us/resource/x8rc-3utf.json">Race</option>
     <option value="https://data.cityofnewyork.us/resource/ffgt-jimk.json"> Gender of Victims</option>
     <option value="https://data.cityofnewyork.us/resource/664m-n5th.json"> Gender of Officers </option>
   </select>
+<select name='timeSeries' ng-model="visualization.formData.chartParams.colorScheme">
+    <option value="winter">Winter Colors</option>
+    <option value="monochrome">Monochrome Colors</option>
+    <option value="summer">Summer Colors</option>
+</select>
 
   <select class='hideMe year20122' ng-model="visualization.formData.chartParams.startYear" onchange="year2012ValidationTime(this);" convert-to-number>
     <option value='0'>2002</option>
@@ -152,12 +164,17 @@
 <form class='barForm  hideMe' ng-submit="visualization.getBarGraphData()">
 
     <select name='bar' ng-model="visualization.formData.dataURL" onchange="activate3(this);">
-    <option value="https://data.cityofnewyork.us/resource/7r8u-zrb7.json">Firearms</option>
+    <option value="https://data.cityofnewyork.us/resource/7r8u-zrb7.json">Reasons for Firearms Discharges by Police</option>
     <option value="https://data.cityofnewyork.us/resource/us5j-esyf.json">Language</option>
     <option value="https://data.cityofnewyork.us/resource/99ez-fwvc.json">Abuse</option>
     <option value="https://data.cityofnewyork.us/resource/x8rc-3utf.json">Race</option>
     <option value="https://data.cityofnewyork.us/resource/ffgt-jimk.json"> Gender of Victims</option>
     <option value="https://data.cityofnewyork.us/resource/664m-n5th.json"> Gender of Officers </option>
+  </select>
+ <select name='bar' ng-model="visualization.formData.charParams.colorScheme">
+    <option value="winter">Winter Colors</option>
+    <option value="monochrome">Monochrome Colors</option>
+    <option value="summer">Summer Colors</option>
   </select>
 
   <select class='hideMe year20123' ng-model="visualization.formData.chartParams.startYear" onchange="year2012ValidationBar(this);" convert-to-number>

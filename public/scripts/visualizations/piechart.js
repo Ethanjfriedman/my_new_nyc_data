@@ -38,7 +38,15 @@ chartParams.endYear = parseInt(chartParams.endYear);
   //////////////////////////////////////
   ////////// SVG VARIABLES /////////////
   //////////////////////////////////////
-
+  var hexColors;
+  if(chartParams.colorScheme ==='monochrome'){
+     hexColors = hexColorsMonochrome;
+  }else if(chartParams.colorScheme =='summer'){
+    hexColors = hexColorsSummer;
+  }
+  else{
+     hexColors = hexColorsWinter;
+  }
   var width = svgParams.width || 100;
   var height = svgParams.height || 100;
   var padding = svgParams.padding || 100;
@@ -200,7 +208,7 @@ chartParams.endYear = parseInt(chartParams.endYear);
           },1500);
 
         })
-      .attr("fill", function(d, i){ return color(i); })
+      .attr("fill", function(d, i){ return hexColors[i];; })
       .attr("stroke", "white")
       .attr("stroke-width", "2px")
       .attr('id', function(d, i){ return data.data[i].name;}) //this id is used for mouseover stuff.
@@ -231,7 +239,7 @@ chartParams.endYear = parseInt(chartParams.endYear);
 
     d3.selectAll(".key-color")
       .transition().duration(1000)
-      .style("background-color", function(d, i) { return color(i);}); //TODO fix colors
+      .style("background-color", function(d, i) { return hexColors[i];}); //TODO fix colors
 
   //////////////////////////////////////////////////////
   ///////// making label strings for each year /////////
@@ -307,6 +315,10 @@ var counter = 0;
 
   $(window).resize(function(){
     smallPie();
+    d3.selectAll("path")
+        .data(pieCharts[0])
+        .transition().duration(1000).attrTween("d", makeArcTween(radius));
+    $('#year').text(yearsToLabel[chartParams.startYear]);
   });
 
 };

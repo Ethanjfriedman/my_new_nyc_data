@@ -15,7 +15,7 @@ data = selectTimeseriesAdapter(data, chartParams);
 var smallSeries = function(){
   var iw = $(window).innerWidth();
     if(iw < 760){
-      width = 200 - margin.left - margin.right;
+      width = 150 - margin.left - margin.right;
     } else{
       width=460 - margin.left - margin.right;
     }
@@ -35,7 +35,15 @@ var smallSeries = function(){
   //////////////////////////////////////
   ////////// SVG VARIABLES /////////////
   //////////////////////////////////////
-
+  var hexColors;
+  if(chartParams.colorScheme ==='monochrome'){
+     hexColors = hexColorsMonochrome;
+  }else if(chartParams.colorScheme =='summer'){
+    hexColors = hexColorsSummer;
+  }
+  else{
+     hexColors = hexColorsWinter;
+  }
   var margin = svgParams.margin || {top: 20, right: 20, bottom: 30, left: 50},
       width = svgParams.width || 460 - margin.left - margin.right,
       height = svgParams.height || 300 - margin.top - margin.bottom;
@@ -177,7 +185,7 @@ var smallSeries = function(){
       .attr("class", "line " + allSeries[i][0].series)
       .attr('opacity',1)
       .attr("d", line)
-      .attr('stroke', function(d){ return color(i); });
+      .attr('stroke', function(d){ return hexColors[i]; });
 
     //adding points
     ////////////////////////////////////////////
@@ -202,7 +210,7 @@ var smallSeries = function(){
       .attr('opacity',1)
       .attr("cx", function(d) { return x(d.date); })
       .attr("cy", function(d) { return y(d.value); })
-      .attr('fill',function(d){ return color(i); })
+      .attr('fill',function(d){ return hexColors[i]; })
 
 
  ///////////////////////////////////////////////////
