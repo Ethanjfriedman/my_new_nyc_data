@@ -150,6 +150,7 @@ width:100%;
   .chooseGraph{
     margin-top:-1%;
     font-size: .9em;
+    text-align: left;
   }
   .controller{
     display:block;
@@ -385,6 +386,8 @@ svg{
  .chooseGraph{
   text-align: center;
   color:darkblue;
+  font-size: 3em;
+  font-weight: 300;
  }
  .fa{
   color:darkblue;
@@ -394,7 +397,7 @@ svg{
   margin-top:5%;
  }
 select {
-    width: 92px;
+    width: 100px;
     white-space:pre-wrap;
 }
  .fa:hover{
@@ -491,4 +494,21 @@ select {
 #logo{
   color:white;
   text-decoration: none;
+}
+.user-submit{
+  background-color: darkblue;
+  color:white;
+  border-radius: none;
+  outline: none;
+  border:none;
+  box-shadow: 1px 1px 5px blue;
+  font-size: 1em;
+  margin-top:3vh;
+}
+.user-submit:hover{
+  cursor: pointer;
+  box-shadow: none;
+}
+.tools p{
+ color:darkblue;
 }

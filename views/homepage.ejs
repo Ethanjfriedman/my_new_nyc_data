@@ -8,7 +8,6 @@
 <main class='controller' ng-controller='visualizationController as visualization'>
 <div class='tools'>
   <!-- FONT AWESOME -->
-  <h3 class='chooseGraph'>Choose a Graph Type</h3>
   <i class="fa fa-pie-chart"></i>
   <i class="fa fa-line-chart"></i>
   <i class="fa fa-bar-chart"></i>
@@ -42,7 +41,7 @@
     <option value="monochrome">Monochrome Colors</option>
     <option value="summer">Summer Colors</option>
   </select>
-  <p>years:</p>
+  <p class='yearLabel hideMe'>Time Frame:</p>
 
   <select class='hideMe year2012 one' ng-model="visualization.formData.chartParams.startYear" onchange="year2012ValidationPie(this);" convert-to-number>
     <option value='0'>2002</option>
@@ -112,7 +111,7 @@
     <option value="monochrome">Monochrome Colors</option>
     <option value="summer">Summer Colors</option>
 </select>
-<p>years:</p>
+<p class='yearLabel hideMe'>Time Frame:</p>
 
   <select class='hideMe year20122' ng-model="visualization.formData.chartParams.startYear" onchange="year2012ValidationTime(this);" convert-to-number>
     <option value='0'>2002</option>
@@ -185,7 +184,7 @@
     <option value="monochrome">Monochrome Colors</option>
     <option value="summer">Summer Colors</option>
   </select>
-  <p>years:</p>
+  <p class='yearLabel hideMe'>Time Frame:</p>
 
   <select class='hideMe year20123' ng-model="visualization.formData.chartParams.startYear" onchange="year2012ValidationBar(this);" convert-to-number>
     <option value='0'>2002</option>
@@ -234,9 +233,10 @@
          value="Generate Bar Graph"
          class='submit hideMe'/>
 </form>
-<!--=============Graph Area======= -->
 </div>
+<!--=============Graph Area======= -->
 <div class='graph'>
+  <h3 class='chooseGraph'>Choose a Graph Type</h3>
 <header>
     <h1 id="title"></h1>
     <h3 id='year'></h3>
@@ -262,9 +262,11 @@
 
 function activate(obj) {
     if(obj.value == "https://data.cityofnewyork.us/resource/7r8u-zrb7.json"){
+      $('.yearLabel').removeClass('hideMe');
       $('.year2009').addClass('hideMe');
       $('.year2012').removeClass('hideMe');
     } else {
+      $('.yearLabel').removeClass('hideMe');
       $('.year2009').removeClass('hideMe');
       $('.year2012').addClass('hideMe');
     }
@@ -272,9 +274,11 @@ function activate(obj) {
 
 function activate2(obj) {
   if(obj.value =='https://data.cityofnewyork.us/resource/7r8u-zrb7.json'){
+    $('.yearLabel').removeClass('hideMe');
     $('.year20092').addClass('hideMe');
     $('.year20122').removeClass('hideMe');
   } else {
+    $('.yearLabel').removeClass('hideMe');
     $('.year20092').removeClass('hideMe');
     $('.year20122').addClass('hideMe');
   }
@@ -282,9 +286,11 @@ function activate2(obj) {
 
 function activate3(obj) {
   if(obj.value =='https://data.cityofnewyork.us/resource/7r8u-zrb7.json'){
+    $('.yearLabel').removeClass('hideMe');
     $('.year20093').addClass('hideMe');
     $('.year20123').removeClass('hideMe');
   } else {
+    $('.yearLabel').removeClass('hideMe');
     $('.year20093').removeClass('hideMe');
     $('.year20123').addClass('hideMe');
   }
