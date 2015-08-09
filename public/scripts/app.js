@@ -71,53 +71,9 @@ app.controller('visualizationController', ['$http', function($http) {
         break;
     }
   }
-  // this.whichDataset = function() {
-  //   if(controller.formData.dataURL === "https://data.cityofnewyork.us/resource/7r8u-zrb7.json"){
-  //     controller.formData.chartParams.yearType = '2012';
-  //     controller.formData.chartParams.totalPresent = false;
-  //     controller.formData.chartParams.dataType = 'firearms';
-  //     controller.formData.chartParams.title = "Reasons for Firearms Discharges by Police, "
-  //                                             + (2002 + parseInt(controller.formData.chartParams.startYear))
-  //                                             + " - " + (2002 + parseInt(controller.formData.chartParams.endYear));
-  //   } else if(controller.formData.dataURL === 'https://data.cityofnewyork.us/resource/us5j-esyf.json'){
-  //       controller.formData.chartParams.yearType = '2009';
-  //       controller.formData.chartParams.totalPresent = true;
-  //       controller.formData.chartParams.dataType = 'language';
-  //       controller.formData.chartParams.title = "Use of Offensive Language by Police, "
-  //                                               + (2005 + parseInt(controller.formData.chartParams.startYear))
-  //                                               + " - " + (2005 + parseInt(controller.formData.chartParams.endYear));
-  //     } else if(controller.formData.dataUrl === 'https://data.cityofnewyork.us/resource/99ez-fwvc.json'){
-  //         controller.formData.chartParams.yearType = '2009';
-  //         controller.formData.chartParams.totalPresent = true;
-  //         controller.formData.chartParams.dataType = 'Abuse of Authority';
-  //         controller.formData.chartParams.title = "Allegations of Police Abuse of Authority"
-  //                                                 + (2005 + parseInt(controller.formData.chartParams.startYear))
-  //                                                 + " - " + (2005 + parseInt(controller.formData.chartParams.endYear));
-  //       } else if(controller.formData.dataUrl === 'https://data.cityofnewyork.us/resource/x8rc-3utf.json'){
-  //           controller.formData.chartParams.yearType = '2009';
-  //           controller.formData.chartParams.totalPresent = 'weird'; //TODO change 'weird' to 'subtotalTypeA'
-  //           controller.formData.chartParams.dataType = 'Race of Victims';
-  //           controller.formData.chartParams.title = "Race of Victims With Substantiated Allegations Against Police"
-  //                                                   + (2005 + parseInt(controller.formData.chartParams.startYear))
-  //                                                   + " - " + (2005 + parseInt(controller.formData.chartParams.endYear));
-  //         } else if(controller.formData.dataUrl === 'https://data.cityofnewyork.us/resource/664m-n5th.json'){
-  //             controller.formData.chartParams.yearType = '2009';
-  //             controller.formData.chartParams.totalPresent = 'weird2';
-  //             controller.formData.chartParams.dataType = 'Gender of Officers';
-  //             controller.formData.chartParams.title = "Gender of Officers With Substantiated Allegations Against Them"
-  //                                                     + (2005 + parseInt(controller.formData.chartParams.startYear))
-  //                                                     + " - " + (2005 + parseInt(controller.formData.chartParams.endYear));
-  //             } else if(controller.formData.dataUrl === 'https://data.cityofnewyork.us/resource/ffgt-jimk.json'){
-  //                 controller.formData.chartParams.yearType = '2009';
-  //                 controller.formData.chartParams.totalPresent = 'weird2';
-  //                 controller.formData.chartParams.dataType = 'Gender of Victims';
-  //                 controller.formData.chartParams.title = "Gender of Victims With Substantiated Allegations Against Police"
-  //                                                         + (2005 + parseInt(controller.formData.chartParams.startYear))
-  //                                                         + " - " + (2005 + parseInt(controller.formData.chartParams.endYear));
-  //           }
-  // };
 
   this.getPieChartData = function () {
+    console.log("visualizationController.getPieChartData()");
     this.whichDataset();
 
     $http.get(controller.formData.dataURL)
@@ -218,23 +174,26 @@ app.controller('visualizationController', ['$http', function($http) {
   //get data for and draw a timeseries chart
 
   this.getTimeseriesData = function () {
+    console.log("visualizationController.getTimeseriesData()");
     this.whichDataset();
 
     $http.get(controller.formData.dataURL)
       .then(function (dataset) {
+        console.log("got the timeseries data. now to run makeTimeseries()");
         makeTimeseries(dataset, controller.formData.chartParams, {});
       });
-
   };
 
 
 
   this.getBarGraphData = function() {
+    console.log("visualizationController.getBarGraphDatas()");
     this.whichDataset();
 
     $http.get(controller.formData.dataURL)
       .then(function (dataset) {
-        makeBarGraph(adapterForAbuseToBarChart(dataset),controller.formData.chartParams,{});
+        console.log("got the bar graph data. now to run makeBarGraph()");
+        makeBarGraph(dataset,controller.formData.chartParams,{});
       });
   };
 }]);

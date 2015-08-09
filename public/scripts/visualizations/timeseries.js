@@ -5,10 +5,12 @@ console.log('loading timeseries.js');
 
 var makeTimeseries = function(data, chartParams, svgParams) {
 
-data = selectAdapter(data, chartParams);
+console.log("let's make a timeseries chart");
+
+data = selectTimeseriesAdapter(data, chartParams);
 
 ///////////////////////////////////////////////////
-//checking window width in order to resize pie/////
+//checking window width in order to resize chart///
 ///////////////////////////////////////////////////
 var smallSeries = function(){
   var iw = $(window).innerWidth();
@@ -84,7 +86,7 @@ var smallSeries = function(){
 
 
   ////////////////////////////////////////////
-  ////////// adding title to DOM ///////////// TODO FIXME
+  ////////// adding title to DOM /////////////
   ////////////////////////////////////////////
   var $title = $('#title');
   $title.text(data.title);
@@ -124,12 +126,6 @@ var smallSeries = function(){
         .attr("transform", "translate(" + ((width) / 2) + " ," + (height + margin.bottom +50) + ")")
         .style("text-anchor", "middle")
         .text("Year");
-    //
-    // svg.append("text")
-    //     .attr("transform", "translate(" + (50) + " ," + (height + margin.bottom +30) + ")")
-    //     .style("text-anchor", "middle")
-    //     .text("Year");
-
 
   //making the y-axis
   ////////////////////////////////////////////
@@ -167,11 +163,11 @@ var smallSeries = function(){
            mouseX = e.pageX;
            mouseY = e.pageY;
         });
-        $('.blurb').css('visibility', 'visible').css('top', mouseY).css('left', mouseY).fadeIn('slow').text(myText);
+        $('.blurb').css('visibility', 'visible').css('top', mouseY).css('left', mouseX).fadeIn('slow').text(myText);
 
       })
       .on('mouseout', function(d){
-        that = this;
+        var that = this;
         setTimeout(function(){
           d3.select(that).attr('stroke-dasharray',"none").attr('stroke-width', '2px');
           $('.blurb').fadeOut('slow');
@@ -196,7 +192,7 @@ var smallSeries = function(){
         $('.blurb').css('visibility', 'visible').css('margin-left', x-50).css('margin-top', y-150).fadeIn('slow').text(valueText);
       })
       .on('mouseout', function(d) {
-        that = this;
+        var that = this;
         setTimeout(function(){
           $('.blurb').fadeOut('slow');
         },1000)
@@ -216,7 +212,7 @@ var smallSeries = function(){
 
   $(window).resize(function(){
      smallSeries();
-     drawBars();
+    //  drawBars();
    });
 
 
@@ -228,7 +224,7 @@ var smallSeries = function(){
 ///////// SELECT THE RIGHT ADAPTER  ///////////
 ///////////////////////////////////////////////
 
-var selectAdapter = function(data, params) {
+var selectTimeseriesAdapter = function(data, params) {
   console.log("selecting the right adapter to draw the timeseries");
   switch (params.dataType) {
     case 'firearms':
@@ -240,7 +236,7 @@ var selectAdapter = function(data, params) {
       return data;
       break;
     case 'Abuse of Authority':
-      data = adapterForLanguageToTimeseries(data, params, 5, 5);
+      data = adapterForLanguageToTimeseries(data, params, 25, 25);
       return data;
       break;
     case 'Race of Victims':
@@ -314,6 +310,7 @@ var adapterForLanguageToTimeseries = function(data, params, limit, skip) {
 ///////////////////////////////////////////////
 
 var adapterForFirearmsToTimeseries = function(data, params) {
+  console.log("running adapterForFirearmsToTimeseries")
   var result = {}; //this object will be returned with the necessary data to graph the timeseries
   var dates = []; //used for labels for the x-axis
   var values = []; //used to calculate the min and max y-values to establish y-axis domain

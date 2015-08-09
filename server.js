@@ -53,9 +53,11 @@ server.use(session({                      //setting up session
 // setting the user as a res.locals variable  FIXME
 server.use(function(req, res, next){
   console.log("running res locals middleware");
-  if (req.user) {
-    res.locals.user = req.user;
-    console.log("Houston we have a user: " + res.locals.user)
+  if (req.session.userId) {
+    console.log("Houston we have a user: " + req.session.userId)
+    console.log(req.session.user);
+    res.locals.user = req.session.user;
+    console.log(res.locals);
   } else {
     console.log("no user boo");
     res.locals.user = null;
@@ -69,6 +71,14 @@ server.use('/users', userController);
 var visualizationController = require('./controllers/visualizations.js');
 server.use('/visualizations', visualizationController);
 
+server.get('/about', function (req, res) {
+  res.render('about');
+});
+
 server.get('/', function(req, res) {
-  res.render('homepage');
+  if (req.session.userId) {
+    res.render('homepage');
+  } else {
+    res.render('users/login');
+  }
 });
