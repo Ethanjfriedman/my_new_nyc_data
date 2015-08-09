@@ -1,10 +1,13 @@
 @import url(http://fonts.googleapis.com/css?family=Open+Sans:400,800,300);
 
 body {
+  font-family: 'Open Sans', sans-serif;
   padding: 0;
   margin:0;
-  background-image:url('https://dl.dropboxusercontent.com/u/89221222/background.jpg');
+  background: black;
+  background-image:url('https://dl.dropboxusercontent.com/u/89221222/AAA.jpg');
   background-repeat: no-repeat;
+  background-size: cover;
       }
 /*<><><><><><><><>BURGER NAV<><><><><><>*/
 .mobileMenu{
@@ -119,6 +122,38 @@ width:100%;
 }
 /*<><><><><><><><>TOP<><><><><><><><><>*/
 @media (max-width: 760px) {
+  .graph{
+    width:100% !important;
+    display: block;
+  }
+  .tools{
+    width:100% !important;
+    height:15vh !important;
+    display: block;
+  }
+  #title{
+    font-size:1em;
+    font-weight: 800;
+  }
+  .fa{
+    display:inline-block !important;
+    margin-top: -.3%!important;
+    margin-left:10vw!important;
+    font-size: 1em;
+  }
+  .modal{
+    height:150vh !important;
+  }
+  .fa-pie-chart{
+    margin-left:15vw!important;
+  }
+  .chooseGraph{
+    margin-top:-1%;
+    font-size: .9em;
+  }
+  .controller{
+    display:block;
+  }
   .mobileMenu{
     display:block;
   }
@@ -209,13 +244,16 @@ width:100%;
   display: inline-block;
   vertical-align: top;
 }
-button {
-  display: block;
+#buttons button {
+  display: inline-block;
   margin: 1.5em;
 }
 #keys {
-  border: 1px solid lightgrey;
-  padding: 1em;
+  display:inline-block;
+  padding: .5em;
+  color:black;
+  font-family:'Open Sans', sans-serif;
+  font-size: .5em;
 }
 .key-color {
   float:right;
@@ -228,7 +266,7 @@ button {
 .blurb{
   visibility: hidden;
   position: absolute;
-  background-color: black;
+  background-color: darkblue;
   color:white;
   padding:5px;
 }
@@ -253,25 +291,34 @@ button {
  }
 
  .hideMe{
+  opacity: 0;
   display:none;
+  height:0;
+  width:0;
+  overflow: hidden;
  }
 
  .modal{
   background-color: white;
   opacity: .9;
   width:90vw;
-  height:70vh;
+  height:80vh;
   border-radius: 5px;
   margin:2% auto;
  }
 
- .tools{
-  width:30vw;
-  display: inline-block;
-  background-color: lightblue;
-  border-radius: 5px;
-  height:65vh;
-  padding:1em;
+
+ #title{
+  display:inline-block;
+  color:darkblue;
+  font-weight: 400;
+ }
+ #year{
+  float: right;
+  z-index: 999;
+  padding-right:5%;
+  font-weight: 300;
+  color:darkblue;
  }
  .submit{
   background-color: darkblue;
@@ -281,12 +328,75 @@ button {
   border:none;
   box-shadow: 1px 1px 5px blue;
  } 
+ #buttons button{
+  background-color: white;
+  color:darkblue;
+  border:1px solid darkblue;
+  box-shadow: 1px 1px 1px blue;
+  outline:none;
+  font-family: 'Open Sans', sans-serif;
+ }
+ #buttons button:hover{
+  cursor:pointer;
+ }
+ .submit:hover{
+  cursor: pointer;
+ }
+ .activeButton{
+  background-color: darkblue !important;
+  color:white !important;
+ }
+ .controller{
+  display:flex;
+  flex-wrap:wrap;
+  justify-content:space-between;
+}
+svg{
+  z-index: 888;
+}
+
  .graph{
-  width:30vw;
+  margin-left:2vw;
+  width:65vw;
   display: inline-block;
  }
+ #pie{
+  margin-left:5vw;
+ }
+.tools{
+  width:15vw;
+  display: inline-block;
+  background-color: lightblue;
+  border-radius: 5px;
+  height:75.5vh;
+  padding:1em;
+  position: static;
+  top:0;
+  left:0;
+ }
+
  select {
   background-color: white;
   border:none;
   border-radius:none;
+ }
+ .chooseGraph{
+  text-align: center;
+  color:darkblue;
+ }
+ .fa{
+  color:darkblue;
+  font-size: 3.5em;
+  display:block;
+  text-align: center;
+  margin-top:5%;
+ }
+
+ .fa:hover{
+  cursor: pointer;
+ }
+ .save button a{
+  color:white;
+  text-decoration: none;
+  font-family: 'Open Sans',sans-serif;
  }
