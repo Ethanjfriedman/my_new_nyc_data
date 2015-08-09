@@ -411,6 +411,7 @@ select {
   text-align: center;
   padding-top:5vh;
   font-size: 2em;
+  font-weight: 400;
  }
 
  .or{
@@ -419,12 +420,14 @@ select {
   padding-top:1vh;
   padding-bottom:1vh;
   font-weight:300;
-  font-size: 2em;
+  font-size: 1.5em;
  }
 
  hr{
-  color:blue;
-  width:50px;
+  color:darkblue;
+  border:none;
+  outline: none;
+  width:100px;
   margin:0 auto;
  }
  #login{
