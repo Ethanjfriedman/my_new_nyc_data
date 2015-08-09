@@ -411,20 +411,23 @@ select {
   text-align: center;
   padding-top:5vh;
   font-size: 2em;
+  font-weight: 400;
  }
 
  .or{
   margin-bottom:2vh;
-  margin-top:2vh;
+  margin-top:5vh;
   padding-top:1vh;
-  padding-bottom:1vh;
   font-weight:300;
-  font-size: 2em;
+  font-size: 1.5em;
  }
 
  hr{
-  color:blue;
-  width:50px;
+  background:darkblue;
+  height:1px;
+  border:none;
+  outline: none;
+  width:100px;
   margin:0 auto;
  }
  #login{
@@ -438,3 +441,54 @@ select {
   color:white;
   text-decoration: none;
  }
+ #register{
+  margin-top:2.5vh;
+  font-size: 1em;
+  padding:.2em;
+ }
+
+ #register:hover{
+  box-shadow: none;
+ }
+ #about{
+  padding:1em;
+  color:darkblue;
+ }
+ #about .login-title{
+  display:inline-block;
+  margin-top:-3%;
+  margin-bottom:0;
+ }
+ #about-modal{
+  height:150vh !important;
+ }
+ #about .logo{
+  width:10vw;
+  display: inline-block;
+  margin:0;
+  padding:0 .5em 0;
+  color:darkblue;
+ }
+
+#about-us{
+  font-weight: 400;
+  font-size:1.5em;
+}
+#about p a{
+  color:darkblue;
+}
+.team-name{
+  font-weight:800;
+  letter-spacing: .1em;
+}
+.team-name:hover{
+  cursor: pointer;
+}
+.team-name a{
+  text-decoration: none;
+  color:darkblue;
+}
+#logo{
+  color:white;
+  text-decoration: none;
+}

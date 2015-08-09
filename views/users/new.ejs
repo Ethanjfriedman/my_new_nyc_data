@@ -1,5 +1,6 @@
 <script src="../scripts/app.js"></script>
-<h3>Register</h3>
+<div class='modal'>
+  <h3 class='login-title'>Register</h3>
 <div id="login">
   <form id="new-user-form" action="new" method="POST">
     <label for="name">Username:</label>
@@ -9,6 +10,7 @@
            class="user-input"
            placeholder="(Choose a username)"
            autofocus required />
+         </br>
     <label for="password">Password (6 or more characters):</label>
     <input type="password"
            id="password"
@@ -17,7 +19,13 @@
            placeholder="(Choose a password)"
            minlength="6"
            required >
+         </br>
     <input type="submit" value="Submit"/>
   </form>
-  <p><a href="login">Log in as an existing user instead</a></p>
+  <p class='or'>or</p>
+    <hr>
+  <button id='register' class='submit'>
+    <a href="login">Log in as an existing user instead</a>
+  </button>
+  <div class='modal'>
 </div>
