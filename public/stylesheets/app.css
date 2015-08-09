@@ -416,15 +416,15 @@ select {
 
  .or{
   margin-bottom:2vh;
-  margin-top:2vh;
+  margin-top:5vh;
   padding-top:1vh;
-  padding-bottom:1vh;
   font-weight:300;
   font-size: 1.5em;
  }
 
  hr{
-  color:darkblue;
+  background:darkblue;
+  height:1px;
   border:none;
   outline: none;
   width:100px;
@@ -440,4 +440,13 @@ select {
  .submit a{
   color:white;
   text-decoration: none;
+ }
+ #register{
+  margin-top:2.5vh;
+  font-size: 1em;
+  padding:.2em;
+ }
+
+ #register:hover{
+  box-shadow: none;
  }
