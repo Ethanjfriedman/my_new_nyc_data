@@ -55,7 +55,7 @@ router.post('/', function(req, res) {
   User.findOne({name: userData.name }, function (error, user) {
     if (error) {
       console.log("error finding user in database");
-      res.redirect(301, 'login');
+      res.redirect(301, 'users/login');
     } else if (user == null) {
       console.log("user not found in db");
       res.redirect(301, 'users/login');
@@ -70,7 +70,7 @@ router.post('/', function(req, res) {
           res.render('homepage');
         } else {
           console.log('password error');
-          res.redirect(301, 'login');
+          res.redirect(301, 'users/login');
         }
       });
     }

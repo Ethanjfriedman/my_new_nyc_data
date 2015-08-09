@@ -4,7 +4,7 @@
 
 console.log('loading bargraph.js');
 var makeBarGraph = function(data, chartParams, svgParams) {
-data = selectAdapter(data, chartParams);
+data = selectPieAdapter(data, chartParams);
 
 $('#buttons button').remove();
 
@@ -67,7 +67,7 @@ $(window).resize(function(){
     ///////////////////////////////////////////
 
     x.domain(data.abuses);
-    y.domain([0,data.maxYValue +50]);
+    y.domain([0,data.maxYValue +50]); //TODO: this should change based on year being shown
 
 
         ///////////////////////////////////////////////
@@ -91,9 +91,9 @@ $(window).resize(function(){
         ///////////////////////////////////////////////////////
         //////// APPEND BARS PLUS HOVER HANDLERS //////////////
         ///////////////////////////////////////////////////////
-
+        debugger;
         svg.selectAll("thisdoesnotmatter")
-          .data(data.data) //love this line!
+          .data(data.data[5]) //love this line!
           .enter()
           .append("rect")
           .style('fill',function(d, i){ return color(d); })
@@ -153,8 +153,8 @@ $(window).resize(function(){
    //////////////////////////////////////////////////
 
       $buttonDiv = $('#buttons');
-      for (var yr = 2005; yr <= 2009; yr++ ) {
-        $button = $('<button>').attr('class','yearButton').attr('id', yr).text(yr);
+      for (var yr = 0; yr < data.years.length; yr++ ) {
+        $button = $('<button>').attr('class','yearButton').attr('id', yr).text(data.years[yr]);
         $buttonDiv.append($button);
       }
         var $buttons = $('.yearButton');
@@ -190,9 +190,9 @@ $(window).resize(function(){
           $($buttons).removeClass('activeButton');
           $(this).addClass('activeButton');
           year = data.years[i];
-          drawBars();
+          drawBars(year);
           $('#year').text($(this).attr('id'));
-          console.log(year + 'yeaaar');
+          console.log(year + 'yeaaar; ' + i);
         });
       });
 
@@ -203,33 +203,33 @@ $(window).resize(function(){
   ///////// SELECT THE RIGHT ADAPTER  ///////////
   ///////////////////////////////////////////////
 
-  var selectAdapter = function(data, params) {
+  var selectPieAdapter = function(data, params) {
     console.log("selecting the right adapter to draw the bar chart");
     switch (params.dataType) {
-      // case 'firearms':
-      //   data = adapterForFirearmsToTimeseries(data, params);
-      //   return data;
-      //   break;
+      case 'firearms':
+        data = adapterForFirearmsToTimeseries(data, params);
+        return data;
+        break;
       case 'language':
         data = adapterForAbuseToBarChart(data, params, 5, 5);
         return data;
         break;
       case 'Abuse of Authority':
-        data = adapterForAbuseToBarChart(data, params, 5, 5);
+        data = adapterForAbuseToBarChart(data, params, 25, 25);
         return data;
         break;
-      // case 'Race of Victims':
-      //   data = adapterForLanguageToTimeseries(data, params, 7 , 5);
-      //   return data;
-      //   break;
-      // case 'Gender of Officers':
-      //   data = adapterForLanguageToTimeseries(data, params, 4, 2);
-      //   return data;
-      //   break;
-      // case 'Gender of Victims':
-      //   data = adapterForLanguageToTimeseries(data, params, 4, 2);
-      //   return data;
-      //   break;
+      case 'Race of Victims':
+        data = adapterForLanguageToTimeseries(data, params, 7 , 5);
+        return data;
+        break;
+      case 'Gender of Officers':
+        data = adapterForLanguageToTimeseries(data, params, 4, 2);
+        return data;
+        break;
+      case 'Gender of Victims':
+        data = adapterForLanguageToTimeseries(data, params, 4, 2);
+        return data;
+        break;
       default:
         console.log('uh-oh something went wrong in the bar selectAdapter function');
         break;
@@ -245,8 +245,16 @@ $(window).resize(function(){
     console.log("runing adapterForAbuseToBarChart");
     var result = {};
     result.data = [];
+    result.years = ["2005", "2006", "2007", "2008", "2009"];
     var keys = Object.keys(data.data[0]).sort();
-    // result.years = ["2005", "2006", "2007", "2008", "2009"];
+    for (var y = 0; y <= result.years.length; y++) {
+      if (y < parseInt(params.startYear)) {
+        result.years.shift();
+      } else if (y > parseInt(params.endYear)) {
+        result.years.pop();
+      }
+    }
+
     result.abuses = [];
     var yValues = [];
     for (var i = 0; i < limit; i++) {
