@@ -5,9 +5,8 @@ console.log('loading timeseries.js');
 
 var makeTimeseries = function(data, chartParams, svgParams) {
 
-if(chartParams.dataType === 'firearms'){
-  data = adapterForFirearmsToTimeseries(data, chartParams);
-}
+data = selectAdapter(data, chartParams);
+
 ///////////////////////////////////////////////////
 //checking window width in order to resize pie/////
 ///////////////////////////////////////////////////
@@ -19,6 +18,9 @@ var smallSeries = function(){
       width=460 - margin.left - margin.right;
     }
 };
+
+
+
 
   ////////////////////////////////////////////////////////////////////////////
   //// clearing out existing SVG elements as well as keys and buttons ////////
@@ -84,7 +86,6 @@ var smallSeries = function(){
   ////////////////////////////////////////////
   ////////// adding title to DOM ///////////// TODO FIXME
   ////////////////////////////////////////////
-
   var $title = $('#title');
   $title.text(data.title);
 
@@ -223,11 +224,97 @@ var smallSeries = function(){
 
 }
 
+///////////////////////////////////////////////
+///////// SELECT THE RIGHT ADAPTER  ///////////
+///////////////////////////////////////////////
+
+var selectAdapter = function(data, params) {
+
+  console.log("selecting the right adapter to draw the timeseries");
+  console.log(data);
+  console.log(params);
+  switch (params.dataType) {
+    case 'firearms':
+      data = adapterForFirearmsToTimeseries(data, params);
+      return data;
+      break;
+    case 'language':
+      data = adapterForLanguageToTimeseries(data, params, 5, 5);
+      return data;
+      break;
+    case 'Abuse of Authority':
+      data = adapterForLanguageToTimeseries(data, params, 5, 5);
+      return data;
+      break;
+    case 'Race of Victims':
+      data = adapterForLanguageToTimeseries(data, params, 7 , 5);
+      return data;
+      break;
+    case 'Gender of Officers':
+      data = adapterForLanguageToTimeseries(data, params, 4, 2);
+      return data;
+      break;
+    case 'Gender of Victims':
+      data = adapterForLanguageToTimeseries(data, params, 4, 2);
+      return data;
+      break;
+    default:
+      console.log('uh-oh something went wrong in the Timeseries selectAdapter function');
+      break;
+  }
+}
+
+///////////////////////////////////////////////
+/////////// ADAPTER FOR LANGUAGE  /////////////
+//////// ALSO FOR ABUSE OF AUTHORITY AND //////
+///////// ALL DATASETS EXCEPT FIREARMS ////////
+///////////////////////////////////////////////
+
+var adapterForLanguageToTimeseries = function(data, params, limit, skip) {
+  console.log("running adapterForLanguageToTimeseries");
+  var result = {};
+  var dates = [];
+  var values = [];
+  var allSeries = [];
+  var parseDate = d3.time.format("%Y").parse;
+  result.title = params.title;
+
+  for (var i = 0; i < limit; i++) {
+    var currentSeries = data.data[i];
+    var dataSeries = [];
+    var keys = Object.keys(currentSeries).sort();  //grabbing the keys for the current series
+    var seriesName = currentSeries[keys[keys.length - 1]]; //series name is the final one after sorting in prior line
+    for (var j = parseInt(params.startYear); j <= parseInt(params.endYear); j++) {
+      var dataPoint = {};
+      dataPoint.date = parseDate((2005 + j).toString());
+      dataPoint.value = parseInt(currentSeries[keys[j]]);
+      dataPoint.series = seriesName;
+      dates.push(dataPoint.date);
+      values.push(dataPoint.value);
+      dataSeries.push(dataPoint);
+      }
+    if (i !== skip) {
+      allSeries.push(dataSeries);
+      }
+    }
+
+
+
+  values.sort(function (a, b) {return b - a});
+  var maxVal = values[0];
+  var minVal = values[values.length - 1];
+
+  result.minVal = minVal;
+  result.maxVal = maxVal;
+  result.dates = dates;
+  result.allSeries = allSeries;
+  console.log(result);
+  return result;
+}
 
 ///////////////////////////////////////////////
 /////////// ADAPTER FOR FIREARMS  /////////////
 ///////////////////////////////////////////////
-
 
 var adapterForFirearmsToTimeseries = function(data, params) {
   var result = {}; //this object will be returned with the necessary data to graph the timeseries
@@ -235,7 +322,7 @@ var adapterForFirearmsToTimeseries = function(data, params) {
   var values = []; //used to calculate the min and max y-values to establish y-axis domain
   var allSeries = []; //each element will be a dataSeries: an array of objects, where each object is one datapoint
   var parseDate = d3.time.format("%Y").parse;
-  var title = "Reasons for Firearms Discharges by Police";
+  var title = params.title;
 
   for (var i = 0; i < data.data.length; i++) {
     var currentSeries = data.data[i];
