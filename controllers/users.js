@@ -67,7 +67,7 @@ router.post('/', function(req, res) {
           req.session.userId = user._id;
           req.session.user = user;
           console.log(req.session.userId);
-          res.render('homepage');
+          res.render('homepage', {user: user});
         } else {
           console.log('password error');
           res.redirect(301, 'users/login');
