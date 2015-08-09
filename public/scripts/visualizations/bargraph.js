@@ -25,11 +25,11 @@ $('#buttons button').remove();
       if(iw < 760){
         width = 300;
         height=200;
-        drawBars();
+        drawBars(year || data.data[chartParams.startYear]);
       } else{
         width=500;
         height=200;
-        drawBars();
+        drawBars(year || data.data[chartParams.startYear]);
       }
   };
   barSmall();
@@ -43,7 +43,7 @@ $(window).resize(function(){
     var $title = $('#title');
     $title.text(data.title);
 
-    function drawBars(){
+    function drawBars(year){
           /////////////////////////////////////
     //////// D3 PARAMETERS //////////////
     /////////////////////////////////////
@@ -66,7 +66,7 @@ $(window).resize(function(){
     //////// XAXIS YAXIS DOMAINS //////////////
     ///////////////////////////////////////////
 
-    x.domain(data.abuses);
+    x.domain(data[year].abuses);
     y.domain([0,data.maxYValue +50]); //TODO: this should change based on year being shown
 
 
@@ -92,8 +92,9 @@ $(window).resize(function(){
         //////// APPEND BARS PLUS HOVER HANDLERS //////////////
         ///////////////////////////////////////////////////////
         debugger;
+
         svg.selectAll("thisdoesnotmatter")
-          .data(data.data[5]) //love this line!
+          .data(data.data) //love this line!
           .enter()
           .append("rect")
           .style('fill',function(d, i){ return color(d); })
@@ -146,7 +147,7 @@ $(window).resize(function(){
     }
 
 
-   drawBars();
+   drawBars(chartParams.startYear);
 
    //////////////////////////////////////////////////
    //////// APPEND YEAR BUTTONS TO DOM //////////////
@@ -173,7 +174,7 @@ $(window).resize(function(){
               setTimeout(function() {
                   $('#year').text(data.years[counter]);
                   year = data.years[counter];
-                  drawBars();
+                  drawBars(year);
                   if(counter === maxLoops){
                     counter = -1;
                   }
@@ -254,7 +255,6 @@ $(window).resize(function(){
         result.years.pop();
       }
     }
-
     result.abuses = [];
     var yValues = [];
     for (var i = 0; i < limit; i++) {
