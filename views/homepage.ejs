@@ -142,7 +142,7 @@
   </select>
 
   <input type='submit'
-         value="Let's travel through time!"
+         value="Generate Time Series"
          class='submit hideMe'/>
 </form>
 
@@ -152,10 +152,63 @@
 
 
 <!--=============BAR CHART =========-->
-<form class='barForm  hideMe' ng-submit="visualization.getBarGraphData('https://data.cityofnewyork.us/resource/99ez-fwvc.json')">
+<form class='barForm  hideMe' ng-submit="visualization.getBarGraphData()">
+
+    <select name='bar' ng-model="visualization.formData.dataURL" onchange="activate3(this);">
+    <option value="https://data.cityofnewyork.us/resource/7r8u-zrb7.json">Firearms</option>
+    <option value="https://data.cityofnewyork.us/resource/us5j-esyf.json">Language</option>
+    <option value="https://data.cityofnewyork.us/resource/99ez-fwvc.json">Abuse</option>
+    <option value="https://data.cityofnewyork.us/resource/x8rc-3utf.json">Race</option>
+    <option value="https://data.cityofnewyork.us/resource/ffgt-jimk.json"> Gender of Victims</option>
+    <option value="https://data.cityofnewyork.us/resource/664m-n5th.json"> Gender of Officers </option>
+  </select>
+
+  <select class='hideMe year20123' ng-model="visualization.formData.chartParams.startYear" onchange="year2012ValidationBar(this);" convert-to-number>
+    <option value='0'>2002</option>
+    <option value='1'>2003</option>
+    <option value='2'>2004</option>
+    <option value='3'>2005</option>
+    <option value='4'>2006</option>
+    <option value='5'>2007</option>
+    <option value='6'>2008</option>
+    <option value='7'>2009</option>
+    <option value='8'>2010</option>
+    <option value='9'>2011</option>
+    <option value='10'>2012</option>
+  </select>
+
+  <select class='hideMe year20093' ng-model="visualization.formData.chartParams.startYear" onchange="year2009ValidationBar(this);" convert-to-number>
+    <option value='0'>2005</option>
+    <option value='1'>2006</option>
+    <option value='2'>2007</option>
+    <option value='3'>2008</option>
+    <option value='4'>2009</option>
+  </select>
+  <select class='hideMe year20123' ng-model="visualization.formData.chartParams.endYear"  onchange="showSubmitBar();" convert-to-number>
+    <option id='20120bar' value='0'>2002</option>
+    <option id='20121bar' value='1'>2003</option>
+    <option id='20122bar' value='2'>2004</option>
+    <option id='20123bar' value='3'>2005</option>
+    <option id='20124bar' value='4'>2006</option>
+    <option id='20125bar' value='5'>2007</option>
+    <option id='20126bar' value='6'>2008</option>
+    <option id='20127bar' value='7'>2009</option>
+    <option id='20128bar' value='8'>2010</option>
+    <option id='20129bar' value='9'>2011</option>
+    <option id='201210bar' value='10'>2012</option>
+  </select>
+
+  <select class='hideMe year20093' ng-model="visualization.formData.chartParams.endYear" onchange="showSubmitBar();" convert-to-number>
+    <option id='20090bar' value='0'>2005</option>
+    <option id='20091bar' value='1'>2006</option>
+    <option id='20092bar' value='2'>2007</option>
+    <option id='20093bar' value='3'>2008</option>
+    <option id='20094bar' value='4'>2009</option>
+  </select>
+
   <input type='submit'
-         value="I want to go to a bar!"
-         class='submit'/>
+         value="Generate Bar Graph"
+         class='submit hideMe'/>
 </form>
 <!--=============Graph Area======= -->
 </div>
@@ -200,6 +253,16 @@ function activate2(obj) {
   } else {
     $('.year20092').removeClass('hideMe');
     $('.year20122').addClass('hideMe');
+  }
+}
+
+function activate3(obj) {
+  if(obj.value =='https://data.cityofnewyork.us/resource/7r8u-zrb7.json'){
+    $('.year20093').addClass('hideMe');
+    $('.year20123').removeClass('hideMe');
+  } else {
+    $('.year20093').removeClass('hideMe');
+    $('.year20123').addClass('hideMe');
   }
 }
 
@@ -342,8 +405,10 @@ function year2009ValidationPie(obj){
   // console.log($('.year2012 .two option:nth-child(n +'x')')));
  
 }
+//////////////////////////////////////////////
+/////////     timeSeries   ///////////////////
+//////////////////////////////////////////////
 
-//timeSeries
 
 function year2012ValidationTime(obj){
 
@@ -441,6 +506,107 @@ function year2009ValidationTime(obj){
   // console.log($('.year2012 .two option:nth-child(n +'x')')));
  
 }
+//////////////////////////////////////////////
+/////////     BarCHART     ///////////////////
+//////////////////////////////////////////////
+
+
+function year2012ValidationBar(obj){
+
+  if(obj.value == '0'){
+    console.log('mew');
+    }else if(obj.value == '1'){
+      $('#20120bar').attr('disabled',true);
+    }else if(obj.value == '2'){
+      $('#20120bar').attr('disabled',true);
+      $('#20121bar').attr('disabled',true);
+    }else if(obj.value == '3'){
+      $('#20120bar').attr('disabled',true);
+      $('#20121bar').attr('disabled',true);
+      $('#20122bar').attr('disabled',true);
+    }else if(obj.value == '4'){
+      $('#20120bar').attr('disabled',true);
+      $('#20121bar').attr('disabled',true);
+      $('#20122bar').attr('disabled',true);
+      $('#20123bar').attr('disabled',true);
+    }else if(obj.value == '5'){
+      $('#20120bar').attr('disabled',true);
+      $('#20121bar').attr('disabled',true);
+      $('#20122bar').attr('disabled',true);
+      $('#20123bar').attr('disabled',true);
+      $('#20124bar').attr('disabled',true);
+    }else if(obj.value == '6'){
+      $('#20120bar').attr('disabled',true);
+      $('#20121bar').attr('disabled',true);
+      $('#20122bar').attr('disabled',true);
+      $('#20123bar').attr('disabled',true);
+      $('#20124bar').attr('disabled',true);
+      $('#20125bar').attr('disabled',true);
+    }else if(obj.value == '7'){
+      $('#20120bar').attr('disabled',true);
+      $('#20121bar').attr('disabled',true);
+      $('#20122bar').attr('disabled',true);
+      $('#20123bar').attr('disabled',true);
+      $('#20124bar').attr('disabled',true);
+      $('#20125bar').attr('disabled',true);
+      $('#20126bar').attr('disabled',true);
+    }else if(obj.value == '8'){
+      $('#20120bar').attr('disabled',true);
+      $('#20121bar').attr('disabled',true);
+      $('#20122bar').attr('disabled',true);
+      $('#20123bar').attr('disabled',true);
+      $('#20124bar').attr('disabled',true);
+      $('#20125bar').attr('disabled',true);
+      $('#20126bar').attr('disabled',true);
+      $('#20127bar').attr('disabled',true);
+    }else if(obj.value == '9'){
+      $('#20120bar').attr('disabled',true);
+      $('#20121bar').attr('disabled',true);
+      $('#20122bar').attr('disabled',true);
+      $('#20123bar').attr('disabled',true);
+      $('#20124bar').attr('disabled',true);
+      $('#20125bar').attr('disabled',true);
+      $('#20126bar').attr('disabled',true);
+      $('#20127bar').attr('disabled',true);
+      $('#20128bar').attr('disabled',true);
+    }else if(obj.value == '10'){
+      $('#20120bar').attr('disabled',true);
+      $('#20121bar').attr('disabled',true);
+      $('#20122bar').attr('disabled',true);
+      $('#20123bar').attr('disabled',true);
+      $('#20124bar').attr('disabled',true);
+      $('#20125bar').attr('disabled',true);
+      $('#20126bar').attr('disabled',true);
+      $('#20127bar').attr('disabled',true);
+      $('#20128bar').attr('disabled',true);
+      $('#20129bar').attr('disabled',true);
+    }
+  // console.log($('.year2012 .two option:nth-child(n +'x')')));
+ 
+}
+
+function year2009ValidationBar(obj){
+
+  if(obj.value == '0'){
+    console.log('mew');
+    }else if(obj.value == '1'){
+      $('#20090bar').attr('disabled',true);
+    }else if(obj.value == '2'){
+      $('#20090bar').attr('disabled',true);
+      $('#20091bar').attr('disabled',true);
+    }else if(obj.value == '3'){
+      $('#20090bar').attr('disabled',true);
+      $('#20091bar').attr('disabled',true);
+      $('#20092bar').attr('disabled',true);
+    }else if(obj.value == '4'){
+      $('#20090bar').attr('disabled',true);
+      $('#20091bar').attr('disabled',true);
+      $('#20092bar').attr('disabled',true);
+      $('#20093bar').attr('disabled',true);
+    }
+  // console.log($('.year2012 .two option:nth-child(n +'x')')));
+ 
+}
 
 function showSubmitTime(){
   $('.timeSeriesForm .submit').removeClass('hideMe');
@@ -448,6 +614,9 @@ function showSubmitTime(){
 
 function showSubmitPie(){
   $('.pieForm .submit').removeClass('hideMe');
+}
+function showSubmitBar(){
+  $('.barForm .submit').removeClass('hideMe');
 }
 
 </script>
