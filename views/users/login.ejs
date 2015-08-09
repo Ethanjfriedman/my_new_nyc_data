@@ -1,21 +1,29 @@
-<h3>Log in</h3>
-<div id="login">
-  <form id="new-user-form" action="/users" method="POST">
-    <label for="name">Username:</label>
-    <input type="text"
-           id="username"
-           name="user[name]"
-           class="user-input"
-           placeholder="(Enter your username)"
-           autofocus required />
-    <label for="password">Password:</label>
-    <input type="password"
-           id="password"
-           class="user-input"
-           name="user[password]"
-           placeholder="(Enter your password)"
-           required >
-    <input type="submit" value="Submit"/>
-  </form>
-  <p><a href="new">Register as a new user instead</a></p>
+<div class='modal'>  
+  <h3 class='login-title'>Log in</h3>
+  <div id="login">
+    <form id="new-user-form" action="/users" method="POST">
+      <label for="name">Username:</label>
+      <input type="text"
+             id="username"
+             name="user[name]"
+             class="user-input"
+             placeholder="(Enter your username)"
+             autofocus required />
+           </br>
+      <label for="password">Password:</label>
+      <input type="password"
+             id="password"
+             class="user-input"
+             name="user[password]"
+             placeholder="(Enter your password)"
+             required >
+           </br>
+      <input type="submit" class='submit' value="Submit"/>
+    </form>
+
+    <p class='or'>OR</p>
+    <button class='submit'>
+    <a href="new">Register as a new user instead</a>
+    </button>
+  </div>
 </div>

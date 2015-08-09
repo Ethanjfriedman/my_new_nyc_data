@@ -374,7 +374,9 @@ svg{
   top:0;
   left:0;
  }
-
+ .menu-greeting:hover{
+  cursor: default;
+ }
  select {
   background-color: white;
   border:none;
@@ -391,7 +393,10 @@ svg{
   text-align: center;
   margin-top:5%;
  }
-
+select {
+    width: 92px;
+    white-space:pre-wrap;
+}
  .fa:hover{
   cursor: pointer;
  }
@@ -399,4 +404,37 @@ svg{
   color:white;
   text-decoration: none;
   font-family: 'Open Sans',sans-serif;
+ }
+
+ .login-title{
+  color:darkblue;
+  text-align: center;
+  padding-top:5vh;
+  font-size: 2em;
+ }
+
+ .or{
+  margin-bottom:2vh;
+  margin-top:2vh;
+  padding-top:1vh;
+  padding-bottom:1vh;
+  font-weight:300;
+  font-size: 2em;
+ }
+
+ hr{
+  color:blue;
+  width:50px;
+  margin:0 auto;
+ }
+ #login{
+  padding:1em;
+  text-align: center;
+  color:darkblue;
+  font-family: 'Open Sans', sans-serif;
+  font-size:1.5em;
+ }
+ .submit a{
+  color:white;
+  text-decoration: none;
  }
