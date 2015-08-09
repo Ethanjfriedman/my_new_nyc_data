@@ -8,6 +8,17 @@ var makeTimeseries = function(data, chartParams, svgParams) {
 if(chartParams.dataType === 'firearms'){
   data = adapterForFirearmsToTimeseries(data, chartParams);
 }
+///////////////////////////////////////////////////
+//checking window width in order to resize pie/////
+///////////////////////////////////////////////////
+var smallSeries = function(){
+  var iw = $(window).innerWidth();
+    if(iw < 760){
+      width = 200 - margin.left - margin.right;
+    } else{
+      width=460 - margin.left - margin.right;
+    }
+};
 
   ////////////////////////////////////////////////////////////////////////////
   //// clearing out existing SVG elements as well as keys and buttons ////////
@@ -22,8 +33,8 @@ if(chartParams.dataType === 'firearms'){
   //////////////////////////////////////
 
   var margin = svgParams.margin || {top: 20, right: 20, bottom: 30, left: 50},
-      width = svgParams.width || 960 - margin.left - margin.right,
-      height = svgParams.height || 500 - margin.top - margin.bottom;
+      width = svgParams.width || 460 - margin.left - margin.right,
+      height = svgParams.height || 300 - margin.top - margin.bottom;
 
 
   /////////////////////////////////////////////
@@ -63,7 +74,7 @@ if(chartParams.dataType === 'firearms'){
  //appending the whole svg
  ////////////////////////////////////////////
 
-  var svg = d3.select("body").append("svg")
+  var svg = d3.select("#pie").append("svg")
       .attr("width", width + margin.left + margin.right)
       .attr("height", height + margin.top + margin.bottom + 150)
       .append("g")
@@ -109,7 +120,7 @@ if(chartParams.dataType === 'firearms'){
   ////////////////////////////////////////////
 
   svg.append("text")
-        .attr("transform", "translate(" + ((width + margin.right + margin.left) / 2) + " ," + (height + margin.bottom +30) + ")")
+        .attr("transform", "translate(" + ((width) / 2) + " ," + (height + margin.bottom +50) + ")")
         .style("text-anchor", "middle")
         .text("Year");
     //
@@ -195,7 +206,21 @@ if(chartParams.dataType === 'firearms'){
       .attr("cx", function(d) { return x(d.date); })
       .attr("cy", function(d) { return y(d.value); })
       .attr('fill',function(d){ return color(i); })
+
+
+ ///////////////////////////////////////////////////
+ /////////// MEDIA QUERIES RESPONSIVE STUFF /////////////
+ ///////////////////////////////////////////////////
+
+
+  $(window).resize(function(){
+     smallSeries();
+     drawBars();
+   });
+
+
   }
+
 }
 
 

@@ -16,6 +16,18 @@ console.log(chartParams);
 console.log("svgParams:");
 console.log(svgParams);
 
+///////////////////////////////////////////////////
+//checking window width in order to resize pie/////
+///////////////////////////////////////////////////
+var smallPie = function(){
+  var iw = $(window).innerWidth();
+    if(iw < 760){
+      radius = 90;
+    } else{
+      radius=150;
+    }
+};
+
 
 chartParams.startYear = parseInt(chartParams.startYear);
 chartParams.endYear = parseInt(chartParams.endYear);
@@ -36,10 +48,11 @@ console.log(chartParams.startYear, chartParams.endYear)
   ////////// SVG VARIABLES /////////////
   //////////////////////////////////////
 
-  var width = svgParams.width || 500;
-  var height = svgParams.height || 500;
-  var padding = svgParams.padding || 500;
-
+  var width = svgParams.width || 100;
+  var height = svgParams.height || 100;
+  var padding = svgParams.padding || 100;
+  var radius = 150;
+  smallPie();
   var pieChart = d3.layout.pie().sort(null),
     color = d3.scale.category20(),  //TODO must make better palette
     arc = d3.svg.arc();
@@ -129,7 +142,7 @@ console.log(chartParams.startYear, chartParams.endYear)
         yearlyTotal = []; //the percentages for each year.
 
         for (var a = 0; a < types.length; a++){
-        console.log('running second level');
+        console.log('running second level'+f);
 
 
           yearlyTotal.push(types[a].arrOfYearValues[f]);  //creating 11 sets for each b cycle (each year), within each pushing only that year from each abuse.
@@ -155,7 +168,7 @@ console.log(chartParams.startYear, chartParams.endYear)
   ///////// making pieee yummy /////////
   //////////////////////////////////////
 
-    arc.outerRadius(205);  //WTF is this FIXME// it will be ok :-)
+    arc.outerRadius(radius);  //WTF is this FIXME// it will be ok :-)
     var cy = height / 2 + padding,
         cx = width / 2 + padding;
 
@@ -204,7 +217,7 @@ console.log(chartParams.startYear, chartParams.endYear)
         this._current = JSON.parse(JSON.stringify(d));
         this._current.endAngle = this._current.startAngle;
       })
-      .transition().duration(1000).attrTween("d", makeArcTween(205));
+      .transition().duration(1000).attrTween("d", makeArcTween(radius));
 
 
   /////////////////////////////////////////////////////
@@ -245,29 +258,33 @@ console.log(chartParams.startYear, chartParams.endYear)
   ///////////////////////////////////////
     $buttonDiv = $('#buttons');
     for (var yr = yearsToLabel[chartParams.startYear]; yr <= yearsToLabel[chartParams.endYear]; yr++ ) { /********************************STARTYEAR AND ENDYEAR********************************//********************************/
-      $button = $('<button>').attr('id', yr).text(yr);
+      $button = $('<button>').attr('class','yearButton').attr('id', yr).text(yr);
       $buttonDiv.append($button);
     }
 
-    var $buttons = $('button');
+    var $buttons = $('.yearButton');
+
+   $('#year').text($($buttons[0]).attr('id'));
+    
 
   //////////////////////////////////////////
   ///////// autoplay through years /////////
   //////////////////////////////////////////
 
-
+var counter = 0;
+ var maxLoops = chartParams.endYear - chartParams.startYear; //we can assume thats the number of years
 
     (function next() {
 
-    var maxLoops = chartParams.endYear - chartParams.startYear; //we can assume thats the number of years
-        var counter = 0;
+   
+        
             if (counter++ >= maxLoops) return;
 
             setTimeout(function() {
-                $('#year').text(yearsToLabel[counter]); //years[counter] would be replaced by i
+                $('#year').text(yearsToLabel[chartParams.startYear + counter]); //years[counter] would be replaced by i
                 d3.selectAll("path")
                 .data(pieCharts[counter])
-                .transition().duration(1000).attrTween("d", makeArcTween(205));
+                .transition().duration(1000).attrTween("d", makeArcTween(radius));
 
                 if(counter === maxLoops){
                   counter = -1;
@@ -282,12 +299,25 @@ console.log(chartParams.startYear, chartParams.endYear)
 
     $.each($buttons, function(i, val) {
       $(val).click(function() {
+        counter = maxLoops +10;
+        $($buttons).removeClass('activeButton');
+        $(this).addClass('activeButton');
+        $('#year').text($(this).attr('id'));
         d3.selectAll("path")
-        .data(pieCharts[i])
-        .transition().duration(1000).attrTween("d", makeArcTween(205));
+        .data(pieCharts[i]) //this is important*************************************
+        .transition().duration(1000).attrTween("d", makeArcTween(radius));
       });
     });
   // });
+ ///////////////////////////////////////////////////
+ /////////// MEDIA QUERIES RESPONSIVE STUFF /////////////
+ ///////////////////////////////////////////////////
+
+
+  $(window).resize(function(){
+    smallPie();
+  });
+
 };
 
 

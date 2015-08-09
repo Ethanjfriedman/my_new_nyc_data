@@ -4,16 +4,46 @@
 
 console.log('loading bargraph.js');
 var makeBarGraph = function(data, charParams, svgParams) {
-
+$('#buttons button').remove();
     //////////////////////////////////////
     //////// SVG PARAMETERS //////////////
     //////////////////////////////////////
 
-    var width = svgParams.width || 1000,
-        height = svgParams.height || 600,
+    var width = svgParams.width || 500,
+        height = svgParams.height || 200,
         padding = svgParams.padding || 200;
 
-    /////////////////////////////////////
+    //////////////////////////////////////
+    //////// MEDIA QUERY FUNCTION //////////////
+    //////////////////////////////////////
+
+    var barSmall = function(){
+    var iw = $(window).innerWidth();
+      if(iw < 760){
+        width = 300;
+        height=200;
+        drawBars();
+      } else{
+        width=500;
+        height=200;
+        drawBars();
+      }
+  };
+  barSmall();
+$(window).resize(function(){
+  barSmall();
+});
+    ///////////////////////////////////////////
+    //////// ADDING TITLE TO DOM //////////////
+    /////////////////////////////////////////// TODO FIXME
+
+    var $title = $('#title');
+    $title.text(data.title);
+
+
+
+    function drawBars(){
+          /////////////////////////////////////
     //////// D3 PARAMETERS //////////////
     /////////////////////////////////////
 
@@ -31,41 +61,31 @@ var makeBarGraph = function(data, charParams, svgParams) {
 
       //colors
     var color = d3.scale.category20();
-
-    ///////////////////////////////////////////
-    //////// ADDING TITLE TO DOM //////////////
-    /////////////////////////////////////////// TODO FIXME
-
-    var $title = $('#title');
-    $title.text(data.title);
-
-
-    ///////////////////////////////////////////
+        ///////////////////////////////////////////
     //////// XAXIS YAXIS DOMAINS //////////////
     ///////////////////////////////////////////
 
     x.domain(data.abuses);
-    y.domain([0,data.maxYValue +100]);
+    y.domain([0,data.maxYValue +50]);
 
 
-    function drawBars(){
         ///////////////////////////////////////////////
         //////// REMOVE THE SVG AND BUTTONS ///////////
         ///////////////////////////////////////////////
 
         $('svg').remove();
-        $('#buttons button').remove();
         $('#keys *').remove();
 
         ///////////////////////////////////////////////
         //////// APPEND SVG TO HTML BODY //////////////
         ///////////////////////////////////////////////
 
-        var svg = d3.select("body").append("svg")
-          .attr("width", width + padding * 2)
-          .attr("height", height + padding * 2)
+        var svg = d3.select("#pie").append("svg")
+          .attr("width", width+100)
+          .attr("height", height + padding)
           .append("g")
-          .attr("transform", "translate(" + padding + "," + padding + ")");
+          .attr("transform", "translate(70,0)");
+        $('#pie').css('margin-left','0').css('margin-top','20px');
 
         ///////////////////////////////////////////////////////
         //////// APPEND BARS PLUS HOVER HANDLERS //////////////
@@ -95,8 +115,8 @@ var makeBarGraph = function(data, charParams, svgParams) {
           .attr("width", x.rangeBand())
           .attr("y", function(d, i) { return y(d[1]);  })
           .style('opacity', 0)
-          .transition().delay(function (d,i){ return i * 100;})
-          .duration(300)
+          .transition().delay(function (d,i){ return i * 10;})
+          .duration(100)
           .style('opacity', 1)
           .attr("height", function(d, i) { return height - y(d[1]); })
           .attr('id', function(d){ return d[8]})
@@ -113,7 +133,8 @@ var makeBarGraph = function(data, charParams, svgParams) {
             .call(xAxis)   //calls the xAxis var we made up above
             .selectAll("text")
             .style("text-anchor", "end")
-            .attr("x", -25)
+            .attr("x", -5)
+            .attr('y',0)
             .attr("transform", "rotate(-60)");
 
           svg.append("g")
@@ -132,17 +153,18 @@ var makeBarGraph = function(data, charParams, svgParams) {
 
       $buttonDiv = $('#buttons');
       for (var yr = 2005; yr <= 2009; yr++ ) {
-        $button = $('<button>').attr('id', yr).text(yr);
+        $button = $('<button>').attr('class','yearButton').attr('id', yr).text(yr);
         $buttonDiv.append($button);
       }
-        var $buttons = $('button');
-   
+        var $buttons = $('.yearButton');
+   $('#year').text($($buttons[0]).attr('id'));
    ///////////////////////////////////////////////
    //////// AUTOPLAY THROUGH YEARS  //////////////
    ///////////////////////////////////////////////
-
+  
       var maxLoops = $buttons.length-1;
-          var counter = 0;
+      var counter = 0;
+
           (function next() {
               if (counter++ >= maxLoops) return;
 
@@ -162,11 +184,17 @@ var makeBarGraph = function(data, charParams, svgParams) {
 
       $.each($buttons, function(i, val) {
         $(val).click(function() {
+          counter = maxLoops +10;
+          $($buttons).removeClass('activeButton');
+          $(this).addClass('activeButton');
           year = data.years[i];
           drawBars();
+          $('#year').text($(this).attr('id'));
           console.log(year + 'yeaaar');
         });
       });
+
+
   }
 
   /////////////////////////////////////////////////////////////////////
