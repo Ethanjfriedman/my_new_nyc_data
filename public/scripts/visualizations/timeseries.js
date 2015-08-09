@@ -200,10 +200,7 @@ data = selectAdapter(data, chartParams);
 ///////////////////////////////////////////////
 
 var selectAdapter = function(data, params) {
-
   console.log("selecting the right adapter to draw the timeseries");
-  console.log(data);
-  console.log(params);
   switch (params.dataType) {
     case 'firearms':
       data = adapterForFirearmsToTimeseries(data, params);

@@ -6,20 +6,9 @@ console.log('loading piechart.js');
 
 
 var makePieChart = function(data, chartParams, svgParams) {
-console.log("ooh baby I'm gonna draw a pie chart!!!");
-console.log("data.dataset:");
-console.log(data.dataset);
-console.log("data:")
-console.log(data);
-console.log("chartParams:");
-console.log(chartParams);
-console.log("svgParams:");
-console.log(svgParams);
-
 
 chartParams.startYear = parseInt(chartParams.startYear);
 chartParams.endYear = parseInt(chartParams.endYear);
-console.log(chartParams.startYear, chartParams.endYear)
 
   /////////////////////////////////
   ///// Preventing duplicates /////
