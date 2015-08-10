@@ -112,7 +112,7 @@ $(window).resize(function(){
           .enter()
           .append("rect")
           .style('fill',function(d, i){ return color(d); })
-          .attr('id', function(d){ return d[0]})
+          .attr('id', function(d){ return (d[0] +": " + d[1])})
           .on('mouseover', function(d) {
             d3.select(this)
             .style('fill', 'black');
@@ -189,7 +189,6 @@ $(window).resize(function(){
               setTimeout(function() {
                   $('#year').text(data.years[counter]);
                   year = counter + parseInt(chartParams.startYear); 
-                  console.log(year);
                   drawBars(year);
                   if(counter === maxLoops){
                     counter = -1;
@@ -237,15 +236,15 @@ $(window).resize(function(){
         return data;
         break;
       case 'Race of Victims':
-        data = adapterForLanguageToTimeseries(data, params, 7 , 5);
+        data = adapterForAbuseToBarChart(data, params, 7, 5);
         return data;
         break;
       case 'Gender of Officers':
-        data = adapterForLanguageToTimeseries(data, params, 4, 2);
+        data = adapterForAbuseToBarChart(data, params, 4, 2);
         return data;
         break;
       case 'Gender of Victims':
-        data = adapterForLanguageToTimeseries(data, params, 4, 2);
+        data = adapterForAbuseToBarChart(data, params, 4, 2);
         return data;
         break;
       default:
