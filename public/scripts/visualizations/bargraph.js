@@ -188,7 +188,7 @@ $(window).resize(function(){
 
               setTimeout(function() {
                   $('#year').text(data.years[counter]);
-                  year = counter + parseInt(chartParams.startYear); 
+                  year = counter + parseInt(chartParams.startYear);
                   drawBars(year);
                   if(counter === maxLoops){
                     counter = -1;
