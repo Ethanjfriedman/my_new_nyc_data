@@ -192,7 +192,7 @@ chartParams.endYear = parseInt(chartParams.endYear);
       .append("path")
       .on('mouseover', function(d) { //this displays the category title on mouseover
         d3.select(this).attr("opacity", 0.5);
-          var myText = $(this).attr('id')+': ' + JSON.parse(JSON.stringify(d)).data;
+          var myText = $(this).attr('id')+': '+ (JSON.parse(JSON.stringify(d)).data) +' incidents, ' + ((((JSON.parse(JSON.stringify(d)).endAngle - JSON.parse(JSON.stringify(d)).startAngle)/6.283)*100).toFixed(2)) + '%';
           var x = event.pageX - this.offsetLeft;
           var y = event.pageY - this.offsetTop;
           $(document).mousemove( function(e) { //this anchors the label to the mouse position
