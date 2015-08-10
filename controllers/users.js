@@ -28,7 +28,7 @@ router.post('/new', function (req, res) {
     if (err) {
       console.log("bcrypt error");
       console.log(err);
-      res.redirect(301, 'users/new');
+      res.redirect(301, '/users/new');
     } else {
       bcrypt.hash(userData.password, salt, function (err, hash) {
         userData.password = hash;
@@ -37,7 +37,7 @@ router.post('/new', function (req, res) {
           if (err) {
             console.log("error saving new user");
             console.log(err);
-            res.redirect(301, 'users/new');
+            res.redirect(301, '/users/new');
           } else {
             console.log("new user is:");
             console.log(user);
