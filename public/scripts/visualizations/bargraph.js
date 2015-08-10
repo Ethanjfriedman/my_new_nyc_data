@@ -118,9 +118,11 @@ $(window).resize(function(){
             .style('fill', 'black');
             var myText = $(this).attr('id');
             console.log(this);
-              var x = event.pageX - this.offsetLeft; //FIXME
-              var y = event.pageY - this.offsetTop; //FIXME
-              $('.blurb').css('visibility', 'visible').css('margin-left', x-50).css('margin-top', y-150).fadeIn('slow').text(myText);
+              $(document).mousemove( function(e) { //this anchors the label to the mouse position
+                 mouseX = e.pageX;
+                 mouseY = e.pageY;
+              });
+              $('.blurb').css('visibility', 'visible').css('top', mouseY).css('left', mouseX).fadeIn('slow').text(myText);
           })
           .on('mouseout', function(d){
             d3.select(this)
