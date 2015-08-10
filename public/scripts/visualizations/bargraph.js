@@ -264,6 +264,7 @@ $(window).resize(function(){
     result.data = [];
     result.years = ["2005", "2006", "2007", "2008", "2009"];
     var keys = Object.keys(data.data[0]).sort();
+    debugger;
     for (var y = 0; y <= result.years.length; y++) {
       if (y < parseInt(params.startYear)) {
         result.years.shift();
