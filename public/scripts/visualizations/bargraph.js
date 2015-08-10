@@ -112,12 +112,14 @@ $(window).resize(function(){
           .enter()
           .append("rect")
           .style('fill',function(d, i){ return color(d); })
+          .attr('id', function(d){ return d[0]})
           .on('mouseover', function(d) {
             d3.select(this)
             .style('fill', 'black');
             var myText = $(this).attr('id');
-              var x = event.pageX - this.offsetLeft;
-              var y = event.pageY - this.offsetTop;
+            console.log(this);
+              var x = event.pageX - this.offsetLeft; //FIXME
+              var y = event.pageY - this.offsetTop; //FIXME
               $('.blurb').css('visibility', 'visible').css('margin-left', x-50).css('margin-top', y-150).fadeIn('slow').text(myText);
           })
           .on('mouseout', function(d){
@@ -135,7 +137,6 @@ $(window).resize(function(){
           .duration(100)
           .style('opacity', 1)
           .attr("height", function(d, i) { return height - y(d[1]); })
-          .attr('id', function(d){ return d[8]})
           .attr('class', 'bars');
 
           ///////////////////////////////////////////////////
