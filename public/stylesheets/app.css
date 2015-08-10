@@ -290,7 +290,10 @@ width:100%;
  .bars{
     transition:1s;
  }
-
+ .fa{
+  z-index: 9999;
+  position: relative;
+ }
  .hideMe{
   opacity: 0;
   display:none;
