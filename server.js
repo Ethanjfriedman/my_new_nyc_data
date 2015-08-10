@@ -6,14 +6,15 @@ var express = require('express'),
     expressLayouts  = require('express-ejs-layouts'),
     MongoClient = require('mongodb').MongoClient,
     ObjectID = require('mongodb').ObjectID,
-    MONGOURI = process.env.MONGOLAB_URI || 'mongodb://localhost:27017/menu', //TODO: change this to process.env || local MongoDB !!!
+    MONGOURI = process.env.MONGOLAB_URI || 'mongodb://localhost:27017/menu',
     methodOverride = require('method-override'),
     morgan = require('morgan'),
     mongoose = require('mongoose'),
     PORT = process.env.PORT || 3000,
     bcrypt = require('bcrypt'),
     fs = require('fs');
-    mongoose.connect(MONGOURI);
+
+mongoose.connect(MONGOURI);
 
 var db = mongoose.connection;
 
