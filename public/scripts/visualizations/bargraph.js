@@ -25,11 +25,11 @@ $('#buttons button').remove();
       if(iw < 760){
         width = 300;
         height=200;
-        drawBars(year || data.data[chartParams.startYear]);
+        drawBars(parseInt(chartParams.startYear));
       } else{
         width=500;
         height=200;
-        drawBars(year || data.data[chartParams.startYear]);
+        drawBars(parseInt(chartParams.startYear));
       }
   };
   barSmall();
@@ -43,7 +43,7 @@ $(window).resize(function(){
     var $title = $('#title');
     $title.text(data.title);
 
-    function drawBars(year){
+    function drawBars(yearToDraw){
           /////////////////////////////////////
     //////// D3 PARAMETERS //////////////
     /////////////////////////////////////
@@ -91,11 +91,26 @@ $(window).resize(function(){
         ///////////////////////////////////////////////////////
         //////// APPEND BARS PLUS HOVER HANDLERS //////////////
         ///////////////////////////////////////////////////////
+        var barData = [];
+        var selectYear = function() {
+          for (var i = 0; i < data.data.length; i ++) {
+            var dataPoint = [];
 
-        var source = data.data;
-
+            for (var j = 0; j < data.data[i].length; j++) {
+              dataPoint.push(data.data[i][j]);
+              console.log(dataPoint);
+            }
+            if (j === 0 || j === (yearToDraw + 1)) {
+              barData.push(dataPoint);
+          }
+        };
+      }
+        console.log(barData);
+        selectYear();
+        debugger;
         svg.selectAll("thisdoesnotmatter")
           .data(data.data) //love this line!
+          // .data(barData)
           .enter()
           .append("rect")
           .style('fill',function(d, i){ return color(d); })
@@ -148,8 +163,6 @@ $(window).resize(function(){
     }
 
 
-   drawBars(chartParams.startYear);
-
    //////////////////////////////////////////////////
    //////// APPEND YEAR BUTTONS TO DOM //////////////
    //////////////////////////////////////////////////
@@ -167,14 +180,14 @@ $(window).resize(function(){
    ///////////////////////////////////////////////
 
       var maxLoops = $buttons.length-1;
-      var counter = 0;
+      var counter = 0; //FIXME -- this two vars need to be start year and end year?
 
           (function next() {
               if (counter++ >= maxLoops) return;
 
               setTimeout(function() {
                   $('#year').text(data.years[counter]);
-                  year = data.years[counter];
+                  year = data.years[counter + parseInt(chartParams.startYear)];
                   drawBars(year);
                   if(counter === maxLoops){
                     counter = -1;
@@ -191,7 +204,7 @@ $(window).resize(function(){
           counter = maxLoops +10;
           $($buttons).removeClass('activeButton');
           $(this).addClass('activeButton');
-          year = data.years[i];
+          year = i + parseInt(chartParams.startYear);
           drawBars(year);
           $('#year').text($(this).attr('id'));
           console.log(year + 'yeaaar; ' + i);
