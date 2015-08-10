@@ -188,7 +188,7 @@ $(window).resize(function(){
 
               setTimeout(function() {
                   $('#year').text(data.years[counter]);
-                  year = counter + parseInt(chartParams.startYear); //FIXME
+                  year = counter + parseInt(chartParams.startYear); 
                   console.log(year);
                   drawBars(year);
                   if(counter === maxLoops){

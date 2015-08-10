@@ -313,6 +313,7 @@ width:100%;
   display:inline-block;
   color:darkblue;
   font-weight: 400;
+  text-align: center;
  }
  #year{
   float: right;
@@ -358,7 +359,7 @@ svg{
 
  .graph{
   margin-left:2vw;
-  width:65vw;
+  width:68vw;
   display: inline-block;
  }
  #pie{
