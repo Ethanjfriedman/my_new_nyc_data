@@ -97,20 +97,18 @@ $(window).resize(function(){
             var dataPoint = [];
 
             for (var j = 0; j < data.data[i].length; j++) {
-              dataPoint.push(data.data[i][j]);
-              console.log(dataPoint);
+              if (j === 0 || j === (yearToDraw + 1)) {
+                dataPoint.push(data.data[i][j]);
+                barData.push(dataPoint);
+              }
             }
-            if (j === 0 || j === (yearToDraw + 1)) {
-              barData.push(dataPoint);
-          }
         };
       }
         console.log(barData);
         selectYear();
-        debugger;
         svg.selectAll("thisdoesnotmatter")
-          .data(data.data) //love this line!
-          // .data(barData)
+          // .data(data.data) //love this line!
+          .data(barData)
           .enter()
           .append("rect")
           .style('fill',function(d, i){ return color(d); })
@@ -169,25 +167,25 @@ $(window).resize(function(){
 
       $buttonDiv = $('#buttons');
       for (var yr = 0; yr < data.years.length; yr++ ) {
-        $button = $('<button>').attr('class','yearButton').attr('id', yr).text(data.years[yr]);
+        $button = $('<button>').attr('class','yearButton').attr('id', data.years[yr]).text(data.years[yr]);
         $buttonDiv.append($button);
       }
-        var $buttons = $('.yearButton');
-   $('#year').text($($buttons[0]).attr('id'));
+      var $buttons = $('.yearButton');
+      $('#year').text(data.years[0]);
 
    ///////////////////////////////////////////////
    //////// AUTOPLAY THROUGH YEARS  //////////////
    ///////////////////////////////////////////////
 
       var maxLoops = $buttons.length-1;
-      var counter = 0; //FIXME -- this two vars need to be start year and end year?
+      var counter = 0;
 
           (function next() {
               if (counter++ >= maxLoops) return;
 
               setTimeout(function() {
                   $('#year').text(data.years[counter]);
-                  year = data.years[counter + parseInt(chartParams.startYear)];
+                  year = data.years[counter + parseInt(chartParams.startYear)]; //FIXME
                   drawBars(year);
                   if(counter === maxLoops){
                     counter = -1;
@@ -285,10 +283,12 @@ $(window).resize(function(){
           currentResult.unshift(currentAbuse[keys[j]]);
         }
       }
-      result.data.push(currentResult);
+      if (j !== skip) {
+        result.data.push(currentResult);
+      }
     }
     result.maxYValue = d3.max(yValues, function(d) {return d;});
-    result.title = "Allegations of Abuse of Authority by Police";
+    result.title = params.title;
     console.log("adapted abuse allegations dataset:")
     console.log(result);
     return result;
