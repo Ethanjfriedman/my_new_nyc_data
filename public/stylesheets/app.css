@@ -1,4 +1,4 @@
-@import url(http://fonts.googleapis.com/css?family=Open+Sans:400,800,300);
+@import url(https://fonts.googleapis.com/css?family=Open+Sans:400,800,300);
 
 body {
   font-family: 'Open Sans', sans-serif;
@@ -357,7 +357,7 @@ svg{
   z-index: 888;
 }
 #keys{
-  width: 160px;
+  width: 180px;
 }
 
  .graph{
