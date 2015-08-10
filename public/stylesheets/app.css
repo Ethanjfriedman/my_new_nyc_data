@@ -126,10 +126,21 @@ width:100%;
     width:100% !important;
     display: block;
   }
+  select {
+    width: 50px;
+    white-space:pre-wrap;
+    display:inline-block;
+  }
   .tools{
     width:100% !important;
     height:15vh !important;
     display: block;
+  }
+  .tools input {
+    display: inline-block;
+  }
+  .tools p{
+    display: inline-block;
   }
   #title{
     font-size:1em;
