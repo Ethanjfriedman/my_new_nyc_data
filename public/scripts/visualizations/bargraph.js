@@ -64,8 +64,7 @@ $(window).resize(function(){
     var color = d3.scale.category20();
         ///////////////////////////////////////////
     //////// XAXIS YAXIS DOMAINS //////////////
-    ///////////////////////////////////////////
-
+    //////////////////////////////////////////
     x.domain(data.abuses);
     y.domain([0,data.maxYValue +50]); //TODO: this should change based on year being shown
 
@@ -131,7 +130,7 @@ $(window).resize(function(){
                 $('.blurb').fadeOut('slow');
               },1500);
           })
-          .attr("x", function(d) { return x(d[0]); })
+          .attr("x", function(d) { console.log(d[0]); return x(d[0]); }) //here's the problem -Aarati
           .attr("width", x.rangeBand())
           .attr("y", function(d, i) { return y(d[1]);  })
           .style('opacity', 0)
@@ -232,11 +231,11 @@ $(window).resize(function(){
         return data;
         break;
       case 'Abuse of Authority':
-        data = adapterForAbuseToBarChart(data, params, 25, 25);
+        data = adapterForAbuseToBarChart(data, params, 25, 25); //WORKS
         return data;
         break;
       case 'Race of Victims':
-        data = adapterForAbuseToBarChart(data, params, 7, 5);
+        data = adapterForAbuseToBarChart(data, params, 7, 5); //works
         return data;
         break;
       case 'Gender of Officers':
@@ -264,7 +263,6 @@ $(window).resize(function(){
     result.data = [];
     result.years = ["2005", "2006", "2007", "2008", "2009"];
     var keys = Object.keys(data.data[0]).sort();
-    debugger;
     for (var y = 0; y <= result.years.length; y++) {
       if (y < parseInt(params.startYear)) {
         result.years.shift();
@@ -275,26 +273,27 @@ $(window).resize(function(){
     result.abuses = [];
     var yValues = [];
     for (var i = 0; i < limit; i++) {
-      var currentAbuse = data.data[i];
+      var currentField = data.data[i];
       var currentResult = [];
+      console.log(keys);
       for (var j = 0; j < keys.length; j++) {
-        if (j < 10) {
-          currentResult.push(parseInt(currentAbuse[keys[j]]));
-          if (j < 4) {
-            yValues.push(parseInt(currentAbuse[keys[j]]));
-          }
-        } else {
-          result.abuses.unshift(currentAbuse[keys[j]]);
-          currentResult.unshift(currentAbuse[keys[j]]);
+        var val = parseInt(currentField[keys[j]]);
+        if (j < 5) {
+          currentResult.push(val);
+          yValues.push(val);
+        }
+        if (j == keys.length - 1 && currentField[keys[j]] != 'Subtotal') {
+          currentResult.unshift(currentField[keys[j]]);
+          result.abuses.push(currentField[keys[j]]);
         }
       }
-      if (j !== skip) {
-        result.data.push(currentResult);
+      if (i !== skip) {
+              result.data.push(currentResult);
       }
-    }
+  }
     result.maxYValue = d3.max(yValues, function(d) {return d;});
     result.title = params.title;
-    console.log("adapted abuse allegations dataset:")
+    console.log("adapted dataset:")
     console.log(result);
     return result;
   }
