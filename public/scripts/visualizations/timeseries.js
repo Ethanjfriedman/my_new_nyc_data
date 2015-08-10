@@ -240,7 +240,7 @@ var selectTimeseriesAdapter = function(data, params) {
       return data;
       break;
     case 'language':
-      data = adapterForLanguageToTimeseries(data, params, 5, 5);
+      data = adapterForLanguageToTimeseries(data, params, 7, 7);
       return data;
       break;
     case 'Abuse of Authority':

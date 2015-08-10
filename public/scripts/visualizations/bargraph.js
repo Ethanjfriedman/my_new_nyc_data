@@ -221,11 +221,12 @@ $(window).resize(function(){
     console.log("selecting the right adapter to draw the bar chart");
     switch (params.dataType) {
       case 'firearms':
-        data = adapterForFirearmsToTimeseries(data, params);
+        // data = adapterForFirearmsToBarChart(data, params);
+        console.log('adapter missing');
         return data;
         break;
       case 'language':
-        data = adapterForAbuseToBarChart(data, params, 5, 5);
+        data = adapterForAbuseToBarChart(data, params, 7, 7);
         return data;
         break;
       case 'Abuse of Authority':
