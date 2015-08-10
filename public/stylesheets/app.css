@@ -356,7 +356,14 @@ width:100%;
 svg{
   z-index: 888;
 }
-
+.key-text{
+  padding:0;
+  margin:0;
+}
+.key-color{
+  padding:0;
+  margin:0;
+}
  .graph{
   margin-left:2vw;
   width:68vw;

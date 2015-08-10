@@ -297,3 +297,58 @@ $(window).resize(function(){
     console.log(result);
     return result;
   }
+
+
+
+  ////////////////////////////////////////////
+  //////// ADAPTER FOR FIREARMS //////////////
+  ////////////////////////////////////////////
+
+    var adapterForFirearmsToBarChart = function(data, params, limit, skip) {
+    console.log("running adapterForFirearmsToBarChart");
+
+    var result = {};
+
+    result.data = [];
+
+    result.years = ["2002", "2003", "2004", "2005", "2006",'2007','2008','2009','2010','2011','2012'];
+
+    var keys = Object.keys(data.data[0]).sort();
+    console.log(keys);
+    debugger;
+    
+    for (var y = 0; y <= result.years.length; y++) {
+      if (y < parseInt(params.startYear)) {
+        result.years.shift();
+      } else if (y > parseInt(params.endYear)) {
+        result.years.pop();
+      }
+    }
+    result.abuses = [];
+    var yValues = [];
+    for (var i = 0; i < limit; i++) {
+      var currentField = data.data[i];
+      var currentResult = [];
+      console.log(keys);
+      for (var j = 0; j < keys.length; j++) {
+        var val = parseInt(currentField[keys[j]]);
+        if (j < 5) {
+          currentResult.push(val);
+          yValues.push(val);
+        }
+        if (j == keys.length - 1 && currentField[keys[j]] != 'Subtotal') {
+          currentResult.unshift(currentField[keys[j]]);
+          result.abuses.push(currentField[keys[j]]);
+        }
+      }
+      if (i !== skip) {
+              result.data.push(currentResult);
+      }
+  }
+    result.maxYValue = d3.max(yValues, function(d) {return d;});
+    result.title = params.title;
+    console.log("adapted dataset:")
+    console.log(result);
+    return result;
+  }
+
