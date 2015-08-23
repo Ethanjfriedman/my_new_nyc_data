@@ -222,8 +222,7 @@ $(window).resize(function(){
     console.log("selecting the right adapter to draw the bar chart");
     switch (params.dataType) {
       case 'firearms':
-        data = adapterForFirearmsToBarChart(data, params, 6, 50);
-        console.log('adapter for firearms');
+        data = adapterForFirearmsToBarChart(data, params);
         return data;
         break;
       case 'language':
@@ -314,8 +313,8 @@ $(window).resize(function(){
     result.years = ["2002", "2003", "2004", "2005", "2006",'2007','2008','2009','2010','2011','2012'];
 
     var keys = Object.keys(data.data[0]).sort();
-    // console.log(keys);
-
+    console.log(keys);
+    debugger;
 
     for (var y = 0; y <= result.years.length; y++) {
       if (y < parseInt(params.startYear)) {
@@ -326,30 +325,28 @@ $(window).resize(function(){
     }
     result.abuses = [];
     var yValues = [];
-
     for (var i = 0; i < limit; i++) {
       var currentField = data.data[i];
       var currentResult = [];
-  
-          for (var j = 0; j < keys.length; j++) {
-             if(j < keys.length -1){
-                var val = parseInt(currentField[keys[j]]);
-                console.log(currentField[keys[j]]);
-                currentResult.push(val);
-                yValues.push(val);
-              } else if (j == keys.length - 1) {
-                currentResult.unshift(currentField[keys[j]]);
-                result.abuses.push(currentField[keys[j]]);
-              }
-          }
-          result.data.push(currentResult); 
+      console.log(keys);
+      for (var j = 0; j < keys.length; j++) {
+        var val = parseInt(currentField[keys[j]]);
+
+          currentResult.push(val);
+          yValues.push(val);
+
+        if (j == keys.length - 1 && currentField[keys[j]] != 'Subtotal') {
+          currentResult.unshift(currentField[keys[j]]);
+          result.abuses.push(currentField[keys[j]]);
+        }
+      }
+      if (i !== skip) {
+              result.data.push(currentResult);
+      }
   }
     result.maxYValue = d3.max(yValues, function(d) {return d;});
     result.title = params.title;
     console.log("adapted dataset:")
     console.log(result);
-
     return result;
-
   }
-

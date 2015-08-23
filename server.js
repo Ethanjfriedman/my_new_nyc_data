@@ -51,23 +51,23 @@ server.use(session({                      //setting up session
   saveUninitialized: false
 }));
 
-// setting the user as a res.locals variable  FIXME
-server.use(function(req, res, next){
-  console.log("running res locals middleware");
-  if (req.session.userId) {
-    console.log("Houston we have a user: " + req.session.userId)
-    console.log(req.session.user);
-    res.locals.user = req.session.user;
-    console.log(res.locals);
-  } else {
-    console.log("no user boo");
-    res.locals.user = null;
-  }
-  next();
-});
-
-var userController = require('./controllers/users.js');
-server.use('/users', userController);
+// setting the user as a res.locals variable
+// server.use(function(req, res, next){
+//   console.log("running res locals middleware");
+//   if (req.session.userId) {
+//     console.log("Houston we have a user: " + req.session.userId)
+//     console.log(req.session.user);
+//     res.locals.user = req.session.user;
+//     console.log(res.locals);
+//   } else {
+//     console.log("no user boo");
+//     res.locals.user = null;
+//   }
+//   next();
+// });
+//
+// var userController = require('./controllers/users.js');
+// server.use('/users', userController);
 
 var visualizationController = require('./controllers/visualizations.js');
 server.use('/visualizations', visualizationController);
@@ -76,18 +76,20 @@ server.get('/about', function (req, res) {
   res.render('about');
 });
 
-server.get('/new', function (req, res) {
-  res.render('users/new');
-});
+// server.get('/new', function (req, res) {
+//   res.render('users/new');
+// });
+//
+// server.get('/login', function (req, res) {
+//   res.render('users/login');
+// });
 
-server.get('/login', function (req, res) {
-  res.render('users/login');
-});
-
+// /  THIS FUNCTION REQUIRES USER LOGIN BEFORE PROCEEDING ANYWHERE
+// OTHER THAN HOME PAGE:
 server.get('/', function(req, res) {
-  if (req.session.userId) {
+  // if (req.session.userId) {
     res.render('homepage');
-  } else {
-    res.render('users/login');
-  }
-});
+  // } else {
+  //   res.render('users/login');
+  // }
+});  
