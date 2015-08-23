@@ -195,11 +195,14 @@ chartParams.endYear = parseInt(chartParams.endYear);
           var myText = $(this).attr('id') + ": " + (JSON.parse(JSON.stringify(d)).data) +' incidents, ' + ((((JSON.parse(JSON.stringify(d)).endAngle - JSON.parse(JSON.stringify(d)).startAngle)/6.283)*100).toFixed(2)) + '%';
           var x = event.pageX - this.offsetLeft;
           var y = event.pageY - this.offsetTop;
+          mouseX = event.pageX;
+          mouseY = event.pageY;
           $(document).mousemove( function(e) { //this anchors the label to the mouse position
-             mouseX = e.pageX || $(document).width()/2;
-             mouseY = e.pageY || $(document).height()/2;
+             mouseX = e.pageX;
+             mouseY = e.pageY;
+            $('.blurb').css('visibility', 'visible').css('top', mouseY).css('left', mouseX).fadeIn('slow').text(myText);
           });
-          $('.blurb').css('visibility', 'visible').css('top', mouseY).css('left', mouseX).fadeIn('slow').text(myText);
+          
         })
       .on('mouseout', function(d){ //removes hover effects.
         d3.select(this).attr("opacity", 1);
