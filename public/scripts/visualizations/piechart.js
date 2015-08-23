@@ -192,7 +192,7 @@ chartParams.endYear = parseInt(chartParams.endYear);
       .append("path")
       .on('mouseover', function(d) { //this displays the category title on mouseover
         d3.select(this).attr("opacity", 0.5);
-          var myText = $(this).attr('id')+': '+ (JSON.parse(JSON.stringify(d)).data) +' incidents, ' + ((((JSON.parse(JSON.stringify(d)).endAngle - JSON.parse(JSON.stringify(d)).startAngle)/6.283)*100).toFixed(2)) + '%';
+          var myText = $(this).attr('id') + ": " + (JSON.parse(JSON.stringify(d)).data) +' incidents, ' + ((((JSON.parse(JSON.stringify(d)).endAngle - JSON.parse(JSON.stringify(d)).startAngle)/6.283)*100).toFixed(2)) + '%';
           var x = event.pageX - this.offsetLeft;
           var y = event.pageY - this.offsetTop;
           $(document).mousemove( function(e) { //this anchors the label to the mouse position
@@ -206,18 +206,15 @@ chartParams.endYear = parseInt(chartParams.endYear);
           setTimeout(function(){
             $('.blurb').fadeOut('slow');
           },1500);
+
         })
       .attr("fill", function(d, i){ return hexColors[i];; })
       .attr("stroke", "white")
       .attr("stroke-width", "2px")
-      .attr('id', function(d, i){ return data.data[i].name}) //this id is used for mouseover stuff.
+      .attr('id', function(d, i){ return data.data[i].name;}) //this id is used for mouseover stuff.
       .each(function(d) { //drawing the slice
         this._current = JSON.parse(JSON.stringify(d));
-        console.log(this._current.data);
-        var dataNum = this._current.data;
         this._current.endAngle = this._current.startAngle;
-        return dataNum;
-        $(this).addClass(dataNum);
       })
       .transition().duration(1000).attrTween("d", makeArcTween(radius));
 
