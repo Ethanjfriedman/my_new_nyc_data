@@ -197,7 +197,9 @@ chartParams.endYear = parseInt(chartParams.endYear);
           var y = event.pageY - this.offsetTop;
           $(document).mousemove( function(e) { //this anchors the label to the mouse position
              mouseX = e.pageX || $(document).width()/2;
+             console.log(mouseX);
              mouseY = e.pageY || $(document).height()/2;
+             console.log(mouseY);
           });
           $('.blurb').css('visibility', 'visible').css('top', mouseY).css('left', mouseX).fadeIn('slow').text(myText);
         })
