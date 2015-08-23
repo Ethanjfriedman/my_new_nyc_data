@@ -126,6 +126,12 @@ width:100%;
     width:100% !important;
     display: block;
   }
+  .navbar{
+    height:80vh;
+  }
+  .navbar.open{
+    height:100vh;
+  }
   select {
     width: 30px;
     white-space:pre-wrap;
@@ -133,7 +139,7 @@ width:100%;
   }
   .tools{
     width:100% !important;
-    height:15vh !important;
+    height:25vh !important;
     display: block;
   }
   .tools input {
@@ -148,7 +154,7 @@ width:100%;
   }
   .fa{
     display:inline-block !important;
-    margin-top: -.3%!important;
+    margin-top: 3%!important;
     margin-left:10vw!important;
     font-size: 1em;
   }

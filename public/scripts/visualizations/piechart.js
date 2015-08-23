@@ -190,7 +190,8 @@ chartParams.endYear = parseInt(chartParams.endYear);
       .data(pieCharts[0])
       .enter()
       .append("path")
-      .on('mouseover', function(d) { //this displays the category title on mouseover
+      .on('mouseover', function(d) {
+       myBool = true; //this displays the category title on mouseover
         d3.select(this).attr("opacity", 0.5);
           var myText = $(this).attr('id') + ": " + (JSON.parse(JSON.stringify(d)).data) +' incidents, ' + ((((JSON.parse(JSON.stringify(d)).endAngle - JSON.parse(JSON.stringify(d)).startAngle)/6.283)*100).toFixed(2)) + '%';
           var x = event.pageX - this.offsetLeft;
@@ -200,18 +201,22 @@ chartParams.endYear = parseInt(chartParams.endYear);
           $(document).mousemove( function(e) { //this anchors the label to the mouse position
              mouseX = e.pageX;
              mouseY = e.pageY;
-            $('.blurb').css('visibility', 'visible').css('top', mouseY).css('left', mouseX).fadeIn('slow').text(myText);
+            if(myBool === true){
+              $('.blurb').css('visibility', 'visible').css('top', mouseY).css('left', mouseX).fadeIn('slow').text(myText);
+            }
           });
           
         })
       .on('mouseout', function(d){ //removes hover effects.
-        d3.select(this).attr("opacity", 1);
+
+        myBool = false;
+          console.log('im out');
           setTimeout(function(){
-            $('.blurb').fadeOut('slow');
+            $('.blurb').fadeOut('slow').css('visibility','hidden');
           },1500);
 
         })
-      .attr("fill", function(d, i){ return hexColors[i];; })
+      .attr("fill", function(d, i){ return hexColors[i]; })
       .attr("stroke", "white")
       .attr("stroke-width", "2px")
       .attr('id', function(d, i){ return data.data[i].name;}) //this id is used for mouseover stuff.
