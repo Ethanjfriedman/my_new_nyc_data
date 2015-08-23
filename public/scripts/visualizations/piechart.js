@@ -199,13 +199,13 @@ chartParams.endYear = parseInt(chartParams.endYear);
           mouseX = event.pageX;
           mouseY = event.pageY;
           $(document).mousemove( function(e) { //this anchors the label to the mouse position
+
              mouseX = e.pageX;
              mouseY = e.pageY;
             if(myBool === true){
               $('.blurb').css('visibility', 'visible').css('top', mouseY).css('left', mouseX).fadeIn('slow').text(myText);
             }
           });
-          
         })
       .on('mouseout', function(d){ //removes hover effects.
 
