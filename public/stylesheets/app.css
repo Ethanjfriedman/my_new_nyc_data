@@ -335,12 +335,23 @@ width:100%;
   font-weight: 400;
   text-align: center;
  }
+ #pause{
+ display:none;
+ margin-top:-2%;
+ }
  #year{
+  display:none;
   float: right;
+  position: absolute;
+  top:40%;
+  left:83%;
+  font-size:2em;
   z-index: 999;
-  padding-right:10%;
+  padding:2px;
+  border-radius: 2px;
   font-weight: 300;
-  color:darkblue;
+  color:white;
+  background-color: darkblue;
  }
  .submit{
   background-color: darkblue;

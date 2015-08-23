@@ -4,7 +4,8 @@
 console.log('loading timeseries.js');
 
 var makeTimeseries = function(data, chartParams, svgParams) {
-
+$('#year').css('display','inline');
+$('#pause').css('display','inline');
 console.log("let's make a timeseries chart");
 
 data = selectTimeseriesAdapter(data, chartParams);

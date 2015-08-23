@@ -2,7 +2,7 @@
 /////////BAR TEMPLATE//////////////
 ///////////////////////////////////
 
-console.log('loading bargraph.js');
+
 var makeBarGraph = function(data, chartParams, svgParams) {
 data = selectPieAdapter(data, chartParams);
 
@@ -103,7 +103,7 @@ $(window).resize(function(){
             }
         };
       }
-        console.log(barData);
+
         selectYear();
         svg.selectAll("thisdoesnotmatter")
           // .data(data.data) //love this line!
@@ -113,24 +113,36 @@ $(window).resize(function(){
           .style('fill',function(d, i){ return color(d); })
           .attr('id', function(d){ return (d[0] +": " + d[1])})
           .on('mouseover', function(d) {
+            myBoolean = true;
+            mouseX = event.pageX;
+            mouseY = event.pageY;
             d3.select(this)
             .style('fill', 'black');
             var myText = $(this).attr('id');
-            console.log(this);
+
               $(document).mousemove( function(e) { //this anchors the label to the mouse position
                  mouseX = e.pageX;
                  mouseY = e.pageY;
+                 if(myBoolean === true){
+                  $('.blurb').css('visibility', 'visible').css('top', mouseY).css('left', mouseX).fadeIn('slow').text(myText);
+                 } else{
+                  $('.blurb').css('visibility', 'hidden');
+                 }
               });
-              $('.blurb').css('visibility', 'visible').css('top', mouseY).css('left', mouseX).fadeIn('slow').text(myText);
+              
           })
           .on('mouseout', function(d){
-            d3.select(this)
-            .style('fill',function(d){ return color(d); });
+            myBoolean = false;
+        
+            
             setTimeout(function(){
                 $('.blurb').fadeOut('slow');
               },1500);
+            d3.select(this)
+            .style('fill',function(d){ return color(d); });
+            
           })
-          .attr("x", function(d) { console.log(d[0]); return x(d[0]); }) //here's the problem -Aarati
+          .attr("x", function(d) { return x(d[0]); }) //here's the problem -Aarati
           .attr("width", x.rangeBand())
           .attr("y", function(d, i) { return y(d[1]);  })
           .style('opacity', 0)
@@ -175,10 +187,13 @@ $(window).resize(function(){
       var $buttons = $('.yearButton');
       $('#year').text(data.years[0]);
 
+
    ///////////////////////////////////////////////
    //////// AUTOPLAY THROUGH YEARS  //////////////
    ///////////////////////////////////////////////
 
+$('#year').css('display','inline');
+$('#pause').css('display','block');
       var maxLoops = $buttons.length-1;
       var counter = 0;
 
@@ -207,7 +222,7 @@ $(window).resize(function(){
           year = i + parseInt(chartParams.startYear);
           drawBars(year);
           $('#year').text($(this).attr('id'));
-          console.log(year + 'yeaaar; ' + i);
+        
         });
       });
 
@@ -219,7 +234,7 @@ $(window).resize(function(){
   ///////////////////////////////////////////////
 
   var selectPieAdapter = function(data, params) {
-    console.log("selecting the right adapter to draw the bar chart");
+
     switch (params.dataType) {
       case 'firearms':
         data = adapterForFirearmsToBarChart(data, params);
@@ -246,7 +261,7 @@ $(window).resize(function(){
         return data;
         break;
       default:
-        console.log('uh-oh something went wrong in the bar selectAdapter function');
+  
         break;
     }
   }
@@ -257,7 +272,7 @@ $(window).resize(function(){
 
 
   var adapterForAbuseToBarChart = function(data, params, limit, skip) {
-    console.log("runing adapterForAbuseToBarChart");
+
     var result = {};
     result.data = [];
     result.years = ["2005", "2006", "2007", "2008", "2009"];
@@ -274,7 +289,7 @@ $(window).resize(function(){
     for (var i = 0; i < limit; i++) {
       var currentField = data.data[i];
       var currentResult = [];
-      console.log(keys);
+
       for (var j = 0; j < keys.length; j++) {
         var val = parseInt(currentField[keys[j]]);
         if (j < 5) {
@@ -292,8 +307,7 @@ $(window).resize(function(){
   }
     result.maxYValue = d3.max(yValues, function(d) {return d;});
     result.title = params.title;
-    console.log("adapted dataset:")
-    console.log(result);
+
     return result;
   }
 
@@ -304,7 +318,7 @@ $(window).resize(function(){
   ////////////////////////////////////////////
 
     var adapterForFirearmsToBarChart = function(data, params, limit, skip) {
-    console.log("running adapterForFirearmsToBarChart");
+   
 
     var result = {};
 
@@ -313,8 +327,8 @@ $(window).resize(function(){
     result.years = ["2002", "2003", "2004", "2005", "2006",'2007','2008','2009','2010','2011','2012'];
 
     var keys = Object.keys(data.data[0]).sort();
-    console.log(keys);
-    debugger;
+
+
 
     for (var y = 0; y <= result.years.length; y++) {
       if (y < parseInt(params.startYear)) {
@@ -328,7 +342,7 @@ $(window).resize(function(){
     for (var i = 0; i < limit; i++) {
       var currentField = data.data[i];
       var currentResult = [];
-      console.log(keys);
+
       for (var j = 0; j < keys.length; j++) {
         var val = parseInt(currentField[keys[j]]);
 
@@ -346,7 +360,6 @@ $(window).resize(function(){
   }
     result.maxYValue = d3.max(yValues, function(d) {return d;});
     result.title = params.title;
-    console.log("adapted dataset:")
-    console.log(result);
+
     return result;
   }

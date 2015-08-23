@@ -208,7 +208,7 @@ chartParams.endYear = parseInt(chartParams.endYear);
           });
         })
       .on('mouseout', function(d){ //removes hover effects.
-
+        d3.select(this).attr("opacity", 1);
         myBool = false;
           console.log('im out');
           setTimeout(function(){
@@ -277,7 +277,8 @@ chartParams.endYear = parseInt(chartParams.endYear);
   //////////////////////////////////////////
   ///////// autoplay through years /////////
   //////////////////////////////////////////
-
+$('#year').css('display','inline');
+$('#pause').css('display','block');
 var counter = 0;
  var maxLoops = chartParams.endYear - chartParams.startYear; //we can assume thats the number of years
 
