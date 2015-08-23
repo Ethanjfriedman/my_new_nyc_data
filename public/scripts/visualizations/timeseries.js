@@ -4,8 +4,7 @@
 console.log('loading timeseries.js');
 
 var makeTimeseries = function(data, chartParams, svgParams) {
-$('#year').css('display','inline');
-$('#pause').css('display','inline');
+
 console.log("let's make a timeseries chart");
 
 data = selectTimeseriesAdapter(data, chartParams);
@@ -163,19 +162,24 @@ var smallSeries = function(){
       .attr('opacity',0)
       .attr('id', 'allSeries[i][0].series')
       .on('mouseover', function(d) {
-      d3.select(this).attr('stroke-dasharray',"5,5").attr('stroke-width', '5px');
+        d3.select(this).attr('stroke-dasharray',"5,5").attr('stroke-width', '5px');
         var myText = $(this).attr('class').split(' ');
-
+        myBoolean = true;
+        mouseX = event.pageX;
+        mouseY = event.pageY;
         myText.shift();
         myText = myText.join('');
         $(document).mousemove( function(e) {
            mouseX = e.pageX;
            mouseY = e.pageY;
+           if(myBoolean === true){
+            $('.blurb').css('visibility', 'visible').css('top', mouseY).css('left', mouseX).fadeIn('slow').text(myText);
+           }
         });
-        $('.blurb').css('visibility', 'visible').css('top', mouseY).css('left', mouseX).fadeIn('slow').text(myText);
-
+        
       })
       .on('mouseout', function(d){
+        myBoolean = false;
         var that = this;
         setTimeout(function(){
           d3.select(that).attr('stroke-dasharray',"none").attr('stroke-width', '2px');
@@ -197,10 +201,24 @@ var smallSeries = function(){
       .attr('opacity', 0)
       .attr('id',function(d) {return (d.value); })
       .on('mouseover', function() {
+        myBoolean2 = true;
+        $(this).attr('r',5);
         var valueText = ($(this).attr('id')).slice(0,6);
-        $('.blurb').css('visibility', 'visible').css('margin-left', x-50).css('margin-top', y-150).fadeIn('slow').text(valueText);
+        mouseX = event.pageX;
+        mouseY = event.pageY;
+        $(document).mousemove( function(e) {
+           mouseX = e.pageX;
+           mouseY = e.pageY;
+           if(myBoolean2 === true){
+          console.log('doign')
+            $('.blurb').css('visibility', 'visible').css('left', mouseX).css('top', mouseY).fadeIn('slow').text(valueText);
+           }
+        });
+
       })
       .on('mouseout', function(d) {
+        $(this).attr('r',3);
+        myBoolean2 = false;
         var that = this;
         setTimeout(function(){
           $('.blurb').fadeOut('slow');
