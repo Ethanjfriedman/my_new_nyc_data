@@ -4,6 +4,7 @@ body {
   font-family: 'Open Sans', sans-serif;
   padding: 0;
   margin:0;
+  color:darkblue;
   background: black;
   background-image:url('https://dl.dropboxusercontent.com/u/89221222/AAA.jpg');
   background-repeat: no-repeat;
@@ -546,4 +547,58 @@ select {
 }
 .tools p{
  color:darkblue;
+}
+#how-to-modal{
+  height:200vh;
+  padding:2%;
+}
+
+#how-to-modal .login-title{
+  font-size: 2.5em;
+  margin-top:0;
+}
+
+#how-to-modal .logo{
+  text-align: center;
+  padding-left:0;
+  margin:0;
+}
+.directions{
+  margin-left:5%;
+  font-weight:400;
+  font-size:1.5em;
+}
+.directions span{
+  font-size:.8em;
+  display:block;
+  margin-top:2%;
+}
+.chart-types{
+  list-style: decimal;
+  padding-left:10%;
+  margin-top:0;
+}
+.chart-types li i{
+  font-size: 1.5em;
+  text-align: left;
+  display:inline-block;
+  margin-top:0;
+}
+.chart-types li{
+  margin-top:1%;
+
+}
+.chart-types dt{
+  font-size: 1em;
+  margin-top:2%;
+
+}
+.chart-types dd{
+  font-size: .8em;
+  margin-top:1%;
+  width:60%;
+}
+.time-disclaimer{
+  margin-left:5%;
+  display:block;
 }
