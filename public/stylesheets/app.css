@@ -1,5 +1,30 @@
 @import url(https://fonts.googleapis.com/css?family=Open+Sans:400,800,300);
 
+/*<><><><><><><>ANIMATIONS<><><><><><>*/
+@-webkit-keyframes floating {
+  0% {
+    -webkit-transform: translateY(0%);
+  }
+  50% {
+    -webkit-transform: translateY(8%);
+  }
+  100% {
+    -webkit-transform: translateY(0%);
+  }
+}
+@keyframes floating {
+  0% {
+    transform: translateY(0%);
+  }
+  50% {
+    transform: translateY(8%);
+  }
+  100% {
+    transform: translateY(0%);
+  }
+}
+/*<><><><><><><><><><><><><><><><>*/
+
 body {
   font-family: 'Open Sans', sans-serif;
   padding: 0;
@@ -68,6 +93,7 @@ transform:translateY(12px) rotate(45deg);
   z-index:888;/*so it's above the content and below the burger*/
   height:100vh;
   width: 100vw;
+  margin-left:-2%;
   top:-100vw;
   transition:.8s;
   background-color:darkblue;
@@ -121,82 +147,105 @@ width:100%;
 .navbar ul li:last-child{
   transition-delay:.3s;
 }
+
+/*//////////////MEDIA QUERIES////////////*/
+
+    @media (max-width: 760px) {
+        body{
+          background: white;
+          background-image: none;
+        }
+        .modal{
+          width:100vw !important;
+          margin: 0 !important;
+        }
+        .graph{
+          width:100% !important;
+          display: block;
+        }
+        .navbar{
+          height:80vh;
+        }
+        .navbar.open{
+          height:100vh;
+        }
+        select {
+          width: 30px;
+          white-space:pre-wrap;
+          display:inline-block;
+        }
+        .tools{
+          width:100% !important;
+          height:auto;
+          display: block;
+        }
+
+        .tools input {
+          display: inline-block;
+        }
+        .tools p{
+          display: inline-block;
+
+        }
+        #title{
+          font-size:1em;
+          font-weight: 800;
+        }
+        .fa{
+          display:inline-block !important;
+          margin-top: 3%!important;
+          margin-left:10vw!important;
+          font-size: 2em !important;
+        }
+        .arrow{
+          display: none !important;
+        }
+        .modal{
+          height:auto;
+        }
+        .fa-pie-chart{
+          margin-left:15vw!important;
+        }
+        .chooseGraph{
+          margin-top:-1%;
+          font-size: .9em;
+          text-align: left;
+        }
+        .controller{
+          display:block;
+        }
+        .mobileMenu{
+          display:block;
+        }
+        .logo {
+          text-align:left;
+          display: block;
+          padding:0;
+          margin:0;
+          font-size:3em !important;
+        }
+
+        .left{
+          padding-left:5vw;
+        }
+        .right{
+          display:none !important;
+          width:100vw;
+          padding:0;
+          border-top:1px solid white;
+          padding:2%;
+          margin:10% 0 0;
+        }
+
+        #year{
+          font-size:1.5em !important;
+          padding-bottom:10%; 
+        }
+
+    }
+/*//////////////////////////////////////*/
+/*<><><><><><><><><><><><><><><><><><><>*/
 /*<><><><><><><><>TOP<><><><><><><><><>*/
-@media (max-width: 760px) {
-  .graph{
-    width:100% !important;
-    display: block;
-  }
-  .navbar{
-    height:80vh;
-  }
-  .navbar.open{
-    height:100vh;
-  }
-  select {
-    width: 30px;
-    white-space:pre-wrap;
-    display:inline-block;
-  }
-  .tools{
-    width:100% !important;
-    height:25vh !important;
-    display: block;
-  }
-  .tools input {
-    display: inline-block;
-  }
-  .tools p{
-    display: inline-block;
-  }
-  #title{
-    font-size:1em;
-    font-weight: 800;
-  }
-  .fa{
-    display:inline-block !important;
-    margin-top: 3%!important;
-    margin-left:10vw!important;
-    font-size: 1em;
-  }
-  .modal{
-    height:150vh !important;
-  }
-  .fa-pie-chart{
-    margin-left:15vw!important;
-  }
-  .chooseGraph{
-    margin-top:-1%;
-    font-size: .9em;
-    text-align: left;
-  }
-  .controller{
-    display:block;
-  }
-  .mobileMenu{
-    display:block;
-  }
-  .logo {
-    text-align:left;
-    display: block;
-    padding:0;
-    margin:0;
-    font-size:3em !important;
-  }
-
-  .left{
-    padding-left:5vw;
-  }
-  .right{
-    display:none !important;
-    width:100vw;
-    padding:0;
-    border-top:1px solid white;
-    padding:2%;
-    margin:10% 0 0;
-  }
-
-}
 .topBar{
   font-family: 'Open Sans', sans-serif;
   background-color:darkblue;
@@ -259,6 +308,11 @@ width:100%;
   font-weight:800;
 }
 
+
+/*//////////////////////////////////////*/
+/*<><><><><><><><><><><><><><><><><><><>*/
+/*<><><><><><><><>GRAPH AREA<><><><><><><><><>*/
+
 #buttons, #keys, #pie {
   display: inline-block;
   vertical-align: top;
@@ -308,27 +362,6 @@ width:100%;
  .bars{
     transition:1s;
  }
- .fa{
-  z-index: 9999;
-  position: relative;
- }
- .hideMe{
-  opacity: 0;
-  display:none;
-  height:0;
-  width:0;
-  overflow: hidden;
- }
-
- .modal{
-  background-color: white;
-  opacity: .9;
-  width:90vw;
-  height:80vh;
-  border-radius: 5px;
-  margin:2% auto;
- }
-
 
  #title{
   display:inline-block;
@@ -342,10 +375,7 @@ width:100%;
  }
  #year{
   display:none;
-  float: right;
-  position: absolute;
-  top:40%;
-  left:83%;
+  position: relative;
   font-size:2em;
   z-index: 999;
   padding:2px;
@@ -354,15 +384,7 @@ width:100%;
   color:white;
   background-color: darkblue;
  }
- .submit{
-  background-color: darkblue;
-  color:white;
-  border-radius: none;
-  outline: none;
-  border:none;
-  box-shadow: 1px 1px 5px blue;
- }
- #buttons button{
+  #buttons button{
   background-color: white;
   color:darkblue;
   border:1px solid darkblue;
@@ -373,19 +395,7 @@ width:100%;
  #buttons button:hover{
   cursor:pointer;
  }
- .submit:hover{
-  cursor: pointer;
- }
- .activeButton{
-  background-color: darkblue !important;
-  color:white !important;
- }
- .controller{
-  display:flex;
-  flex-wrap:wrap;
-  justify-content:space-between;
-}
-svg{
+ svg{
   z-index: 888;
 }
 #keys{
@@ -400,31 +410,88 @@ svg{
  #pie{
   margin-left:5vw;
  }
-.tools{
+ /*//////////////////////////////////////*/
+/*<><><><><><><><><><><><><><><><><><><>*/
+/*<><><><><><><><>TOOL BAR<><><><><><><><><>*/
+ .fa{
+  z-index: 9999;
+  position: relative;
+ }
+ .hideMe{
+  opacity: 0;
+  display:none !important;
+  height:0;
+  width:0;
+  overflow: hidden;
+  padding:0;
+  margin:0;
+ }
+
+  .submit{
+  background-color: darkblue;
+  color:white;
+  border-radius: none;
+  outline: none;
+  border:none;
+  box-shadow: 1px 1px 5px blue;
+ }
+
+ .submit:hover{
+  cursor: pointer;
+ }
+
+ .tools{
   width:15vw;
   display: inline-block;
   background-color: lightblue;
   border-radius: 5px;
-  height:75.5vh;
+  height:auto;
   padding:1em;
   position: static;
   top:0;
   left:0;
  }
- .menu-greeting:hover{
-  cursor: default;
- }
+  .tools p{
+    color:darkblue;
+  }
  select {
   background-color: white;
   border:none;
   border-radius:none;
  }
+
+
+
  .chooseGraph{
+  margin-top:10%;
   text-align: center;
   color:darkblue;
-  font-size: 3em;
+  font-size: 2em;
   font-weight: 300;
+  margin-left:5%;
+  display: inline-block;
+  -webkit-animation-name: floating;
+  -webkit-animation-duration: 1.5s;
+  -webkit-animation-iteration-count: infinite;
+  animation-name: floating;
+  animation-duration: 1.5s;
+  animation-iteration-count: infinite;
  }
+
+ .arrow{
+  margin-top: 10%;
+  display: inline-block;
+  font-size: 2.5em;
+  margin-left:5%;
+  -webkit-animation-name: floating;
+  -webkit-animation-duration: 1.5s;
+  -webkit-animation-iteration-count: infinite;
+  animation-name: floating;
+  animation-duration: 1.5s;
+  animation-iteration-count: infinite;
+ }
+
+
  .fa{
   color:darkblue;
   font-size: 3.5em;
@@ -432,10 +499,11 @@ svg{
   text-align: center;
   margin-top:5%;
  }
-select {
-    width: 100px;
-    white-space:pre-wrap;
-}
+ select {
+  width: 100px;
+  white-space:pre-wrap;
+ }
+
  .fa:hover{
   cursor: pointer;
  }
@@ -444,6 +512,37 @@ select {
   text-decoration: none;
   font-family: 'Open Sans',sans-serif;
  }
+ 
+ .submit a{
+  color:white;
+  text-decoration: none;
+ }
+ /*//////////////////////////////////////*/
+/*<><><><><><><><><><><><><><><><><><><>*/
+/*<><><><><><><><>MODAL STYLING<><><><><><><><><>*/
+
+ .modal{
+  background-color: white;
+  opacity: .9;
+  width:90vw;
+  height:auto;
+  border-radius: 5px;
+  margin:2% auto;
+ }
+
+  
+
+ .activeButton{
+  background-color: darkblue !important;
+  color:white !important;
+ }
+ .controller{
+  display:flex;
+  flex-wrap:wrap;
+  justify-content:space-between;
+}
+
+
 
  .login-title{
   color:darkblue;
@@ -453,13 +552,6 @@ select {
   font-weight: 400;
  }
 
- .or{
-  margin-bottom:2vh;
-  margin-top:5vh;
-  padding-top:1vh;
-  font-weight:300;
-  font-size: 1.5em;
- }
 
  hr{
   background:darkblue;
@@ -469,6 +561,10 @@ select {
   width:100px;
   margin:0 auto;
  }
+
+  /*//////////////////////////////////////*/
+/*<><><><><><><><><><><><><><><><><><><>*/
+/*<><><><><><><><>OLD LOGIN STYLING<><><><><><><><><>*/
  #login{
   padding:1em;
   text-align: center;
@@ -476,10 +572,7 @@ select {
   font-family: 'Open Sans', sans-serif;
   font-size:1.5em;
  }
- .submit a{
-  color:white;
-  text-decoration: none;
- }
+
  #register{
   margin-top:2.5vh;
   font-size: 1em;
@@ -489,6 +582,25 @@ select {
  #register:hover{
   box-shadow: none;
  }
+
+ .user-submit{
+  background-color: darkblue;
+  color:white;
+  border-radius: none;
+  outline: none;
+  border:none;
+  box-shadow: 1px 1px 5px blue;
+  font-size: 1em;
+  margin-top:3vh;
+}
+.user-submit:hover{
+  cursor: pointer;
+  box-shadow: none;
+}
+
+   /*//////////////////////////////////////*/
+/*<><><><><><><><><><><><><><><><><><><>*/
+/*<><><><><><><><>ABOUT PAGE<><><><><><><><><>*/
  #about{
   padding:1em;
   color:darkblue;
@@ -499,7 +611,7 @@ select {
   margin-bottom:0;
  }
  #about-modal{
-  height:150vh !important;
+
  }
  #about .logo{
   width:10vw;
@@ -531,25 +643,14 @@ select {
   color:white;
   text-decoration: none;
 }
-.user-submit{
-  background-color: darkblue;
-  color:white;
-  border-radius: none;
-  outline: none;
-  border:none;
-  box-shadow: 1px 1px 5px blue;
-  font-size: 1em;
-  margin-top:3vh;
-}
-.user-submit:hover{
-  cursor: pointer;
-  box-shadow: none;
-}
-.tools p{
- color:darkblue;
-}
+
+
+   /*//////////////////////////////////////*/
+/*<><><><><><><><><><><><><><><><><><><>*/
+/*<><><><><><><><>HOW TO PAGE<><><><><><><><><>*/
+
+
 #how-to-modal{
-  height:200vh;
   padding:2%;
 }
 
@@ -565,6 +666,7 @@ select {
 }
 .directions{
   margin-left:5%;
+  margin-top:10%;
   font-weight:400;
   font-size:1.5em;
 }
@@ -601,4 +703,5 @@ select {
 .time-disclaimer{
   margin-left:5%;
   display:block;
+  margin-top:0;
 }

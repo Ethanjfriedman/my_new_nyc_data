@@ -231,7 +231,7 @@
 </div>
 <!--=============Graph Area======= -->
 <div class='graph'>
-  <h3 class='chooseGraph'>Choose a Graph Type</h3>
+  <p class='arrow'>⬅ </p><h3 class='chooseGraph'>Choose a Graph Type</h3>
 <header>
     <h1 id="title"></h1>
     <!-- <p id='pause'>Pause on a Year</p> -->
@@ -294,7 +294,7 @@ function activate3(obj) {
 
 
 $('.fa-pie-chart').on('click', function(){
-  $('.chooseGraph').text('Choose a dataset and timespan')
+  $('.chooseGraph').text('Choose a dataset, colorscheme and timespan')
   $('i').addClass('hideMe');
   $('.pieForm').removeClass('hideMe');
 })
@@ -302,14 +302,14 @@ $('.fa-pie-chart').on('click', function(){
 
 
 $('.fa-line-chart').on('click', function(){
-  $('.chooseGraph').text('Choose a dataset and timespan')
+  $('.chooseGraph').text('Choose a dataset, colorscheme and timespan')
   $('i').addClass('hideMe');
   $('.timeSeriesForm').removeClass('hideMe');
 })
 
 
 $('.fa-bar-chart').on('click', function(){
-  $('.chooseGraph').text('Choose a dataset and timespan')
+  $('.chooseGraph').text('Choose a dataset, colorscheme and timespan')
   $('i').addClass('hideMe');
   $('.barForm').removeClass('hideMe');
 })
@@ -317,12 +317,14 @@ $('.fa-bar-chart').on('click', function(){
 $('.pieForm .submit').on('click', function(){
   $('.pieForm').addClass('hideMe');
   $('.chooseGraph').addClass('hideMe');
+  $('.arrow').addClass('hideMe');
   $('.save').removeClass('hideMe');
   $('.back').removeClass('hideMe');
 })
 $('.timeSeriesForm .submit').on('click', function(){
   $('.timeSeriesForm').addClass('hideMe');
   $('.chooseGraph').addClass('hideMe');
+  $('.arrow').addClass('hideMe');
   $('.save').removeClass('hideMe');
   $('.back').removeClass('hideMe');
 
@@ -330,6 +332,7 @@ $('.timeSeriesForm .submit').on('click', function(){
 $('.barForm .submit').on('click', function(){
   $('.barForm').addClass('hideMe');
   $('.chooseGraph').addClass('hideMe');
+  $('.arrow').addClass('hideMe');
   $('.save').removeClass('hideMe');
   $('.back').removeClass('hideMe');
 
