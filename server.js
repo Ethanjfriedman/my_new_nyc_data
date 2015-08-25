@@ -76,6 +76,10 @@ server.get('/about', function (req, res) {
   res.render('about');
 });
 
+server.get('/howto', function (req, res) {
+  res.render('how_to');
+})
+
 // server.get('/new', function (req, res) {
 //   res.render('users/new');
 // });
@@ -92,4 +96,4 @@ server.get('/', function(req, res) {
   // } else {
   //   res.render('users/login');
   // }
-});  
+});
