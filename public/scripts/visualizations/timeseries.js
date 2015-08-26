@@ -14,15 +14,16 @@ data = selectTimeseriesAdapter(data, chartParams);
 ///////////////////////////////////////////////////
 var smallSeries = function(){
   var iw = $(window).innerWidth();
-    if(iw < 760){
+    if(iw < 560){
       width = 350 - margin.left - margin.right;
       drawTimeSeries();
-      console.log('small')
-    } else{
-      width=460 - margin.left - margin.right;
-      drawTimeSeries();
-      console.log('big')
-    }
+    } else if(iw < 760){
+        width=450 - margin.left - margin.right;
+        drawTimeSeries();
+      } else{
+          width=560 - margin.left - margin.right;
+          drawTimeSeries();
+        }
 };
 
 
