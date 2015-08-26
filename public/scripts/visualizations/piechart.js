@@ -280,9 +280,9 @@ $('#pause').css('display','block');
 var counter = 0;
  var maxLoops = chartParams.endYear - chartParams.startYear; //we can assume thats the number of years
 
-    (function next() {
+    function next() {
 
-
+    console.log('next');
 
             if (counter++ >= maxLoops) return;
 
@@ -297,21 +297,41 @@ var counter = 0;
                 }
                 next();
             }, 5000);
-        })();
+        }
+        next();
 
    //////////////////////////////////////////////////
    /////////// year button click effect /////////////
    //////////////////////////////////////////////////
+  var isAnimating = true;
+  var currentYearPausedOn; //the button that was last clicked
 
     $.each($buttons, function(i, val) {
       $(val).click(function() {
-        counter = maxLoops +10;
-        $($buttons).removeClass('activeButton');
-        $(this).addClass('activeButton');
-        $('#year').text($(this).attr('id'));
-        d3.selectAll("path")
-        .data(pieCharts[i]) //this is important*************************************
-        .transition().duration(1000).attrTween("d", makeArcTween(radius));
+        //clicking for the first time
+       that = this;
+    
+        if((isAnimating === true) || (that !== currentYearPausedOn)){ //if its animating
+          console.log('im stopping the animation');
+          counter = maxLoops +10;
+          $($buttons).removeClass('activeButton');
+          $(this).addClass('activeButton');
+          $('#year').text($(this).attr('id'));
+          d3.selectAll("path")
+          .data(pieCharts[i]) //this is important*************************************
+          .transition().duration(1000).attrTween("d", makeArcTween(radius));
+          isAnimating = false;
+          currentYearPausedOn = that;
+       //clicking again...
+
+        } else {
+            console.log('is Animating again');
+            counter = -1;
+            isAnimating = true;
+            next();
+          }
+
+        
       });
     });
   // });
