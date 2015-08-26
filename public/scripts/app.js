@@ -73,6 +73,7 @@ app.controller('visualizationController', ['$http', function($http) {
         controller.formData.chartParams.title = "Reasons for Police-Civilian Encounters That Led to Complaints, "
                                                 + (2005 + parseInt(controller.formData.chartParams.startYear))
                                                 + " - " + (2005 + parseInt(controller.formData.chartParams.endYear));
+        controller.formData.svgParams.height = 700;
         break;
       default:
         console.log("error in visualizationController.whichDataset()");
@@ -194,16 +195,13 @@ app.controller('visualizationController', ['$http', function($http) {
     $http.get(controller.formData.dataURL)
       .then(function (dataset) {
         console.log("got the bar graph data. now to run makeBarGraph()");
-        makeBarGraph(dataset,controller.formData.chartParams,{});
+        if (controller.formData.svgParams.height == 700) {
+        makeBarGraph(dataset,controller.formData.chartParams, controller.formData.svgParams);
+        } else {
+          makeBarGraph(dataset,controller.formData.chartParams, {});
+        }
       });
   };
-}]);
 
-// this.getPieChartData = function () {
-//   this.whichDataset();
-//
-//   $http.get(controller.formData.dataURL)
-//     .then(function (dataset) {
-//       controller.dataset = dataset;
-//       controller.makePieChart( dataset, controller.formData.chartParams, {} );
-//     });
+  
+}]);

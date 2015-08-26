@@ -26,11 +26,6 @@ var smallSeries = function(){
         }
 };
 
-
-
-
- 
-
   //////////////////////////////////////
   ////////// SVG VARIABLES /////////////
   //////////////////////////////////////
@@ -193,7 +188,7 @@ function drawTimeSeries(){
             $('.blurb').css('visibility', 'visible').css('top', mouseY).css('left', mouseX).fadeIn('slow').text(myText);
            }
         });
-        
+
       })
       .on('mouseout', function(d){
         myBoolean = false;
@@ -227,7 +222,6 @@ function drawTimeSeries(){
            mouseX = e.pageX;
            mouseY = e.pageY;
            if(myBoolean2 === true){
-          console.log('doign')
             $('.blurb').css('visibility', 'visible').css('left', mouseX).css('top', mouseY).fadeIn('slow').text(valueText);
            }
         });
@@ -299,6 +293,10 @@ var selectTimeseriesAdapter = function(data, params) {
       data = adapterForLanguageToTimeseries(data, params, 4, 2);
       return data;
       break;
+    case 'Reasons for Encounters':
+      data = adapterForLanguageToTimeseries(data, params, 36, 34);
+      return data;
+      break;
     default:
       console.log('uh-oh something went wrong in the Timeseries selectAdapter function');
       break;
@@ -321,25 +319,23 @@ var adapterForLanguageToTimeseries = function(data, params, limit, skip) {
   result.title = params.title;
 
   for (var i = 0; i < limit; i++) {
-    var currentSeries = data.data[i];
-    var dataSeries = [];
-    var keys = Object.keys(currentSeries).sort();  //grabbing the keys for the current series
-    var seriesName = currentSeries[keys[keys.length - 1]]; //series name is the final one after sorting in prior line
-    for (var j = parseInt(params.startYear); j <= parseInt(params.endYear); j++) {
-      var dataPoint = {};
-      dataPoint.date = parseDate((2005 + j).toString());
-      dataPoint.value = parseInt(currentSeries[keys[j]]);
-      dataPoint.series = seriesName;
-      dates.push(dataPoint.date);
-      values.push(dataPoint.value);
-      dataSeries.push(dataPoint);
-      }
     if (i !== skip) {
+      var currentSeries = data.data[i];
+      var dataSeries = [];
+      var keys = Object.keys(currentSeries).sort();  //grabbing the keys for the current series
+      var seriesName = currentSeries[keys[keys.length - 1]]; //series name is the final one after sorting in prior line
+      for (var j = parseInt(params.startYear); j <= parseInt(params.endYear); j++) {
+        var dataPoint = {};
+        dataPoint.date = parseDate((2005 + j).toString());
+        dataPoint.value = parseInt(currentSeries[keys[j]]);
+        dataPoint.series = seriesName;
+        dates.push(dataPoint.date);
+        values.push(dataPoint.value);
+        dataSeries.push(dataPoint);
+        }
       allSeries.push(dataSeries);
       }
     }
-
-
 
   values.sort(function (a, b) {return b - a});
   var maxVal = values[0];
