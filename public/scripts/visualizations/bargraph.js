@@ -197,7 +197,7 @@ $('#pause').css('display','block');
       var maxLoops = $buttons.length-1;
       var counter = 0;
 
-          (function next() {
+          function next() {
               if (counter++ >= maxLoops) return;
 
               setTimeout(function() {
@@ -209,25 +209,42 @@ $('#pause').css('display','block');
                   }
                   next();
               }, 5000);
-          })();
+          }
+        next();
     ///////////////////////////////////////////////
     ////////  BUTTON CLICK HANDLERS  //////////////
     ///////////////////////////////////////////////
+    var isAnimating = true;
+    var currentYearPausedOn; //the button that was last clicked
 
       $.each($buttons, function(i, val) {
         $(val).click(function() {
-          counter = maxLoops +10;
-          $($buttons).removeClass('activeButton');
-          $(this).addClass('activeButton');
-          year = i + parseInt(chartParams.startYear);
-          drawBars(year);
-          $('#year').text($(this).attr('id'));
-        
+
+           //clicking for the first time
+          that = this;
+
+          if((isAnimating === true) || (that !== currentYearPausedOn)){
+            counter = maxLoops +10;
+            $($buttons).removeClass('activeButton');
+            $(this).addClass('activeButton');
+            year = i + parseInt(chartParams.startYear);
+            drawBars(year);
+            $('#year').text($(this).attr('id'));
+            isAnimating = false;
+            currentYearPausedOn = that;
+       //clicking again...
+
+          } else {
+              counter = -1;
+              isAnimating = true;
+              $($buttons).removeClass('activeButton');
+              next();
+          }
         });
       });
 
 
-  }
+  };
 
   ///////////////////////////////////////////////
   ///////// SELECT THE RIGHT ADAPTER  ///////////

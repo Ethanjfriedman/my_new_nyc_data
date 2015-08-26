@@ -312,7 +312,6 @@ var counter = 0;
        that = this;
     
         if((isAnimating === true) || (that !== currentYearPausedOn)){ //if its animating
-          console.log('im stopping the animation');
           counter = maxLoops +10;
           $($buttons).removeClass('activeButton');
           $(this).addClass('activeButton');
@@ -325,9 +324,9 @@ var counter = 0;
        //clicking again...
 
         } else {
-            console.log('is Animating again');
             counter = -1;
             isAnimating = true;
+            $($buttons).removeClass('activeButton');
             next();
           }
 
