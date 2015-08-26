@@ -68,9 +68,9 @@ server.use(session({                      //setting up session
 //
 // var userController = require('./controllers/users.js');
 // server.use('/users', userController);
-
-var visualizationController = require('./controllers/visualizations.js');
-server.use('/visualizations', visualizationController);
+//
+// var visualizationController = require('./controllers/visualizations.js');
+// server.use('/visualizations', visualizationController);
 
 server.get('/about', function (req, res) {
   res.render('about');
@@ -90,10 +90,15 @@ server.get('/howto', function (req, res) {
 
 // /  THIS FUNCTION REQUIRES USER LOGIN BEFORE PROCEEDING ANYWHERE
 // OTHER THAN HOME PAGE:
-server.get('/', function(req, res) {
+server.get('/home', function(req, res) {
   // if (req.session.userId) {
     res.render('homepage');
   // } else {
   //   res.render('users/login');
   // }
+
 });
+
+server.get('/', function (req, res) {
+  res.render('how_to');
+})
