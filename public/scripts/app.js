@@ -66,6 +66,14 @@ app.controller('visualizationController', ['$http', function($http) {
                                                 + (2005 + parseInt(controller.formData.chartParams.startYear))
                                                 + " - " + (2005 + parseInt(controller.formData.chartParams.endYear));
         break;
+      case 'https://data.cityofnewyork.us/resource/4vsa-fhnm.json':
+        controller.formData.chartParams.yearType = '2009';
+        controller.formData.chartParams.totalPresent = 'weird';
+        controller.formData.chartParams.dataType = 'Reasons for Encounters';
+        controller.formData.chartParams.title = "Reasons for Police-Civilian Encounters That Led to Complaints, "
+                                                + (2005 + parseInt(controller.formData.chartParams.startYear))
+                                                + " - " + (2005 + parseInt(controller.formData.chartParams.endYear));
+        break;
       default:
         console.log("error in visualizationController.whichDataset()");
         break;
@@ -81,9 +89,6 @@ app.controller('visualizationController', ['$http', function($http) {
         controller.dataset = dataset;
         controller.makePieChart( dataset, controller.formData.chartParams, {} );
       });
-      // .then(function() {
-      //         $http.post('/visualizations', {dataset: controller.dataset, charParms: controller.formData.chartParams, svgParams: {}});
-      // });
   };
 
   //THIS IS THE VERSION THAT GOES TO OUR SERVER NOT TO THE API
@@ -167,10 +172,6 @@ app.controller('visualizationController', ['$http', function($http) {
   // }
 
 
-
-
-
-
   //get data for and draw a timeseries chart
 
   this.getTimeseriesData = function () {
@@ -206,17 +207,3 @@ app.controller('visualizationController', ['$http', function($http) {
 //       controller.dataset = dataset;
 //       controller.makePieChart( dataset, controller.formData.chartParams, {} );
 //     });
-
-var firearms = {
-  name: "Firearms Discharge Report",
-  dataURL:"https://data.cityofnewyork.us/resource/7r8u-zrb7.json",
-  description: "Reasons for NYPD firearms discharge",
-  dataset: [
-    { "discharge_detail" : "Adversarial Conflict", "_2012" : "45", "_2010" : "33", "_2011" : "36", "_2002" : "55", "_2006" : "59", "_2005" : "59", "_2004" : "51", "_2003" : "61", "_2009" : "47", "_2008" : "49", "_2007" : "45" },
-    { "discharge_detail" : "Animal Attack", "_2012" : "24", "_2010" : "30", "_2011" : "36", "_2002" : "38", "_2006" : "30", "_2005" : "32", "_2004" : "26", "_2003" : "35", "_2009" : "28", "_2008" : "30", "_2007" : "39" },
-    { "discharge_detail" : "Unintentional Discharge", "_2012" : "21", "_2010" : "21", "_2011" : "15", "_2002" : "24", "_2006" : "26", "_2005" : "25", "_2004" : "27", "_2003" : "25", "_2009" : "23", "_2008" : "15", "_2007" : "15" },
-    { "discharge_detail" : "Mistaken Identity", "_2012" : "0", "_2010" : "0", "_2011" : "0", "_2002" : "0", "_2006" : "1", "_2005" : "0", "_2004" : "0", "_2003" : "0", "_2009" : "1", "_2008" : "0", "_2007" : "0" },
-    { "discharge_detail" : "Unauthorized use of a Firearm", "_2012" : "6", "_2010" : "6", "_2011" : "2", "_2002" : "0", "_2006" : "8", "_2005" : "6", "_2004" : "5", "_2003" : "2", "_2009" : "4", "_2008" : "3", "_2007" : "6" },
-    { "discharge_detail" : "MOS Suicide / Attempt", "_2012" : "9", "_2010" : "2", "_2011" : "3", "_2002" : "2", "_2006" : "3", "_2005" : "3", "_2004" : "5", "_2003" : "7", "_2009" : "3", "_2008" : "8", "_2007" : "6" }
-  ]
-};

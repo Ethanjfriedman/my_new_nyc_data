@@ -33,8 +33,6 @@ chartParams.endYear = parseInt(chartParams.endYear);
   $('#keys *').remove();
 
 
-
-
   //////////////////////////////////////
   ////////// SVG VARIABLES /////////////
   //////////////////////////////////////
@@ -57,7 +55,6 @@ chartParams.endYear = parseInt(chartParams.endYear);
     arc = d3.svg.arc();
 
 
-
   ////////////////////////////////////////////////////
   /////// calling the appropriate adapter ////////////
   ////////////////////////////////////////////////////
@@ -73,8 +70,9 @@ chartParams.endYear = parseInt(chartParams.endYear);
             adapterForGenderOfVictimsToPie(data);
           } else if (chartParams.dataType == 'Gender of Officers'){
               adapterForGenderOfOfficersToPie(data);
+          } else if (chartParams.dataType == 'Reasons for Encounters'){
+              adapterForReasonsForEncountersToPie(data);
           }
-
 
   ////////////////////////////////////////////////////////////////
   /////// getting rid of total & subtotal if appropriate /////////
@@ -335,17 +333,16 @@ var counter = 0;
 
 
 
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////    ADAPTERS FOR EVERYTHING    //////////////////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
  ///////////////////////////////////////////////////
  /////////// ADAPTER FOR FIREARMS DATA /////////////
  ///////////////////////////////////////////////////
 
  var adapterForFirearmsToPie = function(data){
-
-
-
     for(type = 0; type < data.data.length; type++){
-
-
       data.data[type].arrOfYearValues = [
          data.data[type]._2002,
          data.data[type]._2003,
@@ -362,22 +359,14 @@ var counter = 0;
 
       numberOfYearsForThisDataset = data.data[type].arrOfYearValues.length; //i didnt use var because i wanted to cheat scope and make this global :-)
       data.data[type].name = data.data[type].discharge_detail;
-
     }
-
 };
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-////////////////////////////////////////    ADAPTERS FOR EVERYTHING    //////////////////////////////////////////////////////////////////////////////////
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
 
  ///////////////////////////////////////////////////
- /////////// ADAPTER FOR FIREARMS DATA /////////////
+ ///////// ADAPTER FOR OFFENSIVE LANGUAGE //////////
  ///////////////////////////////////////////////////
 
 var adapterForOffensiveLanguageToPie = function(data){
-
-
     for(type = 0; type < data.data.length; type++){
       data.data[type].arrOfYearValues = [
          data.data[type]._number_1,
@@ -388,9 +377,7 @@ var adapterForOffensiveLanguageToPie = function(data){
       ];
       numberOfYearsForThisDataset = data.data[type].arrOfYearValues.length; //i didnt use var because i wanted to cheat scope and make this global :-)
       data.data[type].name = data.data[type].type_of_offensive_language_allegation;
-
     }
-
 };
 
 
@@ -438,7 +425,6 @@ var adapterForRaceOfVictimsToPie = function(data){
       data.data[type].name = data.data[type].race;
 
     }
-
 };
 
 
@@ -485,4 +471,28 @@ var adapterForGenderOfOfficersToPie = function(data){
 
     }
 
+};
+
+
+///////////////////////////////////////////////////////
+///////// ADAPTER FOR REASONS FOR ENCOUNTERS //////////
+///////////////////////////////////////////////////////
+
+var adapterForReasonsForEncountersToPie = function(data){
+  for(type = 0; type < data.data.length; type++){
+    data.data[type].arrOfYearValues = [
+       data.data[type]._number_1,
+       data.data[type]._number_2,
+       data.data[type]._number_3,
+       data.data[type]._number_4,
+       data.data[type]._number_5
+    ];
+    numberOfYearsForThisDataset = data.data[type].arrOfYearValues.length; //i didnt use var because i wanted to cheat scope and make this global :-)
+
+    if (data.data[type].name == 'Total') {
+      data.data.splice(type, 1);
+    } else {
+      data.data[type].name = data.data[type].type_of_encounter;
+    }
+  }
 };
