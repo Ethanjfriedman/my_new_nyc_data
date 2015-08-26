@@ -15,22 +15,20 @@ data = selectTimeseriesAdapter(data, chartParams);
 var smallSeries = function(){
   var iw = $(window).innerWidth();
     if(iw < 760){
-      width = 150 - margin.left - margin.right;
+      width = 350 - margin.left - margin.right;
+      drawTimeSeries();
+      console.log('small')
     } else{
       width=460 - margin.left - margin.right;
+      drawTimeSeries();
+      console.log('big')
     }
 };
 
 
 
 
-  ////////////////////////////////////////////////////////////////////////////
-  //// clearing out existing SVG elements as well as keys and buttons ////////
-  ////////////////////////////////////////////////////////////////////////////
-
-  $('svg').remove();
-  $('#buttons button').remove();
-  $('#keys *').remove();
+ 
 
   //////////////////////////////////////
   ////////// SVG VARIABLES /////////////
@@ -44,7 +42,7 @@ var smallSeries = function(){
   else{
      hexColors = hexColorsWinter;
   }
-  var margin = svgParams.margin || {top: 20, right: 20, bottom: 30, left: 50},
+  var margin = svgParams.margin || {top: 20, right: 20, bottom: 30, left: 10},
       width = svgParams.width || 460 - margin.left - margin.right,
       height = svgParams.height || 300 - margin.top - margin.bottom;
 
@@ -60,6 +58,24 @@ var smallSeries = function(){
 
   //scaling
  ////////////////////////////////////////////
+  ////////////////////////////////////////////
+   ////////////////////////////////////////////
+    ////////////////////////////////////////////
+     ////////////////////////////////////////////
+function drawTimeSeries(){
+
+   ////////////////////////////////////////////////////////////////////////////
+  //// clearing out existing SVG elements as well as keys and buttons ////////
+  ////////////////////////////////////////////////////////////////////////////
+
+  $('svg').remove();
+  $('#buttons button').remove();
+  $('#keys *').remove();
+
+   /////////////////////////////////////////
+  //// drawing all the svg elements ////////
+  //////////////////////////////////////////
+
 
   var x = d3.time.scale()
       .range([0, width]);
@@ -232,6 +248,13 @@ var smallSeries = function(){
       .attr('fill',function(d){ return hexColors[i]; })
 
 
+
+
+
+
+  }
+}
+smallSeries();
  ///////////////////////////////////////////////////
  /////////// MEDIA QUERIES RESPONSIVE STUFF /////////////
  ///////////////////////////////////////////////////
@@ -241,9 +264,6 @@ var smallSeries = function(){
      smallSeries();
     //  drawBars();
    });
-
-
-  }
 
 }
 

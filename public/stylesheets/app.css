@@ -399,7 +399,8 @@ width:100%;
   z-index: 888;
 }
 #keys{
-  width: 180px;
+  width: auto;
+  max-width:180px;
 }
 
  .graph{
