@@ -1,29 +1,7 @@
 @import url(https://fonts.googleapis.com/css?family=Open+Sans:400,800,300);
 
 /*<><><><><><><>ANIMATIONS<><><><><><>*/
-@-webkit-keyframes floating {
-  0% {
-    -webkit-transform: translateY(0%);
-  }
-  50% {
-    -webkit-transform: translateY(8%);
-  }
-  100% {
-    -webkit-transform: translateY(0%);
-  }
-}
-@keyframes floating {
-  0% {
-    transform: translateY(0%);
-  }
-  50% {
-    transform: translateY(8%);
-  }
-  100% {
-    transform: translateY(0%);
-  }
-}
-/*<><><><><><><><><><><><><><><><>*/
+
 
 body {
   font-family: 'Open Sans', sans-serif;
@@ -470,13 +448,8 @@ width:100%;
   font-size: 2em;
   font-weight: 300;
   margin-left:5%;
+  max-width: 50vw;
   display: inline-block;
-  -webkit-animation-name: floating;
-  -webkit-animation-duration: 1.5s;
-  -webkit-animation-iteration-count: infinite;
-  animation-name: floating;
-  animation-duration: 1.5s;
-  animation-iteration-count: infinite;
  }
 
  .arrow{
@@ -484,12 +457,6 @@ width:100%;
   display: inline-block;
   font-size: 2.5em;
   margin-left:5%;
-  -webkit-animation-name: floating;
-  -webkit-animation-duration: 1.5s;
-  -webkit-animation-iteration-count: infinite;
-  animation-name: floating;
-  animation-duration: 1.5s;
-  animation-iteration-count: infinite;
  }
 
 

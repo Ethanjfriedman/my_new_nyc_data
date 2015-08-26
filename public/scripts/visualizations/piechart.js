@@ -284,21 +284,27 @@ var counter = 0;
 
     console.log('next');
 
-            if (counter++ >= maxLoops) return;
-
+            if (counter++ >= maxLoops){ return;} else{
+            var currentCount = counter;
             setTimeout(function() {
-                $('#year').text(yearsToLabel[chartParams.startYear + counter]); //years[counter] would be replaced by i
+              if(counter > maxLoops){ return;} else{
+                $('#year').text(yearsToLabel[chartParams.startYear + currentCount]); //years[counter] would be replaced by i
                 d3.selectAll("path")
-                .data(pieCharts[counter])
+                .data(pieCharts[currentCount])
                 .transition().duration(1000).attrTween("d", makeArcTween(radius));
 
                 if(counter === maxLoops){
                   counter = -1;
                 }
                 next();
+              }
             }, 5000);
+          }
         }
         next();
+
+
+
 
    //////////////////////////////////////////////////
    /////////// year button click effect /////////////

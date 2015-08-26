@@ -198,18 +198,23 @@ $('#pause').css('display','block');
       var counter = 0;
 
           function next() {
-              if (counter++ >= maxLoops) return;
-
+            console.log('next')
+              if (counter++ >= maxLoops){ return;} else {
+              year = counter + parseInt(chartParams.startYear);
+              var currentCount = counter;
               setTimeout(function() {
-                  $('#year').text(data.years[counter]);
-                  year = counter + parseInt(chartParams.startYear);
+                if(counter > maxLoops){ return;} else{
+                $('#year').text(data.years[currentCount]);
                   drawBars(year);
-                  if(counter === maxLoops){
+                  if(currentCount === maxLoops){
                     counter = -1;
                   }
                   next();
+                }
               }, 5000);
+            }
           }
+
         next();
     ///////////////////////////////////////////////
     ////////  BUTTON CLICK HANDLERS  //////////////
