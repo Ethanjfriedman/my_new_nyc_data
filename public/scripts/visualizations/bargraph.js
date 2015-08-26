@@ -4,7 +4,7 @@
 
 
 var makeBarGraph = function(data, chartParams, svgParams) {
-data = selectPieAdapter(data, chartParams);
+data = selectBarAdapter(data, chartParams);
 
 $('#buttons button').remove();
 
@@ -129,18 +129,18 @@ $(window).resize(function(){
                   $('.blurb').css('visibility', 'hidden');
                  }
               });
-              
+
           })
           .on('mouseout', function(d){
             myBoolean = false;
-        
-            
+
+
             setTimeout(function(){
                 $('.blurb').fadeOut('slow');
               },1500);
             d3.select(this)
             .style('fill',function(d){ return color(d); });
-            
+
           })
           .attr("x", function(d) { return x(d[0]); }) //here's the problem -Aarati
           .attr("width", x.rangeBand())
@@ -247,15 +247,13 @@ $('#pause').css('display','block');
           }
         });
       });
-
-
   };
 
   ///////////////////////////////////////////////
   ///////// SELECT THE RIGHT ADAPTER  ///////////
   ///////////////////////////////////////////////
 
-  var selectPieAdapter = function(data, params) {
+  var selectBarAdapter = function(data, params) {
 
     switch (params.dataType) {
       case 'firearms':
@@ -267,11 +265,11 @@ $('#pause').css('display','block');
         return data;
         break;
       case 'Abuse of Authority':
-        data = adapterForAbuseToBarChart(data, params, 25, 25); //WORKS
+        data = adapterForAbuseToBarChart(data, params, 25, 25);
         return data;
         break;
       case 'Race of Victims':
-        data = adapterForAbuseToBarChart(data, params, 7, 5); //works
+        data = adapterForAbuseToBarChart(data, params, 7, 5);
         return data;
         break;
       case 'Gender of Officers':
@@ -282,8 +280,12 @@ $('#pause').css('display','block');
         data = adapterForAbuseToBarChart(data, params, 4, 2);
         return data;
         break;
+      case 'Reasons for Encounters':
+        data = adapterForAbuseToBarChart(data, params, 36 ,34);
+        return data;
+        break;
       default:
-  
+        console.log("Error in selectBarAdapter -- dataset not found");
         break;
     }
   }
@@ -309,22 +311,23 @@ $('#pause').css('display','block');
     result.abuses = [];
     var yValues = [];
     for (var i = 0; i < limit; i++) {
-      var currentField = data.data[i];
-      var currentResult = [];
-
-      for (var j = 0; j < keys.length; j++) {
-        var val = parseInt(currentField[keys[j]]);
-        if (j < 5) {
-          currentResult.push(val);
-          yValues.push(val);
-        }
-        if (j == keys.length - 1 && currentField[keys[j]] != 'Subtotal') {
-          currentResult.unshift(currentField[keys[j]]);
-          result.abuses.push(currentField[keys[j]]);
-        }
-      }
       if (i !== skip) {
-              result.data.push(currentResult);
+        var currentField = data.data[i];
+        var currentResult = [];
+
+        for (var j = 0; j < keys.length; j++) {
+          var val = parseInt(currentField[keys[j]]);
+          if (j < 5) {
+            currentResult.push(val);
+            yValues.push(val);
+          }
+          if (j == keys.length - 1 && currentField[keys[j]] != 'Subtotal') {
+            currentResult.unshift(currentField[keys[j]]);
+            result.abuses.push(currentField[keys[j]]);
+          }
+        }
+
+        result.data.push(currentResult);
       }
   }
     result.maxYValue = d3.max(yValues, function(d) {return d;});
@@ -340,7 +343,7 @@ $('#pause').css('display','block');
   ////////////////////////////////////////////
 
     var adapterForFirearmsToBarChart = function(data, params, limit, skip) {
-   
+
 
     var result = {};
 

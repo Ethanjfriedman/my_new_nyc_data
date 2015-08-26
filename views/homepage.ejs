@@ -17,7 +17,7 @@
        <INPUT TYPE="button" class='submit' onClick="history.go(0)" VALUE="back">
     </FORM>
   </div>
-  
+
   <!--==========PIE CHART===========-->
 <form class='pieForm hideMe' ng-submit="visualization.getPieChartData()">
   <p>dataset:</p>
@@ -100,7 +100,7 @@
     <option value="https://data.cityofnewyork.us/resource/x8rc-3utf.json">Race of Victims With Allegations Against Police</option>
     <option value="https://data.cityofnewyork.us/resource/ffgt-jimk.json"> Gender of Victims With Allegations Against Police</option>
     <option value="https://data.cityofnewyork.us/resource/664m-n5th.json"> Gender of Officers With Allegations Against Them </option>
-    <option value="https://data.cityofnewyork.us/resource/4vsa-fhnm.json">Reasons for Police-Civilan Encounters That Led to Complaints</option>
+    <option value="https://data.cityofnewyork.us/resource/4vsa-fhnm.json" disabled>Reasons for Police-Civilan Encounters That Led to Complaints</option>
   </select>
   <p>color scheme:</p>
 <select name='timeSeries' ng-model="visualization.formData.chartParams.colorScheme">
@@ -168,12 +168,13 @@
   <p>dataset:</p>
 
     <select name='bar' ng-model="visualization.formData.dataURL" onchange="activate3(this);">
-    <option value="https://data.cityofnewyork.us/resource/7r8u-zrb7.json" >Reasons for Firearms Discharges by Police</option>
+    <option value="https://data.cityofnewyork.us/resource/7r8u-zrb7.json" disabled>Reasons for Firearms Discharges by Police</option>
     <option value="https://data.cityofnewyork.us/resource/us5j-esyf.json">Use of Offensive Language by Police</option>
     <option value="https://data.cityofnewyork.us/resource/99ez-fwvc.json">Allegations of Police Abuse of Authority</option>
     <option value="https://data.cityofnewyork.us/resource/x8rc-3utf.json">Race of Victims With Allegations Against Police</option>
     <option value="https://data.cityofnewyork.us/resource/ffgt-jimk.json"> Gender of Victims With Allegations Against Police</option>
     <option value="https://data.cityofnewyork.us/resource/664m-n5th.json"> Gender of Officers With Allegations Against Them </option>
+    <option value="https://data.cityofnewyork.us/resource/4vsa-fhnm.json">Reasons for Police-Civilan Encounters That Led to Complaints</option>
   </select>
   <p>color scheme:</p>
  <select name='bar' ng-model="visualization.formData.charParams.colorScheme">
